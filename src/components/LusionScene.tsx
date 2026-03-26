@@ -9,18 +9,19 @@ const COLORS = ['#38BDF8', '#A855F7', '#F472B6', '#34D399', '#FBBF24'];
 const vertexShader = `
   varying vec3 vColor;
   varying float vFocus;
+  varying vec3 vNormal;
   uniform vec2 uMouse;
   uniform float uViewportWidth;
   uniform float uViewportHeight;
 
   void main() {
     vColor = instanceColor;
+    vNormal = normalize(normalMatrix * normal);
     
     // Calculate world position of instance
     vec4 worldPosition = instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
     
     // Calculate distance to mouse in world coordinates
-    // uMouse is -1 to 1, so we scale it to viewport
     vec2 mousePos = uMouse * vec2(uViewportWidth, uViewportHeight) * 0.5;
     float dist = distance(worldPosition.xy, mousePos);
     
@@ -39,13 +40,22 @@ const vertexShader = `
 const fragmentShader = `
   varying vec3 vColor;
   varying float vFocus;
+  varying vec3 vNormal;
 
   void main() {
-    // Very transparent by default (0.05), becomes more solid on focus (0.6)
-    float alpha = 0.05 + vFocus * 0.55;
+    // Base opacity
+    float alpha = 0.1 + vFocus * 0.6;
+    
+    // Soften edges to simulate "out of focus" (Fresnel effect)
+    // vNormal.z is 1.0 at the center facing the camera, and 0.0 at the edges
+    float edgeSoftness = smoothstep(0.0, 0.8, vNormal.z);
+    
+    // Make it even blurrier when not in focus
+    float blur = mix(pow(edgeSoftness, 3.0), edgeSoftness, vFocus);
+    alpha *= blur;
     
     // Simulate "out of focus" by softening the color based on focus
-    vec3 finalColor = mix(vColor * 0.8, vColor, vFocus);
+    vec3 finalColor = mix(vColor * 0.7, vColor, vFocus);
     
     gl_FragColor = vec4(finalColor, alpha);
   }
@@ -77,7 +87,7 @@ function ParticleField() {
       const y = (Math.random() - 0.5) * viewport.height * 2.2;
       const z = (Math.random() - 0.5) * 4 - 2;
       const scale = Math.random() * 0.6 + 0.4;
-      const speed = Math.random() * 0.02 + 0.01; // Extremely slow
+      const speed = Math.random() * 0.05 + 0.02; // Slightly faster for noticeable background movement
       const colorIdx = Math.floor(Math.random() * COLORS.length);
       temp.push({ x, y, z, originX: x, originY: y, originZ: z, scale, speed, colorIdx, offset: Math.random() * Math.PI * 2 });
     }
@@ -102,7 +112,7 @@ function ParticleField() {
   useFrame(() => {
     if (!mesh.current || !materialRef.current) return;
     
-    mouse.current.lerp(targetMouse.current, 0.015); // Even slower reaction
+    mouse.current.lerp(targetMouse.current, 0.02); // Slightly more responsive
     materialRef.current.uniforms.uMouse.value = mouse.current;
     
     const targetX = (mouse.current.x * viewport.width) / 2;
@@ -110,8 +120,9 @@ function ParticleField() {
     const time = clock.getElapsedTime();
 
     particles.forEach((particle, i) => {
-      const floatY = Math.sin(time * particle.speed + particle.offset) * 0.3;
-      const floatX = Math.cos(time * particle.speed * 0.6 + particle.offset) * 0.2;
+      // Increased amplitude for noticeable background movement
+      const floatY = Math.sin(time * particle.speed + particle.offset) * 0.6;
+      const floatX = Math.cos(time * particle.speed * 0.8 + particle.offset) * 0.4;
       
       let currentX = particle.originX + floatX;
       let currentY = particle.originY + floatY;

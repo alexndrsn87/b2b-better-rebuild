@@ -34,14 +34,14 @@ export default function Hero() {
 
   return (
     <section 
-      className="relative pt-24 pb-20 lg:pt-32 lg:pb-28 overflow-hidden min-h-[90vh] flex flex-col justify-center"
+      className="relative pt-16 pb-20 lg:pt-20 lg:pb-28 overflow-hidden min-h-[90vh] flex flex-col justify-center"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       {/* 3D WebGL Background & Interactive Crystal */}
       <LusionScene />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-12" style={{ perspective: 1200 }}>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-4" style={{ perspective: 1200 }}>
         <motion.div
           ref={ref}
           style={{ rotateX, rotateY }}
