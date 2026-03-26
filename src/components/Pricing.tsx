@@ -92,7 +92,7 @@ export default function Pricing() {
             className="text-lg text-gray-400 max-w-2xl mx-auto font-sans"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, amount: "some" }}
             transition={{ delay: 0.3 }}
           >
             Choose the package that fits your business. No hidden fees. No long-term contracts. Just a website that works as hard as you do.
@@ -103,7 +103,7 @@ export default function Pricing() {
         <motion.div 
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: "some" }}
           className="max-w-4xl mx-auto mb-16"
         >
           <TiltCard className="p-8 md:p-10 border-blue-500/30 overflow-hidden" glowColor="rgba(59, 130, 246, 0.2)">
@@ -140,7 +140,7 @@ export default function Pricing() {
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, amount: "some" }}
             transition={{ delay: 0.1 }}
           >
             <TiltCard className="p-8 md:p-10 flex flex-col h-full" glowColor="rgba(59, 130, 246, 0.15)">
@@ -190,7 +190,7 @@ export default function Pricing() {
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, amount: "some" }}
             transition={{ delay: 0.2 }}
           >
             <TiltCard className="p-8 md:p-10 flex flex-col h-full border-cyan-500/30" glowColor="rgba(6, 182, 212, 0.2)">
@@ -247,7 +247,7 @@ export default function Pricing() {
           className="mt-16 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: "some" }}
           transition={{ delay: 0.4 }}
         >
           <TiltCard className="p-6 flex items-start gap-4 border-white/5" glowColor="rgba(244, 63, 94, 0.15)">

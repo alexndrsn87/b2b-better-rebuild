@@ -5,17 +5,28 @@ export function TextReveal({ text, className = "" }: { text: string, className?:
   const words = text.split(" ");
   
   return (
-    <span className={`inline-flex flex-wrap gap-x-2 ${className}`}>
+    <motion.span 
+      className={`inline-flex flex-wrap gap-x-2 ${className}`}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: "some" }}
+      variants={{
+        visible: {
+          transition: {
+            staggerChildren: 0.08,
+          }
+        }
+      }}
+    >
       {words.map((word, i) => (
         <span key={i} className="overflow-hidden inline-flex">
           <motion.span
-            initial={{ y: "100%", opacity: 0, rotate: 5 }}
-            whileInView={{ y: 0, opacity: 1, rotate: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ 
-              duration: 0.5, 
-              delay: i * 0.08, 
-              ease: [0.33, 1, 0.68, 1], // Custom spring-like easing
+            variants={{
+              hidden: { y: "100%", opacity: 0, rotate: 5 },
+              visible: { 
+                y: 0, opacity: 1, rotate: 0,
+                transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] }
+              }
             }}
             className="inline-block"
           >
@@ -23,6 +34,6 @@ export function TextReveal({ text, className = "" }: { text: string, className?:
           </motion.span>
         </span>
       ))}
-    </span>
+    </motion.span>
   );
 }

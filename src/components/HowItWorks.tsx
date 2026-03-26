@@ -1,8 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { PenTool, Code2, HeadphonesIcon, Triangle, Square, Circle } from 'lucide-react';
+import { PenTool, Code2, Headphones, Triangle, Square, Circle } from 'lucide-react';
 import { TextReveal } from './TextReveal';
-import { MaskedSection } from './MaskedSection';
 
 export default function HowItWorks() {
   const steps = [
@@ -22,12 +21,19 @@ export default function HowItWorks() {
       num: "3",
       title: "We Manage Everything",
       desc: "We host, secure, and update it forever. Need a change? Just message us. You run your business, we handle the tech.",
-      icon: <HeadphonesIcon className="w-8 h-8 text-emerald-400" />,
+      icon: <Headphones className="w-8 h-8 text-emerald-400" />,
     }
   ];
 
   return (
-    <MaskedSection id="how-it-works" className="py-24 relative z-10 overflow-hidden bg-[var(--color-navy-light)]/20">
+    <motion.section 
+      id="how-it-works" 
+      className="py-24 relative z-10 overflow-hidden bg-[var(--color-navy-light)]/20"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: "some" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
       {/* Floating Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <motion.div
@@ -56,7 +62,7 @@ export default function HowItWorks() {
             className="text-lg text-gray-400 max-w-2xl mx-auto font-sans"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, amount: "some" }}
             transition={{ delay: 0.3 }}
           >
             Three simple steps to a professional website. No dashboards to learn, no software to update.
@@ -73,7 +79,7 @@ export default function HowItWorks() {
               className="relative z-10 flex flex-col items-center text-center"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, amount: "some" }}
               transition={{ delay: index * 0.2, duration: 0.6 }}
             >
               <div className="w-24 h-24 rounded-full glass-card flex items-center justify-center mb-6 relative">
@@ -90,6 +96,6 @@ export default function HowItWorks() {
           ))}
         </div>
       </div>
-    </MaskedSection>
+    </motion.section>
   );
 }

@@ -29,7 +29,7 @@ export default function Layout({ children }: LayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-navy)] text-[var(--color-text)] selection:bg-[var(--color-blue)] selection:text-white relative overflow-hidden">
+    <div className="min-h-screen bg-[var(--color-navy)] text-[var(--color-text)] selection:bg-[var(--color-blue)] selection:text-white relative overflow-x-hidden">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       
       {/* Scroll Progress Line (Left Rail) */}
