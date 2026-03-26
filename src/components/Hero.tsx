@@ -63,20 +63,20 @@ export default function Hero() {
             Website Management, Simplified
           </motion.div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight tracking-tight text-white flex flex-wrap justify-center gap-x-4 gap-y-2">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight tracking-tight text-white">
             {headlineWords.map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ opacity: 0, y: 20, rotate: -5 }}
                 animate={{ opacity: 1, y: 0, rotate: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.5, type: "spring", bounce: 0.4 }}
-                className="inline-block"
+                className="inline-block mr-3 last:mr-0"
               >
                 {word === "ever" || word === "need." ? (
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">{word}</span>
                 ) : (
                   word
-                )}
+                )}{' '}
               </motion.span>
             ))}
           </h1>
@@ -102,7 +102,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Try our £49 Prototype
+              Get the £49 prototype
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </motion.a>
             <motion.a 

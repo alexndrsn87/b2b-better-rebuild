@@ -127,7 +127,7 @@ export default function Pricing() {
               </div>
               <div className="flex-shrink-0 w-full md:w-auto">
                 <button className="btn-primary w-full md:w-auto text-lg py-3 px-8">
-                  Get Your Prototype
+                  Get the £49 prototype
                 </button>
               </div>
             </div>
