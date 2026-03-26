@@ -3,7 +3,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-const PARTICLE_COUNT = 60;
+const PARTICLE_COUNT = 110;
 const COLORS = ['#38BDF8', '#A855F7', '#F472B6', '#34D399', '#FBBF24'];
 
 const vertexShader = `
@@ -26,11 +26,11 @@ const vertexShader = `
     float dist = distance(worldPosition.xy, mousePos);
     
     // Focus factor: 1.0 when close, 0.0 when far
-    float focus = smoothstep(5.0, 0.0, dist);
+    float focus = smoothstep(8.0, 0.0, dist);
     vFocus = focus;
 
-    // Scale up slightly on focus
-    float scale = 1.0 + focus * 0.4;
+    // Stronger scale on focus for a more reactive feel
+    float scale = 1.0 + focus * 0.75;
     
     vec4 mvPosition = modelViewMatrix * instanceMatrix * vec4(position * scale, 1.0);
     gl_Position = projectionMatrix * mvPosition;
@@ -44,7 +44,7 @@ const fragmentShader = `
 
   void main() {
     // Base opacity
-    float alpha = 0.1 + vFocus * 0.6;
+    float alpha = 0.22 + vFocus * 0.65;
     
     // Soften edges to simulate "out of focus" (Fresnel effect)
     // vNormal.z is 1.0 at the center facing the camera, and 0.0 at the edges
@@ -55,7 +55,9 @@ const fragmentShader = `
     alpha *= blur;
     
     // Simulate "out of focus" by softening the color based on focus
-    vec3 finalColor = mix(vColor * 0.7, vColor, vFocus);
+    vec3 finalColor = mix(vColor * 0.72, vColor, vFocus);
+    // Add a subtle bloom-like lift at high focus
+    finalColor += vColor * pow(vFocus, 2.0) * 0.2;
     
     gl_FragColor = vec4(finalColor, alpha);
   }
@@ -86,10 +88,27 @@ function ParticleField() {
       const x = (Math.random() - 0.5) * viewport.width * 2.2;
       const y = (Math.random() - 0.5) * viewport.height * 2.2;
       const z = (Math.random() - 0.5) * 4 - 2;
-      const scale = Math.random() * 0.6 + 0.4;
+      const scale = Math.random() * 0.7 + 0.45;
       const speed = Math.random() * 0.05 + 0.02; // Slightly faster for noticeable background movement
       const colorIdx = Math.floor(Math.random() * COLORS.length);
-      temp.push({ x, y, z, originX: x, originY: y, originZ: z, scale, speed, colorIdx, offset: Math.random() * Math.PI * 2 });
+      temp.push({
+        x,
+        y,
+        z,
+        originX: x,
+        originY: y,
+        originZ: z,
+        currentX: x,
+        currentY: y,
+        currentZ: z,
+        velocityX: 0,
+        velocityY: 0,
+        velocityZ: 0,
+        scale,
+        speed,
+        colorIdx,
+        offset: Math.random() * Math.PI * 2
+      });
     }
     return temp;
   }, [viewport.width, viewport.height]);
@@ -112,7 +131,7 @@ function ParticleField() {
   useFrame(() => {
     if (!mesh.current || !materialRef.current) return;
     
-    mouse.current.lerp(targetMouse.current, 0.02); // Slightly more responsive
+    mouse.current.lerp(targetMouse.current, 0.12);
     materialRef.current.uniforms.uMouse.value = mouse.current;
     
     const targetX = (mouse.current.x * viewport.width) / 2;
@@ -120,27 +139,44 @@ function ParticleField() {
     const time = clock.getElapsedTime();
 
     particles.forEach((particle, i) => {
-      // Increased amplitude for noticeable background movement
-      const floatY = Math.sin(time * particle.speed + particle.offset) * 0.6;
-      const floatX = Math.cos(time * particle.speed * 0.8 + particle.offset) * 0.4;
+      const floatY = Math.sin(time * particle.speed + particle.offset) * 0.45;
+      const floatX = Math.cos(time * particle.speed * 0.8 + particle.offset) * 0.35;
       
-      let currentX = particle.originX + floatX;
-      let currentY = particle.originY + floatY;
-      let currentZ = particle.originZ;
+      const homeX = particle.originX + floatX;
+      const homeY = particle.originY + floatY;
+      const homeZ = particle.originZ;
 
-      const dx = currentX - targetX;
-      const dy = currentY - targetY;
+      const dx = targetX - particle.currentX;
+      const dy = targetY - particle.currentY;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      
-      const force = Math.max(0, 4.5 - dist);
-      
-      if (force > 0) {
-        currentX += (dx / dist) * force * 0.08;
-        currentY += (dy / dist) * force * 0.08;
-        currentZ += force * 0.15;
+
+      const influenceRadius = 6.5;
+      const falloff = Math.max(0, 1 - dist / influenceRadius);
+      const cursorForce = falloff * falloff;
+
+      // Elastic spring to home + magnetic pull toward cursor
+      particle.velocityX += (homeX - particle.currentX) * 0.022 + dx * cursorForce * 0.03;
+      particle.velocityY += (homeY - particle.currentY) * 0.022 + dy * cursorForce * 0.03;
+      particle.velocityZ += (homeZ - particle.currentZ) * 0.02 + cursorForce * 0.04;
+
+      particle.velocityX *= 0.9;
+      particle.velocityY *= 0.9;
+      particle.velocityZ *= 0.88;
+
+      particle.currentX += particle.velocityX;
+      particle.currentY += particle.velocityY;
+      particle.currentZ += particle.velocityZ;
+
+      if (!Number.isFinite(particle.currentX) || !Number.isFinite(particle.currentY) || !Number.isFinite(particle.currentZ)) {
+        particle.currentX = homeX;
+        particle.currentY = homeY;
+        particle.currentZ = homeZ;
+        particle.velocityX = 0;
+        particle.velocityY = 0;
+        particle.velocityZ = 0;
       }
 
-      dummy.position.set(currentX, currentY, currentZ);
+      dummy.position.set(particle.currentX, particle.currentY, particle.currentZ);
       dummy.scale.setScalar(particle.scale);
       dummy.updateMatrix();
       mesh.current!.setMatrixAt(i, dummy.matrix);
@@ -151,7 +187,7 @@ function ParticleField() {
 
   return (
     <instancedMesh ref={mesh} args={[undefined, undefined, PARTICLE_COUNT]}>
-      <sphereGeometry args={[0.3, 32, 32]} />
+      <sphereGeometry args={[0.36, 32, 32]} />
       <shaderMaterial 
         ref={materialRef}
         vertexShader={vertexShader}

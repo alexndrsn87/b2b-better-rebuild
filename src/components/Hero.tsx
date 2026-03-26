@@ -34,7 +34,7 @@ export default function Hero() {
 
   return (
     <section 
-      className="relative pt-16 pb-20 lg:pt-20 lg:pb-28 overflow-hidden min-h-[90vh] flex flex-col justify-center"
+      className="relative pt-14 pb-14 lg:pt-16 lg:pb-16 overflow-hidden min-h-[82vh] flex flex-col justify-center"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -118,7 +118,7 @@ export default function Hero() {
 
         {/* Feature badges */}
         <motion.div 
-          className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"
+          className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.8 }}
@@ -147,10 +147,26 @@ export default function Hero() {
             <p className="text-gray-400 text-sm leading-relaxed">Need to update a photo or change some text? Just send us an email or WhatsApp message.</p>
           </motion.div>
         </motion.div>
+
+        <motion.div
+          className="mt-10 inline-flex flex-col items-center gap-2 text-blue-200/70"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.8, duration: 0.6 }}
+        >
+          <span className="text-[11px] tracking-[0.22em] uppercase font-heading">Scroll to explore</span>
+          <div className="h-10 w-[1px] bg-gradient-to-b from-blue-300/90 via-blue-300/40 to-transparent overflow-hidden">
+            <motion.div
+              className="h-3 w-[1px] bg-blue-200"
+              animate={{ y: [-2, 26, -2], opacity: [0.2, 1, 0.2] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+        </motion.div>
       </div>
 
       {/* Marquee Banner */}
-      <div className="mt-24 border-y border-white/5 bg-white/5 py-4 overflow-hidden flex whitespace-nowrap relative z-10">
+      <div className="mt-14 border-y border-white/5 bg-white/5 py-4 overflow-hidden flex whitespace-nowrap relative z-10">
         <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-[var(--color-navy)] via-transparent to-[var(--color-navy)] z-10 pointer-events-none"></div>
         <div className="animate-marquee flex gap-8 items-center text-sm font-heading font-medium text-blue-200/60 uppercase tracking-widest">
           {[...Array(2)].map((_, i) => (

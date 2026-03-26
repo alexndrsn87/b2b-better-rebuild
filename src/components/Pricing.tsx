@@ -63,7 +63,7 @@ function TiltCard({ children, className = "", glowColor = "rgba(56, 189, 248, 0.
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-24 relative z-10 overflow-hidden">
+    <section id="pricing" className="py-20 relative z-10 overflow-hidden">
       {/* Floating Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <motion.div
@@ -84,7 +84,7 @@ export default function Pricing() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-white">
             <TextReveal text="Simple, transparent pricing" />
           </h2>
@@ -104,7 +104,7 @@ export default function Pricing() {
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: "some" }}
-          className="max-w-4xl mx-auto mb-16"
+          className="max-w-4xl mx-auto mb-12"
         >
           <TiltCard className="p-8 md:p-10 border-blue-500/30 overflow-hidden" glowColor="rgba(59, 130, 246, 0.2)">
             <div className="absolute top-0 right-0 bg-blue-600 text-white px-4 py-1.5 text-sm font-semibold rounded-bl-lg rounded-tr-[1.5rem]">
@@ -244,7 +244,7 @@ export default function Pricing() {
 
         {/* Community Rewards */}
         <motion.div 
-          className="mt-16 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="mt-12 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: "some" }}

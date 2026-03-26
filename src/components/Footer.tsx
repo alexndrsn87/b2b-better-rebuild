@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="bg-[var(--color-navy-light)]/50 border-t border-white/10 relative z-10 overflow-hidden">
       {/* CTA Section */}
-      <div className="py-24 relative border-b border-white/5">
+      <div className="py-20 relative border-b border-white/5">
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
           <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
@@ -57,7 +57,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-1 md:col-span-2">
             <a href="#" className="font-heading font-bold text-2xl tracking-tight text-white flex items-center gap-2 mb-6">

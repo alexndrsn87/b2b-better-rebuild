@@ -28,7 +28,7 @@ export default function HowItWorks() {
   return (
     <motion.section 
       id="how-it-works" 
-      className="py-24 relative z-10 overflow-hidden bg-[var(--color-navy-light)]/20"
+      className="py-20 relative z-10 overflow-hidden bg-[var(--color-navy-light)]/20"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: "some" }}
@@ -54,7 +54,7 @@ export default function HowItWorks() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-20">
+        <div className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-white">
             <TextReveal text="How it works" />
           </h2>
