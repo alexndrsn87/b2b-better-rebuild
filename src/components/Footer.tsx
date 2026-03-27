@@ -66,10 +66,14 @@ export default function Footer({ onRequestPrototype }: FooterProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-1 md:col-span-2">
-            <Link to="/" className="font-heading font-bold text-2xl tracking-tight text-white flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                <span className="text-white text-sm font-bold">B</span>
-              </div>
+            <Link to="/" className="font-heading font-bold text-2xl tracking-tight text-white flex items-center gap-3 mb-6">
+              <img
+                src="/logo.png"
+                alt=""
+                width={48}
+                height={48}
+                className="h-11 w-11 sm:h-12 sm:w-12 rounded-2xl object-cover shadow-lg shadow-black/25 ring-1 ring-white/15 shrink-0"
+              />
               Built Better
             </Link>
             <p className="text-gray-400 font-sans max-w-sm mb-8 leading-relaxed">

@@ -48,11 +48,15 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
                 to="/"
-                className="font-heading font-bold text-xl sm:text-2xl tracking-tight text-white flex items-center gap-2"
+                className="font-heading font-bold text-xl sm:text-2xl tracking-tight text-white flex items-center gap-3"
               >
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
-                  <span className="text-white text-sm font-bold">B</span>
-                </div>
+                <img
+                  src="/logo.png"
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl object-cover shadow-lg shadow-black/25 ring-1 ring-white/15 shrink-0"
+                />
                 <span className="truncate">Built Better</span>
               </Link>
             </motion.div>
