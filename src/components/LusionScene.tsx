@@ -89,7 +89,7 @@ function ParticleField() {
       const y = (Math.random() - 0.5) * viewport.height * 2.2;
       const z = (Math.random() - 0.5) * 4 - 2;
       const scale = Math.random() * 0.7 + 0.45;
-      const speed = Math.random() * 0.05 + 0.02; // Slightly faster for noticeable background movement
+      const speed = (Math.random() * 0.05 + 0.02) * 0.5; // ~50% slower, more fluid drift
       const colorIdx = Math.floor(Math.random() * COLORS.length);
       temp.push({
         x,

@@ -61,24 +61,28 @@ function TiltCard({ children, className = "", glowColor = "rgba(56, 189, 248, 0.
   );
 }
 
-export default function Pricing() {
+type PricingProps = {
+  onRequestPrototype?: () => void;
+};
+
+export default function Pricing({ onRequestPrototype }: PricingProps) {
   return (
     <section id="pricing" className="py-20 relative z-10 overflow-hidden">
       {/* Floating Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <motion.div
           animate={{ y: [0, 30, 0], x: [0, 20, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[10%] left-[5%] w-48 h-48 rounded-full bg-pink-500/10 blur-xl"
         />
         <motion.div
           animate={{ y: [0, -40, 0], x: [0, -30, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute bottom-[15%] right-[5%] w-64 h-64 rounded-full bg-cyan-500/10 blur-2xl"
         />
         <motion.div
           animate={{ y: [0, 20, 0], x: [0, -20, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           className="absolute top-[40%] right-[10%] w-32 h-32 rounded-full bg-purple-500/10 blur-xl"
         />
       </div>
@@ -126,7 +130,11 @@ export default function Pricing() {
                 </ul>
               </div>
               <div className="flex-shrink-0 w-full md:w-auto">
-                <button className="btn-primary w-full md:w-auto text-lg py-3 px-8">
+                <button
+                  type="button"
+                  onClick={() => onRequestPrototype?.()}
+                  className="btn-primary w-full md:w-auto text-lg py-3 px-8"
+                >
                   Get the £49 prototype
                 </button>
               </div>

@@ -1,12 +1,15 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import CustomScrollbar from './CustomScrollbar';
+import Navbar from './Navbar';
 
 interface LayoutProps {
   children: React.ReactNode;
+  onRequestPrototype?: () => void;
 }
 
-export default function Layout({ children }: LayoutProps) {
-  const { scrollY, scrollYProgress } = useScroll();
+export default function Layout({ children, onRequestPrototype }: LayoutProps) {
+  const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 3000], [0, -600]);
   const y2 = useTransform(scrollY, [0, 3000], [0, -300]);
   const rotate = useTransform(scrollY, [0, 3000], [0, 120]);
@@ -14,9 +17,6 @@ export default function Layout({ children }: LayoutProps) {
   // Spatial Scroll effect (Z-axis movement)
   const gridZ = useTransform(scrollY, [0, 3000], [0, 1000]);
   const gridOpacity = useTransform(scrollY, [0, 500], [0.2, 0.05]);
-
-  // Scroll Progress Line (Lusion style)
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -31,14 +31,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-[var(--color-navy)] text-[var(--color-text)] selection:bg-[var(--color-blue)] selection:text-white relative overflow-x-hidden">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      
-      {/* Scroll Progress Line (Left Rail) */}
-      <div className="fixed left-6 top-0 bottom-0 w-[1px] bg-white/5 z-50 hidden lg:block">
-        <motion.div 
-          style={{ height: lineHeight }}
-          className="w-full bg-gradient-to-b from-blue-400 to-cyan-300 shadow-[0_0_10px_rgba(56,189,248,0.5)]"
-        />
-      </div>
+      <CustomScrollbar />
 
       {/* 3D Parallax Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" style={{ perspective: '1000px' }}>
@@ -68,33 +61,7 @@ export default function Layout({ children }: LayoutProps) {
         </motion.div>
       </div>
       
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-[var(--color-navy)]/70 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex-shrink-0">
-              <motion.a 
-                href="#" 
-                className="font-heading font-bold text-2xl tracking-tight text-white flex items-center gap-2"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                  <span className="text-white text-sm font-bold">B</span>
-                </div>
-                Built Better
-              </motion.a>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-center space-x-8">
-                <a href="#how-it-works" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">How it Works</a>
-                <a href="#pricing" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">Pricing</a>
-                <a href="#pricing" className="btn-primary text-sm px-6 py-2.5">Get Started</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar onRequestPrototype={onRequestPrototype} />
 
       {/* Main Content */}
       <main className="relative z-10">
