@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'motion/react';
 import { Check, Sparkles } from 'lucide-react';
 import { TextReveal } from './TextReveal';
+import PrototypeOffer from './PrototypeOffer';
 
 function TiltCard({
   children,
@@ -148,6 +149,10 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
             Pick a tier that fits how you work. One setup fee, then a fixed monthly cost—so you always know what
             you&apos;re paying, with no surprise invoices.
           </motion.p>
+        </div>
+
+        <div className="mb-14">
+          <PrototypeOffer onRequestPrototype={onRequestPrototype} />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-14">
