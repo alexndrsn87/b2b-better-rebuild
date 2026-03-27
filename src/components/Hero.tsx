@@ -80,20 +80,12 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.5 }}
-            className="mt-10 flex flex-col sm:flex-row justify-center gap-4"
+            className="mt-10 flex justify-center"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link to="/pricing" className="btn-primary btn-shimmer text-lg group inline-flex items-center justify-center">
                 See Your Demo
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                to="/what-we-do"
-                className="glass-panel text-lg font-medium text-white px-8 py-3.5 rounded-full border border-white/15 inline-flex items-center justify-center"
-              >
-                What we do
               </Link>
             </motion.div>
           </motion.div>
@@ -119,22 +111,6 @@ export default function Hero() {
               </div>
             </div>
           </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="mt-10 inline-flex flex-col items-center gap-2 text-blue-200/70"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.85, duration: 0.5 }}
-        >
-          <span className="text-[11px] tracking-[0.22em] uppercase font-heading">Explore the site</span>
-          <div className="h-10 w-[1px] bg-gradient-to-b from-blue-300/90 via-blue-300/40 to-transparent overflow-hidden">
-            <motion.div
-              className="h-3 w-[1px] bg-cyan-300"
-              animate={{ y: [-2, 26, -2], opacity: [0.2, 1, 0.2] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-            />
-          </div>
         </motion.div>
       </div>
 
