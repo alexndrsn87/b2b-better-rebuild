@@ -7,11 +7,12 @@ type NavbarProps = {
 
 export default function Navbar({ onRequestPrototype }: NavbarProps) {
   const glassStyle: React.CSSProperties = {
-    background: 'rgba(10, 17, 40, 0.42)',
-    backdropFilter: 'blur(24px) saturate(200%)',
-    WebkitBackdropFilter: 'blur(24px) saturate(200%)',
+    background:
+      'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(10,17,40,0.55) 100%)',
+    backdropFilter: 'blur(40px) saturate(225%)',
+    WebkitBackdropFilter: 'blur(40px) saturate(225%)',
     boxShadow:
-      '0 8px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(255,255,255,0.04)',
+      '0 8px 44px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(255,255,255,0.06)',
   };
 
   return (
