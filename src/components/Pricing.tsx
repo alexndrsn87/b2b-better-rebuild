@@ -163,19 +163,21 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 'some' }}
               transition={{ delay: index * 0.1 }}
-              className="flex"
+              className="flex relative overflow-visible"
             >
               <TiltCard
-                className={`p-8 md:p-10 flex flex-col h-full w-full ${tier.popular ? 'border-cyan-500/35' : ''}`}
+                className={`p-8 md:p-10 flex flex-col h-full w-full overflow-visible ${tier.popular ? 'border-cyan-500/35' : ''}`}
                 glowColor={tier.glow}
               >
                 {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-cyan-400 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg whitespace-nowrap z-20 flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4" />
+                  <div
+                    className="pointer-events-none absolute -top-2 -right-2 z-30 flex rotate-[8deg] items-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-400 px-3 py-1.5 text-xs font-semibold text-white shadow-[0_8px_24px_rgba(37,99,235,0.45)] ring-2 ring-white/25 sm:-top-3 sm:-right-3 sm:gap-1.5 sm:px-3.5 sm:py-2 sm:text-sm"
+                  >
+                    <Sparkles className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden />
                     Most Popular
                   </div>
                 )}
-                <div className={tier.popular ? 'mt-4' : ''}>
+                <div>
                   <h3 className="text-2xl font-heading font-bold mb-2 text-white">{tier.name}</h3>
                   <p className="text-gray-400 text-sm font-sans mb-6">
                     {tier.popular
