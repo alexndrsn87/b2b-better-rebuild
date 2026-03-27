@@ -4,26 +4,39 @@
  */
 
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Layout from './components/Layout';
-import Hero from './components/Hero';
-import HowItWorks from './components/HowItWorks';
-import Pricing from './components/Pricing';
 import Footer from './components/Footer';
 import PrototypeModal from './components/PrototypeModal';
+import HomePage from './pages/HomePage';
+import WhatWeDoPage from './pages/WhatWeDoPage';
+import PricingPage from './pages/PricingPage';
 
-export default function App() {
+function LayoutWrapper() {
   const [prototypeOpen, setPrototypeOpen] = useState(false);
   const openPrototype = () => setPrototypeOpen(true);
 
   return (
     <>
       <Layout onRequestPrototype={openPrototype}>
-        <Hero onRequestPrototype={openPrototype} />
-        <HowItWorks />
-        <Pricing onRequestPrototype={openPrototype} />
+        <Outlet context={{ openPrototype }} />
         <Footer onRequestPrototype={openPrototype} />
       </Layout>
       <PrototypeModal open={prototypeOpen} onClose={() => setPrototypeOpen(false)} />
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LayoutWrapper />}>
+          <Route index element={<HomePage />} />
+          <Route path="what-we-do" element={<WhatWeDoPage />} />
+          <Route path="pricing" element={<PricingPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }

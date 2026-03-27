@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import AmbientNoise from './AmbientNoise';
 import CustomScrollbar from './CustomScrollbar';
+import MouseGlow from './MouseGlow';
 import Navbar from './Navbar';
 
 interface LayoutProps {
@@ -32,9 +34,16 @@ export default function Layout({ children, onRequestPrototype }: LayoutProps) {
     <div className="min-h-screen bg-[var(--color-navy)] text-[var(--color-text)] selection:bg-[var(--color-blue)] selection:text-white relative overflow-x-hidden">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <CustomScrollbar />
+      <AmbientNoise />
 
-      {/* 3D Parallax Background */}
+      {/* 3D Parallax + aurora wash */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" style={{ perspective: '1000px' }}>
+        <MouseGlow />
+        <div className="aurora-layer" aria-hidden>
+          <div className="aurora-blob" />
+          <div className="aurora-blob" />
+          <div className="aurora-blob" />
+        </div>
         <motion.div 
           style={{ y: y1, rotate, translateZ: useTransform(scrollY, [0, 3000], [0, -200]) }}
           className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-blue-600/5 blur-[120px]"
