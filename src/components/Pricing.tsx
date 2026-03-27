@@ -117,7 +117,7 @@ type PricingProps = {
 
 export default function Pricing({ onRequestPrototype }: PricingProps) {
   return (
-    <section id="pricing" className="py-[var(--section-py)] relative z-10 overflow-hidden">
+    <section id="pricing" className="py-[var(--section-py)] relative z-10 overflow-x-hidden overflow-y-visible">
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <motion.div
           animate={{ y: [0, 30, 0], x: [0, 20, 0] }}
@@ -133,9 +133,6 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-14 max-w-3xl mx-auto">
-          <p className="text-[11px] sm:text-xs tracking-[0.28em] uppercase font-heading text-blue-400/90 mb-4">
-            Pricing
-          </p>
           <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-heading font-bold mb-6 text-white">
             <TextReveal text="Clear plans. Recurring value." />
           </h2>
@@ -171,7 +168,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
               >
                 {tier.popular && (
                   <div
-                    className="pointer-events-none absolute -top-2 -right-2 z-30 flex rotate-[8deg] items-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-400 px-3 py-1.5 text-xs font-semibold text-white shadow-[0_8px_24px_rgba(37,99,235,0.45)] ring-2 ring-white/25 sm:-top-3 sm:-right-3 sm:gap-1.5 sm:px-3.5 sm:py-2 sm:text-sm"
+                    className="pointer-events-none absolute -top-5 -right-5 z-30 flex rotate-[10deg] items-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-400 px-3.5 py-2 text-xs font-semibold text-white shadow-[0_12px_32px_rgba(37,99,235,0.55)] ring-2 ring-white/30 sm:-top-6 sm:-right-6 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm"
                   >
                     <Sparkles className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden />
                     Most Popular
