@@ -56,9 +56,9 @@ export default function Hero() {
           </motion.p>
 
           <h1 className="font-heading font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white max-w-[min(100%,48rem)] mx-auto leading-[1.12] tracking-tight">
-            Professional Websites for{' '}
+            Websites that win more work for{' '}
             <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
-              Local Businesses &amp; Tradies
+              local businesses &amp; tradies
             </span>
             .
           </h1>
