@@ -62,8 +62,8 @@ export default function Hero() {
             </span>
             .
           </h1>
-          <p className="mt-5 text-xl md:text-2xl text-gray-300 font-sans font-medium">
-            Built for you, managed by us.
+          <p className="mt-5 text-xl md:text-2xl text-gray-200 font-sans font-semibold tracking-tight max-w-xl mx-auto leading-snug">
+            Look like the pro you are online—without living in a dashboard.
           </p>
 
           <motion.p
