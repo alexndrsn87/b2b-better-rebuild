@@ -8,43 +8,51 @@ export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const smoothX = useSpring(x, { stiffness: 90, damping: 28, mass: 0.8 });
+  const smoothY = useSpring(y, { stiffness: 90, damping: 28, mass: 0.8 });
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], ['1.4deg', '-1.4deg']);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], ['-1.4deg', '1.4deg']);
 
-  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['4deg', '-4deg']);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-4deg', '4deg']);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const mouseXRel = e.clientX - rect.left;
-    const mouseYRel = e.clientY - rect.top;
-    x.set(mouseXRel / rect.width - 0.5);
-    y.set(mouseYRel / rect.height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const sellingPoints = [
+    'No Technical Skills Required',
+    'Fixed Monthly Costs',
+    'Google-Friendly Structure',
+    'Unlimited WhatsApp Updates',
+    'Fast Mobile Experience',
+    'Hosting + Security Included',
+    'Built to Convert Visitors',
+    'Local SEO Foundations',
+  ];
 
   return (
-    <section
-      className="relative pt-14 pb-14 lg:pt-16 lg:pb-16 overflow-hidden min-h-[82vh] flex flex-col justify-center"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
+    <section className="relative pt-14 pb-14 lg:pt-16 lg:pb-16 overflow-hidden min-h-[82vh] flex flex-col justify-center">
       <LusionScene />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-4" style={{ perspective: 1200 }}>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-4">
         <motion.div
           ref={ref}
-          style={{ rotateX, rotateY }}
+          onMouseMove={(e) => {
+            if (!ref.current) return;
+            const rect = ref.current.getBoundingClientRect();
+            x.set((e.clientX - rect.left) / rect.width - 0.5);
+            y.set((e.clientY - rect.top) / rect.height - 0.5);
+          }}
+          onMouseLeave={() => {
+            x.set(0);
+            y.set(0);
+          }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="max-w-5xl mx-auto glass-card p-10 sm:p-14 rounded-[2.5rem]"
+          style={{
+            rotateX,
+            rotateY,
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            willChange: 'transform, opacity',
+            transform: 'translateZ(0)',
+          }}
         >
           <motion.p
             initial={{ opacity: 0, y: 8 }}
@@ -58,7 +66,7 @@ export default function Hero() {
           <h1 className="font-heading font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white max-w-[min(100%,48rem)] mx-auto leading-[1.12] tracking-tight">
             Websites that win more work for{' '}
             <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
-              local businesses &amp; tradies
+              local businesses
             </span>
             .
           </h1>
@@ -117,18 +125,14 @@ export default function Hero() {
       <div className="mt-14 border-y border-white/5 bg-white/5 py-4 overflow-hidden flex whitespace-nowrap relative z-10">
         <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-[var(--color-navy)] via-transparent to-[var(--color-navy)] z-10 pointer-events-none"></div>
         <div className="animate-marquee flex gap-8 items-center text-sm font-heading font-medium text-blue-200/60 uppercase tracking-widest">
-          {[...Array(2)].map((_, i) => (
+          {[...Array(4)].map((_, i) => (
             <React.Fragment key={i}>
-              <span>Save Time</span>
-              <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
-              <span>Local SEO</span>
-              <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
-              <span>WhatsApp Updates</span>
-              <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
-              <span>Fully Managed</span>
-              <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
-              <span>Fixed Pricing</span>
-              <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
+              {sellingPoints.map((point) => (
+                <React.Fragment key={`${i}-${point}`}>
+                  <span>{point}</span>
+                  <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
+                </React.Fragment>
+              ))}
             </React.Fragment>
           ))}
         </div>
