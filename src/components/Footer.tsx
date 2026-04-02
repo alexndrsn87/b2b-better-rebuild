@@ -118,19 +118,19 @@ export default function Footer({ onRequestPrototype }: FooterProps) {
             <h4 className="font-heading font-semibold text-lg mb-6 text-white">Support</h4>
             <ul className="space-y-3 font-sans text-sm text-gray-400">
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
+                <Link to="/whatsapp" className="hover:text-blue-400 transition-colors">
                   WhatsApp Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
+                <Link to="/faq" className="hover:text-blue-400 transition-colors">
                   FAQ
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
+                <Link to="/terms" className="hover:text-blue-400 transition-colors">
                   Terms of Service
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

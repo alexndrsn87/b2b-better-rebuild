@@ -11,6 +11,9 @@ import PrototypeModal from './components/PrototypeModal';
 import HomePage from './pages/HomePage';
 import WhatWeDoPage from './pages/WhatWeDoPage';
 import PricingPage from './pages/PricingPage';
+import WhatsAppPage from './pages/WhatsAppPage';
+import FaqPage from './pages/FaqPage';
+import TermsPage from './pages/TermsPage';
 
 function LayoutWrapper() {
   const [prototypeOpen, setPrototypeOpen] = useState(false);
@@ -35,6 +38,9 @@ export default function App() {
           <Route index element={<HomePage />} />
           <Route path="what-we-do" element={<WhatWeDoPage />} />
           <Route path="pricing" element={<PricingPage />} />
+          <Route path="whatsapp" element={<WhatsAppPage />} />
+          <Route path="faq" element={<FaqPage />} />
+          <Route path="terms" element={<TermsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
