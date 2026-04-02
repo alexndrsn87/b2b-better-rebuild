@@ -8,10 +8,10 @@ export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const smoothX = useSpring(x, { stiffness: 90, damping: 28, mass: 0.8 });
-  const smoothY = useSpring(y, { stiffness: 90, damping: 28, mass: 0.8 });
-  const rotateX = useTransform(smoothY, [-0.5, 0.5], ['1.4deg', '-1.4deg']);
-  const rotateY = useTransform(smoothX, [-0.5, 0.5], ['-1.4deg', '1.4deg']);
+  const smoothX = useSpring(x, { stiffness: 80, damping: 24, mass: 0.9 });
+  const smoothY = useSpring(y, { stiffness: 80, damping: 24, mass: 0.9 });
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], ['2.8deg', '-2.8deg']);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], ['-2.8deg', '2.8deg']);
 
   const sellingPoints = [
     'No Technical Skills Required',
@@ -28,7 +28,10 @@ export default function Hero() {
     <section className="relative pt-14 pb-14 lg:pt-16 lg:pb-16 overflow-hidden min-h-[82vh] flex flex-col justify-center">
       <LusionScene />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-4">
+      <div
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-4"
+        style={{ perspective: '1200px' }}
+      >
         <motion.div
           ref={ref}
           onMouseMove={(e) => {
@@ -51,7 +54,7 @@ export default function Hero() {
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
             willChange: 'transform, opacity',
-            transform: 'translateZ(0)',
+            transformStyle: 'preserve-3d',
           }}
         >
           <motion.p
