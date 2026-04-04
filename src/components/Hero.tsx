@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import LusionScene from './LusionScene';
+import StatusQuoSection from './StatusQuoSection';
 
 const trustTickerStatements = [
   'No logins. Ever.',
@@ -12,18 +13,20 @@ const trustTickerStatements = [
   'No disappearing after launch. Ever.',
 ];
 
-function TrustTickerStrip() {
+function TrustTickerStrip({ leadSeparator = false, stripKey }: { leadSeparator?: boolean; stripKey: string }) {
   return (
     <>
-      {trustTickerStatements.map((line) => (
-        <React.Fragment key={line}>
+      {trustTickerStatements.map((line, i) => (
+        <React.Fragment key={`${stripKey}-${line}`}>
+          {(i > 0 || leadSeparator) && (
+            <span
+              className="mx-4 inline-block h-4 w-px shrink-0 bg-[var(--color-hero-cta)]/75 md:mx-5"
+              aria-hidden
+            />
+          )}
           <span className="shrink-0 font-sans text-[0.9375rem] font-semibold tracking-tight text-white md:text-lg">
             {line}
           </span>
-          <span
-            className="mx-5 inline-block h-4 w-px shrink-0 bg-[var(--color-hero-cta)] opacity-90 md:mx-7"
-            aria-hidden
-          />
         </React.Fragment>
       ))}
     </>
@@ -44,6 +47,7 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
   const rotateY = useTransform(smoothX, [-0.5, 0.5], ['-2.8deg', '2.8deg']);
 
   return (
+    <>
     <section className="relative flex min-h-[88vh] flex-col justify-center overflow-hidden bg-[var(--color-navy)] pb-20 pt-6 lg:pb-28 lg:pt-8">
       <LusionScene />
 
@@ -157,14 +161,16 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
         aria-label="Trust promises"
       >
         <div className="animate-marquee-trust flex w-max items-center">
-          <div className="flex items-center px-6 md:px-8">
-            <TrustTickerStrip />
+          <div className="flex items-center">
+            <TrustTickerStrip stripKey="a" />
           </div>
-          <div className="flex items-center px-6 md:px-8" aria-hidden>
-            <TrustTickerStrip />
+          <div className="flex items-center" aria-hidden>
+            <TrustTickerStrip stripKey="b" leadSeparator />
           </div>
         </div>
       </div>
     </section>
+    <StatusQuoSection />
+    </>
   );
 }
