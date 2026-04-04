@@ -7,6 +7,8 @@
   --color-blue: #2563EB;
   --color-blue-light: #60A5FA;
   --color-accent: #38BDF8;
+  --color-hero-cta: #ea580c;
+  --color-hero-cta-hover: #c2410c;
   --color-text: #F8FAFC;
   --color-text-muted: #94A3B8;
 
@@ -257,6 +259,51 @@ blockquote {
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
   border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Hero only: single high-contrast CTA (orange) — rest of site stays blue/cyan */
+.btn-hero-cta {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background: linear-gradient(180deg, #fb923c 0%, var(--color-hero-cta) 55%, var(--color-hero-cta-hover) 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.18),
+    0 12px 40px rgba(234, 88, 12, 0.42);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .btn-hero-cta {
+    width: auto;
+    min-width: min(100%, 22rem);
+    padding: 1.0625rem 2rem;
+    font-size: 1.125rem;
+  }
+}
+
+.btn-hero-cta:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+  box-shadow:
+    0 5px 0 rgba(0, 0, 0, 0.15),
+    0 18px 48px rgba(234, 88, 12, 0.5);
+}
+
+.btn-hero-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2), 0 8px 24px rgba(234, 88, 12, 0.35);
 }
 
 @keyframes marquee {

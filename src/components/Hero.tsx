@@ -1,142 +1,132 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { ArrowRight, ShieldCheck, Wallet } from 'lucide-react';
-import LusionScene from './LusionScene';
+import { motion } from 'motion/react';
 
-export default function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const smoothX = useSpring(x, { stiffness: 80, damping: 24, mass: 0.9 });
-  const smoothY = useSpring(y, { stiffness: 80, damping: 24, mass: 0.9 });
-  const rotateX = useTransform(smoothY, [-0.5, 0.5], ['2.8deg', '-2.8deg']);
-  const rotateY = useTransform(smoothX, [-0.5, 0.5], ['-2.8deg', '2.8deg']);
+const sellingPoints = [
+  'No Technical Skills Required',
+  'Fixed Monthly Costs',
+  'Google-Friendly Structure',
+  'Unlimited WhatsApp Updates',
+  'Fast Mobile Experience',
+  'Hosting + Security Included',
+  'Built to Convert Visitors',
+  'Local SEO Foundations',
+];
 
-  const sellingPoints = [
-    'No Technical Skills Required',
-    'Fixed Monthly Costs',
-    'Google-Friendly Structure',
-    'Unlimited WhatsApp Updates',
-    'Fast Mobile Experience',
-    'Hosting + Security Included',
-    'Built to Convert Visitors',
-    'Local SEO Foundations',
-  ];
+type HeroProps = {
+  onRequestPrototype?: () => void;
+};
 
+export default function Hero({ onRequestPrototype }: HeroProps) {
   return (
-    <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-28 overflow-hidden min-h-[88vh] flex flex-col justify-center">
-      <LusionScene />
+    <section className="relative isolate flex min-h-[min(100svh,56rem)] flex-col overflow-hidden bg-[var(--color-navy)]">
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <img
+          src="/hero-bg.jpg"
+          alt=""
+          width={1920}
+          height={1440}
+          fetchPriority="high"
+          decoding="async"
+          className="h-full w-full object-cover object-[center_35%]"
+        />
+        {/* Navy wash so type stays crisp; keeps photography visible at edges */}
+        <div
+          className="absolute inset-0 bg-[#070b14]/88"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-[#070b14]/95 via-[#070b14]/55 to-[#070b14]/90"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-[#070b14]/80 via-transparent to-[#070b14]/80"
+          aria-hidden
+        />
+      </div>
+      <span className="sr-only">
+        Background photograph: interior of a local service business (salon).
+      </span>
 
-      <div
-        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-4"
-        style={{ perspective: '1200px' }}
-      >
-        <motion.div
-          ref={ref}
-          onMouseMove={(e) => {
-            if (!ref.current) return;
-            const rect = ref.current.getBoundingClientRect();
-            x.set((e.clientX - rect.left) / rect.width - 0.5);
-            y.set((e.clientY - rect.top) / rect.height - 0.5);
-          }}
-          onMouseLeave={() => {
-            x.set(0);
-            y.set(0);
-          }}
-          initial={{ opacity: 0, y: 30 }}
+      <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col justify-center px-4 py-28 text-center sm:px-6 sm:py-32 lg:px-8 lg:py-36">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="max-w-5xl mx-auto glass-card p-12 sm:p-16 md:p-20 rounded-[2.5rem]"
-          style={{
-            rotateX,
-            rotateY,
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-            willChange: 'transform, opacity',
-            transformStyle: 'preserve-3d',
-          }}
+          transition={{ duration: 0.45 }}
+          className="font-heading text-[11px] font-semibold uppercase tracking-[0.28em] text-white/55"
         >
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel-light text-cyan-300/95 text-sm font-medium mb-8 border border-white/10"
-          >
-            Done-for-you websites for local teams
-          </motion.p>
+          For local businesses across the UK
+        </motion.p>
 
-          <h1 className="font-heading font-extrabold text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white max-w-[min(100%,48rem)] mx-auto leading-[1.05] tracking-tight">
-            Websites that win more work for{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
-              local businesses
-            </span>
-            .
-          </h1>
-          <p className="mt-8 text-xl md:text-2xl text-gray-200 font-sans font-semibold tracking-tight max-w-xl mx-auto leading-snug">
-            Look like the pro you are online—without living in a dashboard.
-          </p>
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.06 }}
+          className="mx-auto mt-6 max-w-md font-sans text-base font-medium leading-snug text-white/88 md:text-lg"
+        >
+          Right now, someone is Googling you — what do they find?
+        </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.35, duration: 0.5 }}
-            className="mt-8 max-w-2xl mx-auto space-y-4 text-lg text-gray-400 font-sans leading-relaxed text-center"
-          >
-            <p>Save time on tech. We handle the build, hosting, and updates.</p>
-            <p>You stay focused on customers, jobs, and the work that pays the bills.</p>
-          </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.12 }}
+          className="mt-8 font-heading text-[2.35rem] font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[3.5rem]"
+        >
+          <span className="block">You&apos;re brilliant at what you do.</span>
+          <span className="mt-2 block">Your website should say so.</span>
+        </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.5 }}
-            className="mt-12 flex justify-center"
-          >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link to="/pricing" className="btn-primary btn-shimmer text-lg group inline-flex items-center justify-center">
-                See Your Demo
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-          </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.22 }}
+          className="mx-auto mt-10 max-w-xl font-sans text-lg font-medium leading-relaxed text-white/78 md:text-xl md:leading-relaxed"
+        >
+          We build it. We host it. We update it. You just answer your phone.
+        </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto text-left"
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.36 }}
+          className="mx-auto mt-12 w-full max-w-md sm:max-w-none"
+        >
+          <motion.button
+            type="button"
+            onClick={() => onRequestPrototype?.()}
+            className="btn-hero-cta"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <div className="glass-panel px-5 py-4 rounded-2xl flex items-start gap-3">
-              <ShieldCheck className="w-6 h-6 text-cyan-400 shrink-0 mt-0.5" />
-              <div>
-                <p className="font-heading font-semibold text-white text-sm">No technical skills required</p>
-                <p className="text-gray-400 text-sm mt-1 leading-snug">You never need to log into hosting or touch code.</p>
-              </div>
-            </div>
-            <div className="glass-panel px-5 py-4 rounded-2xl flex items-start gap-3">
-              <Wallet className="w-6 h-6 text-blue-400 shrink-0 mt-0.5" />
-              <div>
-                <p className="font-heading font-semibold text-white text-sm">Fixed monthly costs</p>
-                <div className="text-gray-400 text-sm mt-1 leading-snug space-y-2">
-                  <p>One clear plan.</p>
-                  <p>Predictable spend—no surprise bills.</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            See your site in 24 hours — £49
+          </motion.button>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.45, delay: 0.48 }}
+          className="mt-8"
+        >
+          <Link
+            to="/work"
+            className="font-sans text-sm font-medium text-white/60 transition-colors hover:text-white"
+          >
+            View our work →
+          </Link>
         </motion.div>
       </div>
 
-      <div className="mt-20 border-y border-white/5 bg-white/5 py-5 overflow-hidden flex whitespace-nowrap relative z-10">
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-[var(--color-navy)] via-transparent to-[var(--color-navy)] z-10 pointer-events-none"></div>
-        <div className="animate-marquee flex gap-8 items-center text-sm font-heading font-medium text-blue-200/60 uppercase tracking-widest">
+      <div className="relative z-10 mt-auto border-t border-white/[0.07] bg-black/25 py-5 backdrop-blur-[2px]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-navy)] via-transparent to-[var(--color-navy)] pointer-events-none z-10" />
+        <div className="animate-marquee flex gap-8 items-center whitespace-nowrap text-xs font-heading font-medium uppercase tracking-[0.22em] text-white/30 sm:text-sm">
           {[...Array(4)].map((_, i) => (
             <React.Fragment key={i}>
               {sellingPoints.map((point) => (
                 <React.Fragment key={`${i}-${point}`}>
                   <span>{point}</span>
-                  <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
+                  <span className="h-1 w-1 shrink-0 rounded-full bg-white/25" aria-hidden />
                 </React.Fragment>
               ))}
             </React.Fragment>
