@@ -94,15 +94,21 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
             Right now, someone is Googling you — what do they find?
           </motion.p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.18 }}
-            className="mt-8 font-heading text-[2.35rem] font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[3.5rem]"
-          >
-            <span className="block">You&apos;re brilliant at what you do.</span>
-            <span className="mt-2 block">Your website should say so.</span>
-          </motion.h1>
+          <div className="hero-headline-glow mx-auto mt-8 max-w-[52rem]">
+            <h1 className="hero-headline font-heading text-[2.35rem] sm:text-5xl md:text-6xl lg:text-[3.35rem] xl:text-[3.65rem]">
+              <span className="hero-line">
+                <span className="hero-line-inner">
+                  You&apos;re <span className="hero-word-brilliant">brilliant</span> at what you do.
+                </span>
+              </span>
+              <span className="hero-line">
+                <span className="hero-line-inner">
+                  <span className="hero-word-website">Your website</span> should{' '}
+                  <span className="hero-word-sayso">say so.</span>
+                </span>
+              </span>
+            </h1>
+          </div>
 
           <motion.p
             initial={{ opacity: 0, y: 12 }}

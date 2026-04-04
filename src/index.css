@@ -60,6 +60,187 @@ blockquote {
   .btn-shimmer::after {
     animation: none !important;
   }
+
+  .hero-headline-glow::before,
+  .hero-line-inner,
+  .hero-word-brilliant,
+  .hero-word-brilliant::after,
+  .hero-word-website::after,
+  .hero-word-sayso {
+    animation: none !important;
+  }
+
+  .hero-line-inner {
+    transform: none !important;
+  }
+
+  .hero-word-website::after {
+    width: 100% !important;
+  }
+
+  .hero-word-sayso {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ── Hero main headline: line reveals + word treatments (Outfit via .font-heading) ── */
+.hero-headline-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-headline-glow::before {
+  content: "";
+  position: absolute;
+  width: min(700px, 130%);
+  height: min(420px, 160%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(234, 88, 12, 0.14) 0%, rgba(245, 200, 66, 0.06) 35%, transparent 68%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: hero-glow-pulse 5.5s ease-in-out infinite;
+}
+
+@keyframes hero-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+.hero-headline {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  max-width: 52rem;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  color: #fff;
+}
+
+.hero-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-line + .hero-line {
+  margin-top: 0.35em;
+}
+
+.hero-line-inner {
+  display: block;
+  transform: translateY(108%);
+  animation: hero-line-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-line:nth-child(1) .hero-line-inner {
+  animation-delay: 0.3s;
+}
+
+.hero-line:nth-child(2) .hero-line-inner {
+  animation-delay: 0.52s;
+}
+
+@keyframes hero-line-rise {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-word-brilliant {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 0.06em;
+  background: linear-gradient(
+    92deg,
+    #e8b84a 0%,
+    #fff2b8 22%,
+    #fb923c 48%,
+    #fff0c2 74%,
+    #e8b84a 100%
+  );
+  background-size: 260% auto;
+  background-position: 0% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hero-shimmer 3.4s linear infinite 1.15s;
+}
+
+.hero-word-brilliant::after {
+  content: "";
+  position: absolute;
+  bottom: 0.02em;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #e8b84a, var(--color-hero-cta), #fde68a, var(--color-hero-cta));
+  background-size: 220% auto;
+  opacity: 0.65;
+  animation: hero-shimmer 2.6s linear infinite 1.15s;
+  pointer-events: none;
+}
+
+@keyframes hero-shimmer {
+  to {
+    background-position: 250% center;
+  }
+}
+
+.hero-word-website {
+  display: inline-block;
+  position: relative;
+}
+
+.hero-word-website::after {
+  content: "";
+  position: absolute;
+  bottom: -0.06em;
+  left: 0;
+  height: 4px;
+  width: 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-hero-cta), #fb923c);
+  animation: hero-draw-line 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards 1.35s;
+}
+
+@keyframes hero-draw-line {
+  to {
+    width: 100%;
+  }
+}
+
+.hero-word-sayso {
+  display: inline-block;
+  color: var(--color-hero-cta);
+  text-shadow:
+    0 0 24px rgba(234, 88, 12, 0.45),
+    0 0 48px rgba(234, 88, 12, 0.2);
+  opacity: 0;
+  animation: hero-pop-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.65s;
+}
+
+@keyframes hero-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Organic aurora — sits behind content, very low cost */
