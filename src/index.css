@@ -363,26 +363,17 @@ blockquote {
     inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
-/* Fixed floating nav — soft frosted edge (no harsh outline); blur + diffuse glow */
+/*
+ * Floating nav: backdrop-filter MUST sit on a node with no CSS transform.
+ * (Framer Motion y/scale on the same element disables real blur in Chrome/Safari.)
+ */
 .glass-float-nav {
   position: relative;
-  isolation: isolate;
   overflow: hidden;
   border-radius: 1.5rem;
   border: none;
   outline: none;
-  background-color: rgba(8, 12, 24, 0.86);
-  background-image:
-    linear-gradient(
-      165deg,
-      rgba(255, 255, 255, 0.2) 0%,
-      rgba(255, 255, 255, 0.08) 38%,
-      rgba(255, 255, 255, 0.03) 58%,
-      rgba(255, 255, 255, 0.01) 78%
-    ),
-    linear-gradient(180deg, rgba(248, 250, 252, 0.12) 0%, rgba(248, 250, 252, 0.02) 48%, transparent 72%);
-  backdrop-filter: blur(100px) saturate(220%) brightness(1.05);
-  -webkit-backdrop-filter: blur(100px) saturate(220%) brightness(1.05);
+  background: transparent;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.07),
     0 0 48px -8px rgba(255, 255, 255, 0.06),
@@ -390,24 +381,47 @@ blockquote {
     0 8px 28px rgba(0, 0, 0, 0.32),
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
     inset 0 -1px 0 rgba(255, 255, 255, 0.05);
-  transform: translateZ(0);
 }
 
-.glass-float-nav::before {
-  content: "";
+.glass-float-nav__backdrop {
   position: absolute;
   inset: 0;
   z-index: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 48%, rgba(6, 10, 20, 0.18) 100%);
-  opacity: 0.88;
+  background-color: rgba(8, 12, 24, 0.45);
+  backdrop-filter: blur(32px) saturate(200%) brightness(1.04);
+  -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.04);
+}
+
+@supports (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px)) {
+  .glass-float-nav__backdrop {
+    background-color: rgba(8, 12, 24, 0.35);
+    backdrop-filter: blur(56px) saturate(220%) brightness(1.05);
+    -webkit-backdrop-filter: blur(56px) saturate(220%) brightness(1.05);
+  }
+}
+
+.glass-float-nav__frost {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(255, 255, 255, 0.03) 62%,
+      transparent 82%
+    ),
+    linear-gradient(180deg, rgba(248, 250, 252, 0.14) 0%, rgba(248, 250, 252, 0.03) 45%, transparent 72%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%, rgba(6, 10, 20, 0.2) 100%);
+  opacity: 0.92;
 }
 
 .glass-float-nav.glass-float-nav--raised {
-  background-color: rgba(8, 12, 24, 0.9);
-  backdrop-filter: blur(110px) saturate(228%) brightness(1.06);
-  -webkit-backdrop-filter: blur(110px) saturate(228%) brightness(1.06);
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.09),
     0 0 56px -6px rgba(255, 255, 255, 0.07),
@@ -417,9 +431,22 @@ blockquote {
     inset 0 -1px 0 rgba(255, 255, 255, 0.06);
 }
 
-.glass-float-nav.glass-float-nav--raised::before {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, transparent 45%, rgba(6, 10, 20, 0.22) 100%);
-  opacity: 0.92;
+.glass-float-nav.glass-float-nav--raised .glass-float-nav__backdrop {
+  background-color: rgba(8, 12, 24, 0.42);
+  backdrop-filter: blur(64px) saturate(235%) brightness(1.06);
+  -webkit-backdrop-filter: blur(64px) saturate(235%) brightness(1.06);
+}
+
+@supports (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px)) {
+  .glass-float-nav.glass-float-nav--raised .glass-float-nav__backdrop {
+    background-color: rgba(8, 12, 24, 0.32);
+    backdrop-filter: blur(72px) saturate(240%) brightness(1.06);
+    -webkit-backdrop-filter: blur(72px) saturate(240%) brightness(1.06);
+  }
+}
+
+.glass-float-nav.glass-float-nav--raised .glass-float-nav__frost {
+  opacity: 0.96;
 }
 
 .btn-primary {

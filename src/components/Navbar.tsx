@@ -26,16 +26,16 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
       className="fixed left-0 right-0 top-0 z-50 flex justify-center px-3 pt-[max(0.85rem,env(safe-area-inset-top))] sm:px-5 sm:pt-4 pointer-events-none"
       role="presentation"
     >
-      <motion.nav
-        initial={{ y: -16, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 260, damping: 26 }}
-        className={`glass-float-nav pointer-events-auto w-full max-w-7xl px-4 transition-[box-shadow,border-color] duration-300 sm:px-6 lg:px-8 ${
+      <nav
+        className={`glass-float-nav pointer-events-auto w-full max-w-7xl px-4 transition-[box-shadow] duration-300 sm:px-6 lg:px-8 ${
           scrolled ? 'glass-float-nav--raised' : ''
         }`}
         aria-label="Main navigation"
       >
-        <div className="relative z-[1] flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
+        {/* Blur on this layer only — never put CSS transform / motion transform on the same node as backdrop-filter */}
+        <div className="glass-float-nav__backdrop" aria-hidden />
+        <div className="glass-float-nav__frost" aria-hidden />
+        <div className="relative z-[2] flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
           <div className="min-w-0 flex-shrink-0">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
@@ -76,7 +76,7 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
             </motion.button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
     </div>
   );
 }
