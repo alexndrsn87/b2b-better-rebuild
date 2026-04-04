@@ -379,27 +379,34 @@ blockquote {
 /* Fixed floating nav — frosted bar, always on top of content */
 .glass-float-nav {
   background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 42%, transparent 62%),
-    rgba(7, 11, 20, 0.52);
-  backdrop-filter: blur(48px) saturate(235%);
-  -webkit-backdrop-filter: blur(48px) saturate(235%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+    linear-gradient(155deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.1) 38%, rgba(255, 255, 255, 0.03) 58%, transparent 78%),
+    linear-gradient(180deg, rgba(248, 250, 252, 0.09) 0%, transparent 45%),
+    rgba(7, 11, 20, 0.72);
+  backdrop-filter: blur(80px) saturate(260%) brightness(1.04);
+  -webkit-backdrop-filter: blur(80px) saturate(260%) brightness(1.04);
+  border: 1px solid rgba(255, 255, 255, 0.34);
   border-radius: 1.25rem;
   box-shadow:
-    0 18px 50px -12px rgba(0, 0, 0, 0.55),
-    0 4px 16px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+    0 20px 56px -14px rgba(0, 0, 0, 0.58),
+    0 6px 20px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
   transform: translateZ(0);
 }
 
 .glass-float-nav.glass-float-nav--raised {
-  border-color: rgba(255, 255, 255, 0.28);
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.12) 38%, rgba(255, 255, 255, 0.04) 58%, transparent 78%),
+    linear-gradient(180deg, rgba(248, 250, 252, 0.11) 0%, transparent 45%),
+    rgba(7, 11, 20, 0.78);
+  backdrop-filter: blur(88px) saturate(275%) brightness(1.05);
+  -webkit-backdrop-filter: blur(88px) saturate(275%) brightness(1.05);
+  border-color: rgba(255, 255, 255, 0.4);
   box-shadow:
-    0 22px 60px -10px rgba(0, 0, 0, 0.6),
-    0 8px 24px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.26),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    0 26px 64px -12px rgba(0, 0, 0, 0.62),
+    0 10px 28px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .btn-primary {
