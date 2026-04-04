@@ -44,7 +44,7 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
   const rotateY = useTransform(smoothX, [-0.5, 0.5], ['-2.8deg', '2.8deg']);
 
   return (
-    <section className="relative min-h-[88vh] flex flex-col justify-center overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-28 bg-[var(--color-navy)]">
+    <section className="relative flex min-h-[88vh] flex-col justify-center overflow-hidden bg-[var(--color-navy)] pb-20 pt-6 lg:pb-28 lg:pt-8">
       <LusionScene />
 
       <div

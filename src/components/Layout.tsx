@@ -72,8 +72,8 @@ export default function Layout({ children, onRequestPrototype }: LayoutProps) {
       
       <Navbar onRequestPrototype={onRequestPrototype} />
 
-      {/* Main Content */}
-      <main className="relative z-10">
+      {/* Main Content — offset for fixed float nav (safe area + bar + margin) */}
+      <main className="relative z-10 pt-[max(5.75rem,calc(env(safe-area-inset-top)+4.75rem))] sm:pt-[max(6.25rem,calc(env(safe-area-inset-top)+5.25rem))]">
         {children}
       </main>
     </div>
