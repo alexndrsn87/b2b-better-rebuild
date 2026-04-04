@@ -322,7 +322,7 @@ blockquote {
 
 /* Trust ticker: faster, emphatic (hero section 2) */
 .animate-marquee-trust {
-  animation: marquee 12s linear infinite;
+  animation: marquee 28s linear infinite;
 }
 
 @keyframes gradient {
