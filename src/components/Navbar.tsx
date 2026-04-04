@@ -35,7 +35,7 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
         }`}
         aria-label="Main navigation"
       >
-        <div className="flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
+        <div className="relative z-[1] flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
           <div className="min-w-0 flex-shrink-0">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link

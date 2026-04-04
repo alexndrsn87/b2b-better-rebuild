@@ -131,10 +131,15 @@ blockquote {
 .hero-line {
   display: block;
   overflow: hidden;
+  /* Room inside clip so text-shadow / glow on “say so.” isn’t cropped */
+  padding-inline: 0.22em;
+  margin-inline: -0.22em;
 }
 
 .hero-line + .hero-line {
   margin-top: 0.35em;
+  padding-bottom: 1.05em;
+  padding-top: 0.12em;
 }
 
 .hero-line-inner {
@@ -224,10 +229,17 @@ blockquote {
 
 .hero-word-sayso {
   display: inline-block;
+  position: relative;
+  z-index: 1;
+  font-size: 1.14em;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
   color: var(--color-hero-cta);
   text-shadow:
-    0 0 24px rgba(234, 88, 12, 0.45),
-    0 0 48px rgba(234, 88, 12, 0.2);
+    0 0 20px rgba(234, 88, 12, 0.55),
+    0 0 40px rgba(234, 88, 12, 0.35),
+    0 0 64px rgba(234, 88, 12, 0.2);
   opacity: 0;
   animation: hero-pop-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.65s;
 }
@@ -376,37 +388,58 @@ blockquote {
     inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
-/* Fixed floating nav — frosted bar, always on top of content */
+/* Fixed floating nav — dense frosted glass (opaque base + heavy blur; works if backdrop-filter unsupported) */
 .glass-float-nav {
-  background:
-    linear-gradient(155deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.1) 38%, rgba(255, 255, 255, 0.03) 58%, transparent 78%),
-    linear-gradient(180deg, rgba(248, 250, 252, 0.09) 0%, transparent 45%),
-    rgba(7, 11, 20, 0.72);
-  backdrop-filter: blur(80px) saturate(260%) brightness(1.04);
-  -webkit-backdrop-filter: blur(80px) saturate(260%) brightness(1.04);
-  border: 1px solid rgba(255, 255, 255, 0.34);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background-color: rgba(8, 12, 24, 0.88);
+  background-image:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.34) 0%,
+      rgba(255, 255, 255, 0.14) 32%,
+      rgba(255, 255, 255, 0.05) 55%,
+      rgba(255, 255, 255, 0.02) 72%
+    ),
+    linear-gradient(180deg, rgba(248, 250, 252, 0.16) 0%, rgba(248, 250, 252, 0.03) 42%, transparent 70%);
+  backdrop-filter: blur(100px) saturate(220%) brightness(1.06);
+  -webkit-backdrop-filter: blur(100px) saturate(220%) brightness(1.06);
   box-shadow:
-    0 20px 56px -14px rgba(0, 0, 0, 0.58),
-    0 6px 20px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.32),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+    0 22px 60px -14px rgba(0, 0, 0, 0.62),
+    0 8px 24px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
   transform: translateZ(0);
 }
 
+.glass-float-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, transparent 42%, rgba(6, 10, 20, 0.22) 100%);
+  opacity: 0.95;
+}
+
 .glass-float-nav.glass-float-nav--raised {
-  background:
-    linear-gradient(155deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.12) 38%, rgba(255, 255, 255, 0.04) 58%, transparent 78%),
-    linear-gradient(180deg, rgba(248, 250, 252, 0.11) 0%, transparent 45%),
-    rgba(7, 11, 20, 0.78);
-  backdrop-filter: blur(88px) saturate(275%) brightness(1.05);
-  -webkit-backdrop-filter: blur(88px) saturate(275%) brightness(1.05);
-  border-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(8, 12, 24, 0.92);
+  border-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(110px) saturate(230%) brightness(1.07);
+  -webkit-backdrop-filter: blur(110px) saturate(230%) brightness(1.07);
   box-shadow:
-    0 26px 64px -12px rgba(0, 0, 0, 0.62),
-    0 10px 28px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.36),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+    0 28px 72px -12px rgba(0, 0, 0, 0.66),
+    0 12px 32px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.glass-float-nav.glass-float-nav--raised::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 40%, rgba(6, 10, 20, 0.28) 100%);
 }
 
 .btn-primary {
