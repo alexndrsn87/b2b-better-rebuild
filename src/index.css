@@ -65,8 +65,7 @@ blockquote {
   .hero-line-inner,
   .hero-word-brilliant,
   .hero-word-brilliant::after,
-  .hero-word-website::after,
-  .hero-word-sayso {
+  .hero-word-website::after {
     animation: none !important;
   }
 
@@ -78,10 +77,6 @@ blockquote {
     width: 100% !important;
   }
 
-  .hero-word-sayso {
-    opacity: 1 !important;
-    transform: none !important;
-  }
 }
 
 /* ── Hero main headline: line reveals + word treatments (Outfit via .font-heading) ── */
@@ -121,9 +116,9 @@ blockquote {
   position: relative;
   z-index: 1;
   margin: 0 auto;
-  max-width: 52rem;
+  max-width: 56rem;
   font-weight: 800;
-  line-height: 1.08;
+  line-height: 1.02;
   letter-spacing: -0.045em;
   color: #fff;
 }
@@ -131,15 +126,14 @@ blockquote {
 .hero-line {
   display: block;
   overflow: hidden;
-  /* Room inside clip so text-shadow / glow on “say so.” isn’t cropped */
   padding-inline: 0.22em;
   margin-inline: -0.22em;
 }
 
 .hero-line + .hero-line {
-  margin-top: 0.35em;
-  padding-bottom: 1.05em;
-  padding-top: 0.12em;
+  margin-top: 0.06em;
+  padding-bottom: 0.45em;
+  padding-top: 0.02em;
 }
 
 .hero-line-inner {
@@ -198,6 +192,15 @@ blockquote {
   pointer-events: none;
 }
 
+/* Second line appears later — start shimmer after line reveal */
+.hero-word-brilliant.hero-word-brilliant--line2 {
+  animation: hero-shimmer 3.4s linear infinite 1.55s;
+}
+
+.hero-word-brilliant.hero-word-brilliant--line2::after {
+  animation: hero-shimmer 2.6s linear infinite 1.55s;
+}
+
 @keyframes hero-shimmer {
   to {
     background-position: 250% center;
@@ -224,34 +227,6 @@ blockquote {
 @keyframes hero-draw-line {
   to {
     width: 100%;
-  }
-}
-
-.hero-word-sayso {
-  display: inline-block;
-  position: relative;
-  z-index: 1;
-  font-size: 1.14em;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  color: var(--color-hero-cta);
-  text-shadow:
-    0 0 20px rgba(234, 88, 12, 0.55),
-    0 0 40px rgba(234, 88, 12, 0.35),
-    0 0 64px rgba(234, 88, 12, 0.2);
-  opacity: 0;
-  animation: hero-pop-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.65s;
-}
-
-@keyframes hero-pop-in {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 

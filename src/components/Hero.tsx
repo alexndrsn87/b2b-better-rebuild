@@ -98,8 +98,8 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
             Right now, someone is Googling you — what do they find?
           </motion.p>
 
-          <div className="hero-headline-glow mx-auto mt-8 max-w-[52rem]">
-            <h1 className="hero-headline font-heading text-[2.35rem] sm:text-5xl md:text-6xl lg:text-[3.35rem] xl:text-[3.65rem]">
+          <div className="hero-headline-glow mx-auto mt-8 max-w-[56rem]">
+            <h1 className="hero-headline font-heading text-[2.7rem] sm:text-6xl md:text-7xl lg:text-[4.2rem] xl:text-[4.65rem]">
               <span className="hero-line">
                 <span className="hero-line-inner">
                   You&apos;re <span className="hero-word-brilliant">brilliant</span> at what you do.
@@ -108,7 +108,7 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
               <span className="hero-line">
                 <span className="hero-line-inner">
                   <span className="hero-word-website">Your website</span> should{' '}
-                  <span className="hero-word-sayso">say so.</span>
+                  <span className="hero-word-brilliant hero-word-brilliant--line2">say so.</span>
                 </span>
               </span>
             </h1>
