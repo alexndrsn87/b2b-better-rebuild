@@ -70,27 +70,27 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-14 max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-heading font-bold mb-6 text-white">
+        <div className="text-center mb-20 md:mb-24 max-w-3xl mx-auto">
+          <h2 className="text-5xl md:text-6xl lg:text-[3.5rem] font-heading font-extrabold mb-8 text-white leading-tight">
             <TextReveal text="Clear plans. Recurring value." />
           </h2>
-          <motion.p
-            className="text-lg text-gray-400 max-w-2xl mx-auto font-sans leading-relaxed"
+          <motion.div
+            className="text-lg text-gray-400 max-w-2xl mx-auto font-sans leading-relaxed space-y-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 'some' }}
             transition={{ delay: 0.2 }}
           >
-            Pick a tier that fits how you work. One setup fee, then a fixed monthly cost—so you always know what
-            you&apos;re paying, with no surprise invoices.
-          </motion.p>
+            <p>Pick a tier that fits how you work.</p>
+            <p>One setup fee, then a fixed monthly cost. No surprise invoices.</p>
+          </motion.div>
         </div>
 
-        <div className="mb-14">
+        <div className="mb-20">
           <PrototypeOffer onRequestPrototype={onRequestPrototype} />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto mb-20">
           {tiers.map((tier, index) => (
             <motion.div
               key={tier.name}
@@ -101,7 +101,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
               className="flex relative overflow-visible"
             >
               <TiltCard
-                className={`p-8 md:p-10 flex flex-col h-full w-full overflow-visible ${tier.popular ? 'border-cyan-500/35' : ''}`}
+                className={`p-8 md:p-12 flex flex-col h-full w-full overflow-visible ${tier.popular ? 'border-cyan-500/35' : ''}`}
                 glowColor={tier.glow}
               >
                 {tier.popular && (
@@ -113,7 +113,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
                   </div>
                 )}
                 <div>
-                  <h3 className="text-2xl font-heading font-bold mb-2 text-white">{tier.name}</h3>
+                  <h3 className="text-2xl md:text-3xl font-heading font-extrabold mb-3 text-white">{tier.name}</h3>
                   <p className="text-gray-400 text-sm font-sans mb-6">
                     {tier.popular
                       ? 'Best for most local businesses that need room to grow.'
@@ -155,12 +155,13 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.15 }}
-          className="max-w-3xl mx-auto glass-card p-8 md:p-10"
+          className="max-w-3xl mx-auto glass-card p-8 md:p-12"
         >
-          <h3 className="font-heading font-bold text-xl md:text-2xl text-white mb-2 text-center">Add-ons</h3>
-          <p className="text-center text-gray-400 text-sm font-sans mb-8">
-            Bolt these on whenever you need them—no pressure, no jargon.
-          </p>
+          <h3 className="font-heading font-extrabold text-2xl md:text-3xl text-white mb-4 text-center">Add-ons</h3>
+          <div className="text-center text-gray-400 text-sm font-sans mb-10 space-y-3 max-w-md mx-auto">
+            <p>Bolt these on whenever you need them.</p>
+            <p>No pressure, no jargon.</p>
+          </div>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
             {addOns.map((item) => (
               <li

@@ -48,7 +48,7 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
                 to="/"
-                className="font-heading font-bold text-xl sm:text-2xl tracking-tight text-white flex items-center gap-3"
+                className="font-heading font-extrabold text-xl sm:text-2xl tracking-tight text-white flex items-center gap-3"
               >
                 <img
                   src="/logo.png"

@@ -21,16 +21,17 @@ export default function PrototypeOffer({ onRequestPrototype }: PrototypeOfferPro
         </div>
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 mt-4 md:mt-0">
           <div className="flex-1 text-left">
-            <h2 className="text-2xl font-heading font-bold mb-2 text-white flex items-center gap-3 flex-wrap">
+            <h2 className="text-2xl md:text-3xl font-heading font-extrabold mb-3 text-white flex items-center gap-3 flex-wrap">
               <LayoutTemplate className="w-6 h-6 text-blue-400 shrink-0" />
               The £49 Prototype
             </h2>
             <p className="text-3xl font-bold text-white mb-4">
               £49 <span className="text-base text-gray-400 font-normal">/ 24-hour turnaround</span>
             </p>
-            <p className="text-gray-300 mb-6 leading-relaxed">
-              We build a custom interactive homepage blueprint in 24 hours. Link expires in 7 days.
-            </p>
+            <div className="text-gray-300 mb-8 leading-relaxed space-y-4">
+              <p>We build a custom interactive homepage blueprint in 24 hours.</p>
+              <p>Link expires in 7 days.</p>
+            </div>
             <ul className="space-y-3 text-sm text-gray-300">
               <li className="flex items-center gap-3">
                 <Check className="w-5 h-5 text-emerald-400 flex-shrink-0" />

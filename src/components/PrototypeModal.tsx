@@ -71,12 +71,13 @@ export default function PrototypeModal({ open, onClose }: PrototypeModalProps) {
                 <p className="text-xs font-heading font-semibold uppercase tracking-[0.2em] text-cyan-300">
                   £49 prototype
                 </p>
-                <h2 id={titleId} className="mt-2 font-heading text-2xl font-bold text-white md:text-3xl">
+                <h2 id={titleId} className="mt-2 font-heading text-2xl font-extrabold text-white md:text-3xl">
                   Try a prototype
                 </h2>
-                <p className="mt-2 text-sm text-gray-400">
-                  Tell us a bit about you and what you need. We&apos;ll get back within one business day.
-                </p>
+                <div className="mt-3 text-sm text-gray-400 space-y-3 leading-relaxed">
+                  <p>Tell us a bit about you and what you need.</p>
+                  <p>We&apos;ll get back within one business day.</p>
+                </div>
               </div>
               <button
                 type="button"

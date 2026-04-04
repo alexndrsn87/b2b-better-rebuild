@@ -23,19 +23,19 @@ export default function Footer({ onRequestPrototype }: FooterProps) {
           <p className="text-[11px] sm:text-xs tracking-[0.28em] uppercase font-heading text-cyan-400/85 mb-4">
             Next step
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6 text-white">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold mb-8 text-white leading-tight">
             <TextReveal text="Ready to get started?" />
           </h2>
-          <motion.p
-            className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto font-sans"
+          <motion.div
+            className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto font-sans space-y-4 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            See how simple fixed pricing can be—or tell us what you need and we&apos;ll come back with a clear next
-            step.
-          </motion.p>
+            <p>See how simple fixed pricing can be.</p>
+            <p>Or tell us what you need—we&apos;ll come back with a clear next step.</p>
+          </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -63,10 +63,10 @@ export default function Footer({ onRequestPrototype }: FooterProps) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-14 md:gap-16 mb-16">
           <div className="col-span-1 md:col-span-2">
-            <Link to="/" className="font-heading font-bold text-2xl tracking-tight text-white flex items-center gap-3 mb-6">
+            <Link to="/" className="font-heading font-extrabold text-2xl tracking-tight text-white flex items-center gap-3 mb-6">
               <img
                 src="/logo.png"
                 alt=""
@@ -76,10 +76,10 @@ export default function Footer({ onRequestPrototype }: FooterProps) {
               />
               Built Better
             </Link>
-            <p className="text-gray-400 font-sans max-w-sm mb-8 leading-relaxed">
-              Professional sites for local businesses—built for you, managed by us. Save time and keep your online
-              presence sharp without living in a dashboard.
-            </p>
+            <div className="text-gray-400 font-sans max-w-sm mb-10 space-y-4 leading-relaxed">
+              <p>Professional sites for local businesses—built for you, managed by us.</p>
+              <p>Save time and keep your online presence sharp without living in a dashboard.</p>
+            </div>
             <div className="flex space-x-5">
               <span className="text-gray-400">
                 <LayoutTemplate className="w-5 h-5" />

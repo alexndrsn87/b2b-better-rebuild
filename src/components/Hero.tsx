@@ -25,7 +25,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative pt-14 pb-14 lg:pt-16 lg:pb-16 overflow-hidden min-h-[82vh] flex flex-col justify-center">
+    <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-28 overflow-hidden min-h-[88vh] flex flex-col justify-center">
       <LusionScene />
 
       <div
@@ -47,7 +47,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="max-w-5xl mx-auto glass-card p-10 sm:p-14 rounded-[2.5rem]"
+          className="max-w-5xl mx-auto glass-card p-12 sm:p-16 md:p-20 rounded-[2.5rem]"
           style={{
             rotateX,
             rotateY,
@@ -66,32 +66,32 @@ export default function Hero() {
             Done-for-you websites for local teams
           </motion.p>
 
-          <h1 className="font-heading font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white max-w-[min(100%,48rem)] mx-auto leading-[1.12] tracking-tight">
+          <h1 className="font-heading font-extrabold text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white max-w-[min(100%,48rem)] mx-auto leading-[1.05] tracking-tight">
             Websites that win more work for{' '}
             <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
               local businesses
             </span>
             .
           </h1>
-          <p className="mt-5 text-xl md:text-2xl text-gray-200 font-sans font-semibold tracking-tight max-w-xl mx-auto leading-snug">
+          <p className="mt-8 text-xl md:text-2xl text-gray-200 font-sans font-semibold tracking-tight max-w-xl mx-auto leading-snug">
             Look like the pro you are online—without living in a dashboard.
           </p>
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35, duration: 0.5 }}
-            className="mt-6 text-lg text-gray-400 font-sans max-w-2xl mx-auto leading-relaxed"
+            className="mt-8 max-w-2xl mx-auto space-y-4 text-lg text-gray-400 font-sans leading-relaxed text-center"
           >
-            Save time on tech. We handle the build, hosting, and updates—so you can stay focused on customers, jobs,
-            and the work that pays the bills.
-          </motion.p>
+            <p>Save time on tech. We handle the build, hosting, and updates.</p>
+            <p>You stay focused on customers, jobs, and the work that pays the bills.</p>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.5 }}
-            className="mt-10 flex justify-center"
+            className="mt-12 flex justify-center"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link to="/pricing" className="btn-primary btn-shimmer text-lg group inline-flex items-center justify-center">
@@ -105,7 +105,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto text-left"
+            className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto text-left"
           >
             <div className="glass-panel px-5 py-4 rounded-2xl flex items-start gap-3">
               <ShieldCheck className="w-6 h-6 text-cyan-400 shrink-0 mt-0.5" />
@@ -118,14 +118,17 @@ export default function Hero() {
               <Wallet className="w-6 h-6 text-blue-400 shrink-0 mt-0.5" />
               <div>
                 <p className="font-heading font-semibold text-white text-sm">Fixed monthly costs</p>
-                <p className="text-gray-400 text-sm mt-1 leading-snug">One clear plan—predictable spend, no surprise bills.</p>
+                <div className="text-gray-400 text-sm mt-1 leading-snug space-y-2">
+                  <p>One clear plan.</p>
+                  <p>Predictable spend—no surprise bills.</p>
+                </div>
               </div>
             </div>
           </motion.div>
         </motion.div>
       </div>
 
-      <div className="mt-14 border-y border-white/5 bg-white/5 py-4 overflow-hidden flex whitespace-nowrap relative z-10">
+      <div className="mt-20 border-y border-white/5 bg-white/5 py-5 overflow-hidden flex whitespace-nowrap relative z-10">
         <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-[var(--color-navy)] via-transparent to-[var(--color-navy)] z-10 pointer-events-none"></div>
         <div className="animate-marquee flex gap-8 items-center text-sm font-heading font-medium text-blue-200/60 uppercase tracking-widest">
           {[...Array(4)].map((_, i) => (

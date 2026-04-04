@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -10,9 +10,9 @@
   --color-text: #F8FAFC;
   --color-text-muted: #94A3B8;
 
-  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --section-py: clamp(4rem, 9vw, 7rem);
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --section-py: clamp(5.5rem, 12vw, 9rem);
 }
 
 body {
@@ -20,13 +20,14 @@ body {
   color: var(--color-text);
   font-family: var(--font-sans);
   font-optical-sizing: auto;
-  font-size: 17px;
-  line-height: 1.65;
-  letter-spacing: -0.015em;
+  font-size: 18px;
+  line-height: 1.7;
+  letter-spacing: -0.02em;
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
   text-rendering: optimizeLegibility;
+  text-align: left;
 }
 
 body::-webkit-scrollbar {
@@ -35,9 +36,16 @@ body::-webkit-scrollbar {
 
 h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: var(--font-heading);
-  letter-spacing: -0.04em;
-  line-height: 1.06;
-  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+/* Never justified body copy — keeps blocks calm and scannable */
+p,
+li,
+blockquote {
+  text-align: inherit;
 }
 
 @media (prefers-reduced-motion: reduce) {
