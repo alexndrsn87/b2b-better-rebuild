@@ -52,6 +52,7 @@ blockquote {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
+  .animate-marquee-trust,
   .animate-gradient,
   .hero-gradient-sweep,
   .hero-gradient-sweep-delayed,
@@ -317,6 +318,11 @@ blockquote {
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Trust ticker: faster, emphatic (hero section 2) */
+.animate-marquee-trust {
+  animation: marquee 12s linear infinite;
 }
 
 @keyframes gradient {

@@ -3,16 +3,32 @@ import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import LusionScene from './LusionScene';
 
-const sellingPoints = [
-  'No Technical Skills Required',
-  'Fixed Monthly Costs',
-  'Google-Friendly Structure',
-  'Unlimited WhatsApp Updates',
-  'Fast Mobile Experience',
-  'Hosting + Security Included',
-  'Built to Convert Visitors',
-  'Local SEO Foundations',
+const trustTickerStatements = [
+  'No logins. Ever.',
+  'No surprise bills. Ever.',
+  'No waiting weeks. Ever.',
+  'No tech jargon. Ever.',
+  'No hidden charges. Ever.',
+  'No disappearing after launch. Ever.',
 ];
+
+function TrustTickerStrip() {
+  return (
+    <>
+      {trustTickerStatements.map((line) => (
+        <React.Fragment key={line}>
+          <span className="shrink-0 font-sans text-[0.9375rem] font-semibold tracking-tight text-white md:text-lg">
+            {line}
+          </span>
+          <span
+            className="mx-5 inline-block h-4 w-px shrink-0 bg-[var(--color-hero-cta)] opacity-90 md:mx-7"
+            aria-hidden
+          />
+        </React.Fragment>
+      ))}
+    </>
+  );
+}
 
 type HeroProps = {
   onRequestPrototype?: () => void;
@@ -130,19 +146,17 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
         </motion.div>
       </div>
 
-      <div className="relative z-10 mt-20 flex overflow-hidden border-y border-white/5 bg-white/5 py-5">
-        <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-[var(--color-navy)] via-transparent to-[var(--color-navy)]" />
-        <div className="animate-marquee flex items-center gap-8 whitespace-nowrap text-sm font-heading font-medium uppercase tracking-widest text-blue-200/60">
-          {[...Array(4)].map((_, i) => (
-            <React.Fragment key={i}>
-              {sellingPoints.map((point) => (
-                <React.Fragment key={`${i}-${point}`}>
-                  <span>{point}</span>
-                  <span className="h-2 w-2 shrink-0 rounded-full bg-blue-500/50" aria-hidden />
-                </React.Fragment>
-              ))}
-            </React.Fragment>
-          ))}
+      <div
+        className="relative z-10 mt-20 overflow-hidden border-y border-white/10 bg-[var(--color-navy)] py-3.5 md:py-4"
+        aria-label="Trust promises"
+      >
+        <div className="animate-marquee-trust flex w-max items-center">
+          <div className="flex items-center px-6 md:px-8">
+            <TrustTickerStrip />
+          </div>
+          <div className="flex items-center px-6 md:px-8" aria-hidden>
+            <TrustTickerStrip />
+          </div>
         </div>
       </div>
     </section>
