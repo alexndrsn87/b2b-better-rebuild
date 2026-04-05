@@ -3,9 +3,9 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, ArrowLeft, ExternalLink } from 'lucide-react';
 import { TextReveal } from '../components/TextReveal';
+import { whatsappUrlWithPrefill } from '../lib/whatsapp';
 
-const WHATSAPP_URL =
-  import.meta.env.VITE_WHATSAPP_URL?.trim() || 'https://wa.me/447000000000';
+const WHATSAPP_URL = whatsappUrlWithPrefill();
 
 export default function WhatsAppPage() {
   return (

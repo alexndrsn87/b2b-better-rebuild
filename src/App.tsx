@@ -16,6 +16,7 @@ import FaqPage from './pages/FaqPage';
 import TermsPage from './pages/TermsPage';
 import WorkPage from './pages/WorkPage';
 import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 
 function LayoutWrapper() {
   const [prototypeOpen, setPrototypeOpen] = useState(false);
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="what-we-do" element={<Navigate to="/how-it-works" replace />} />
           <Route path="how-it-works" element={<HowItWorksPage />} />
           <Route path="pricing" element={<PricingPage />} />
+          <Route path="contact" element={<ContactPage />} />
           <Route path="whatsapp" element={<WhatsAppPage />} />
           <Route path="faq" element={<FaqPage />} />
           <Route path="terms" element={<TermsPage />} />
