@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, NavLink } from 'react-router-dom';
-import { motion } from 'motion/react';
 
 type NavbarProps = {
   onRequestPrototype?: () => void;
 };
-
-const linkClass = 'text-sm font-medium text-gray-300 hover:text-white transition-colors';
 
 export default function Navbar({ onRequestPrototype }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
@@ -19,7 +16,7 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
       ticking = true;
       requestAnimationFrame(() => {
         ticking = false;
-        setScrolled(window.scrollY > 24);
+        setScrolled(window.scrollY > 32);
       });
     };
     onScroll();
@@ -27,66 +24,60 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navItem = ({ isActive }: { isActive: boolean }) =>
-    `${linkClass} ${isActive ? 'text-white' : ''}`;
-
   const shell = (
-    <div
-      className="pointer-events-none fixed left-0 right-0 top-0 z-[200] flex justify-center px-3 pt-[max(0.85rem,env(safe-area-inset-top))] sm:px-5 sm:pt-4"
-      role="presentation"
+    <header
+      className="pointer-events-none fixed inset-x-0 top-0 z-[200] flex justify-center px-3 pt-[max(0.65rem,env(safe-area-inset-top))] sm:px-5 sm:pt-4"
     >
       <nav
-        className={`glass-float-nav pointer-events-auto w-full max-w-7xl px-4 transition-[box-shadow] duration-300 sm:px-6 lg:px-8 ${
-          scrolled ? 'glass-float-nav--raised' : ''
-        }`}
+        className={`site-nav pointer-events-auto w-full max-w-6xl ${scrolled ? 'site-nav--scrolled' : ''}`}
         aria-label="Main navigation"
       >
-        {/* Blur on this layer only — never put CSS transform / motion transform on the same node as backdrop-filter */}
-        <div className="glass-float-nav__backdrop" aria-hidden />
-        <div className="glass-float-nav__frost" aria-hidden />
-        <div className="relative z-[2] flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
-          <div className="min-w-0 flex-shrink-0">
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Link
-                to="/"
-                className="flex items-center gap-2.5 font-heading text-lg font-extrabold tracking-tight text-white sm:gap-3 sm:text-xl md:text-2xl"
-              >
-                <img
-                  src="/logo.png"
-                  alt=""
-                  width={40}
-                  height={40}
-                  className="h-9 w-9 shrink-0 rounded-xl object-cover shadow-lg shadow-black/25 ring-1 ring-white/15 sm:h-10 sm:w-10"
-                />
-                <span className="truncate">Built Better</span>
-              </Link>
-            </motion.div>
-          </div>
-          <div className="flex flex-wrap items-center justify-end gap-3 sm:gap-6 md:gap-8">
-            <div className="flex items-center gap-3 sm:gap-6" role="navigation" aria-label="Main">
-              <NavLink to="/" end className={navItem}>
-                Home
-              </NavLink>
-              <NavLink to="/how-it-works" className={navItem}>
-                How it works
-              </NavLink>
-              <NavLink to="/pricing" className={navItem}>
-                Pricing
-              </NavLink>
-            </div>
-            <motion.button
-              type="button"
-              onClick={() => onRequestPrototype?.()}
-              className="btn-primary btn-shimmer shrink-0 px-4 py-2.5 text-xs sm:px-6 sm:text-sm"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
+        <Link
+          to="/"
+          className="site-nav-brand group flex min-w-0 shrink-0 items-center gap-2.5 sm:gap-3"
+        >
+          <img
+            src="/logo.png"
+            alt=""
+            width={40}
+            height={40}
+            className="site-nav-logo h-8 w-8 shrink-0 rounded-[0.65rem] object-cover ring-1 ring-white/20 transition-transform duration-300 group-hover:scale-[1.04] group-active:scale-[0.98] sm:h-9 sm:w-9"
+          />
+          <span className="truncate font-heading text-base font-extrabold tracking-tight text-white sm:text-lg">
+            Built Better
+          </span>
+        </Link>
+
+        <div className="site-nav-links flex flex-1 flex-wrap items-center justify-center gap-1 sm:gap-0 md:gap-1">
+          {(
+            [
+              { to: '/', end: true, label: 'Home' },
+              { to: '/how-it-works', end: false, label: 'How it works' },
+              { to: '/pricing', end: false, label: 'Pricing' },
+            ] as const
+          ).map(({ to, end, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={({ isActive }) =>
+                `site-nav-link ${isActive ? 'site-nav-link--active' : ''}`
+              }
             >
-              Get Started
-            </motion.button>
-          </div>
+              {label}
+            </NavLink>
+          ))}
         </div>
+
+        <button
+          type="button"
+          onClick={() => onRequestPrototype?.()}
+          className="site-nav-cta btn-shimmer shrink-0"
+        >
+          Get Started
+        </button>
       </nav>
-    </div>
+    </header>
   );
 
   if (typeof document === 'undefined') return null;
