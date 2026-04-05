@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import LusionScene from './LusionScene';
 import StatusQuoSection from './StatusQuoSection';
+import HowItWorksSection from './HowItWorksSection';
 
 const trustTickerStatements = [
   'No logins. Ever.',
@@ -171,6 +172,7 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
       </div>
     </section>
     <StatusQuoSection />
+    <HowItWorksSection />
     </>
   );
 }
