@@ -1,9 +1,8 @@
 import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-const PARTICLE_COUNT = 110;
+const PARTICLE_COUNT = 48;
 const COLORS = ['#38BDF8', '#A855F7', '#F472B6', '#34D399', '#FBBF24'];
 
 const vertexShader = `
@@ -187,7 +186,7 @@ function ParticleField() {
 
   return (
     <instancedMesh ref={mesh} args={[undefined, undefined, PARTICLE_COUNT]}>
-      <sphereGeometry args={[0.36, 32, 32]} />
+      <sphereGeometry args={[0.36, 14, 14]} />
       <shaderMaterial 
         ref={materialRef}
         vertexShader={vertexShader}
@@ -202,13 +201,12 @@ function ParticleField() {
 
 export default function LusionScene() {
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none">
-      <Canvas camera={{ position: [0, 0, 8], fov: 50 }} dpr={[1, 2]}>
-        <ambientLight intensity={0.8} />
+    <div className="pointer-events-none absolute inset-0 z-0">
+      <Canvas camera={{ position: [0, 0, 8], fov: 50 }} dpr={[1, 1.35]} gl={{ antialias: false, powerPreference: 'high-performance' }}>
+        <ambientLight intensity={0.85} />
         <pointLight position={[10, 10, 10]} intensity={2} color="#ffffff" />
         <pointLight position={[-10, -10, -10]} intensity={1} color="#A855F7" />
         <ParticleField />
-        <Environment preset="city" />
       </Canvas>
     </div>
   );

@@ -26,7 +26,11 @@ export default function MouseGlow() {
 
   useEffect(() => {
     if (!enabled) return;
+    let last = 0;
     const onMove = (e: MouseEvent) => {
+      const now = performance.now();
+      if (now - last < 24) return;
+      last = now;
       x.set(e.clientX);
       y.set(e.clientY);
     };

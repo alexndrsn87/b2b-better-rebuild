@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, NavLink } from 'react-router-dom';
 import { motion } from 'motion/react';
 
@@ -12,7 +13,15 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        setScrolled(window.scrollY > 24);
+      });
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -21,9 +30,9 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
   const navItem = ({ isActive }: { isActive: boolean }) =>
     `${linkClass} ${isActive ? 'text-white' : ''}`;
 
-  return (
+  const shell = (
     <div
-      className="fixed left-0 right-0 top-0 z-50 flex justify-center px-3 pt-[max(0.85rem,env(safe-area-inset-top))] sm:px-5 sm:pt-4 pointer-events-none"
+      className="pointer-events-none fixed left-0 right-0 top-0 z-[200] flex justify-center px-3 pt-[max(0.85rem,env(safe-area-inset-top))] sm:px-5 sm:pt-4"
       role="presentation"
     >
       <nav
@@ -79,4 +88,7 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
       </nav>
     </div>
   );
+
+  if (typeof document === 'undefined') return null;
+  return createPortal(shell, document.body);
 }

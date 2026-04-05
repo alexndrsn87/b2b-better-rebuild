@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import LusionScene from './LusionScene';
@@ -41,6 +41,17 @@ type HeroProps = {
 
 export default function Hero({ onRequestPrototype }: HeroProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [disableHeroTilt, setDisableHeroTilt] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)').matches;
+  });
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)');
+    const sync = () => setDisableHeroTilt(mq.matches);
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const smoothX = useSpring(x, { stiffness: 80, damping: 24, mass: 0.9 });
@@ -60,7 +71,7 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
         <motion.div
           ref={ref}
           onMouseMove={(e) => {
-            if (!ref.current) return;
+            if (disableHeroTilt || !ref.current) return;
             const rect = ref.current.getBoundingClientRect();
             x.set((e.clientX - rect.left) / rect.width - 0.5);
             y.set((e.clientY - rect.top) / rect.height - 0.5);
@@ -73,14 +84,17 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="mx-auto max-w-5xl rounded-[2.5rem] glass-card p-12 sm:p-16 md:p-20"
-          style={{
-            rotateX,
-            rotateY,
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-            willChange: 'transform, opacity',
-            transformStyle: 'preserve-3d',
-          }}
+          style={
+            disableHeroTilt
+              ? undefined
+              : {
+                  rotateX,
+                  rotateY,
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                  transformStyle: 'preserve-3d',
+                }
+          }
         >
           <motion.p
             initial={{ opacity: 0, y: 8 }}

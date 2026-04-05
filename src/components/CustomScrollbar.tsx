@@ -67,23 +67,17 @@ export default function CustomScrollbar() {
   const { scrollYProgress } = useScroll();
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
-    restDelta: 0.001,
-  });
-
-  const trailProgress = useSpring(scrollYProgress, {
-    stiffness: 22,
+    stiffness: 320,
     damping: 38,
-    mass: 1.4,
-    restDelta: 0.0005,
+    mass: 0.75,
+    restDelta: 0.001,
   });
 
   const top = useTransform(smoothProgress, [0, 1], ['0%', '100%']);
   const y = useTransform(smoothProgress, [0, 1], ['0%', '-100%']);
 
-  const trailTop = useTransform(trailProgress, [0, 1], ['0%', '100%']);
-  const trailY = useTransform(trailProgress, [0, 1], ['0%', '-100%']);
+  const trailTop = top;
+  const trailY = y;
 
   const glowScale = useTransform(smoothProgress, [0, 0.5, 1], [0.95, 1.18, 0.95]);
   const glowOpacity = useTransform(smoothProgress, [0, 0.5, 1], [0.45, 0.85, 0.45]);
