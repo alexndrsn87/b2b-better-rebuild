@@ -25,7 +25,8 @@ body {
   font-size: 18px;
   line-height: 1.7;
   letter-spacing: -0.02em;
-  overflow-x: hidden;
+  /* clip avoids a scroll container; overflow-x:hidden on ancestors can break fixed nav backdrop-filter */
+  overflow-x: clip;
   -ms-overflow-style: none;
   scrollbar-width: none;
   text-rendering: optimizeLegibility;
@@ -116,11 +117,18 @@ blockquote {
   position: relative;
   z-index: 1;
   margin: 0 auto;
-  max-width: 56rem;
+  max-width: none;
   font-weight: 800;
   line-height: 1.02;
   letter-spacing: -0.045em;
   color: #fff;
+}
+
+/* One line per headline row from sm up (smaller type + nowrap) */
+@media (min-width: 640px) {
+  .hero-headline .hero-line-inner {
+    white-space: nowrap;
+  }
 }
 
 .hero-line {

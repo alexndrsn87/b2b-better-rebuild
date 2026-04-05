@@ -124,9 +124,9 @@ export default function HowItWorksSection() {
           <TextReveal text='From "yes please" to live website in five days.' />
         </h2>
 
-        {/* Desktop timeline rail */}
-        <div className="relative mb-10 hidden xl:mb-14 xl:block">
-          <div className="absolute left-[12%] right-[12%] top-[2.25rem] z-0 h-[3px] overflow-hidden rounded-full bg-white/[0.06]">
+        {/* Desktop timeline rail — reserve height so the track never overlaps the cards */}
+        <div className="relative z-0 mb-6 hidden min-h-[3.5rem] xl:mb-10 xl:block xl:min-h-[4.25rem]">
+          <div className="pointer-events-none absolute left-[12%] right-[12%] top-1/2 z-0 h-[3px] -translate-y-1/2 overflow-hidden rounded-full bg-white/[0.06]">
             <motion.div
               className="h-full rounded-full bg-gradient-to-r from-cyan-500/25 via-blue-500/35 to-violet-500/25"
               style={{ scaleX: railScale, opacity: railOpacity, transformOrigin: 'left center' }}

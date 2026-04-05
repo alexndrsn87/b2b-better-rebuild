@@ -4,6 +4,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import LusionScene from './LusionScene';
 import StatusQuoSection from './StatusQuoSection';
 import HowItWorksSection from './HowItWorksSection';
+import PrototypePromoSection from './PrototypePromoSection';
 
 const trustTickerStatements = [
   'No logins. Ever.',
@@ -99,8 +100,8 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
             Right now, someone is Googling you — what do they find?
           </motion.p>
 
-          <div className="hero-headline-glow mx-auto mt-8 max-w-[56rem]">
-            <h1 className="hero-headline font-heading text-[2.7rem] sm:text-6xl md:text-7xl lg:text-[4.2rem] xl:text-[4.65rem]">
+          <div className="hero-headline-glow mx-auto mt-8 max-w-[min(100%,72rem)] px-1 sm:px-0">
+            <h1 className="hero-headline font-heading text-[1.9rem] sm:text-[2.35rem] md:text-[2.65rem] lg:text-[2.95rem] xl:text-[3.2rem] 2xl:text-[3.45rem]">
               <span className="hero-line">
                 <span className="hero-line-inner">
                   You&apos;re <span className="hero-word-brilliant">brilliant</span> at what you do.
@@ -173,6 +174,7 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
     </section>
     <StatusQuoSection />
     <HowItWorksSection />
+    <PrototypePromoSection onRequestPrototype={onRequestPrototype} />
     </>
   );
 }

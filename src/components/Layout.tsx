@@ -31,7 +31,7 @@ export default function Layout({ children, onRequestPrototype }: LayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-navy)] text-[var(--color-text)] selection:bg-[var(--color-blue)] selection:text-white relative overflow-x-hidden">
+    <div className="min-h-screen bg-[var(--color-navy)] text-[var(--color-text)] selection:bg-[var(--color-blue)] selection:text-white relative">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <CustomScrollbar />
       <AmbientNoise />
@@ -73,7 +73,7 @@ export default function Layout({ children, onRequestPrototype }: LayoutProps) {
       <Navbar onRequestPrototype={onRequestPrototype} />
 
       {/* Main Content — offset for fixed float nav (safe area + bar + margin) */}
-      <main className="relative z-10 pt-[max(5.75rem,calc(env(safe-area-inset-top)+4.75rem))] sm:pt-[max(6.25rem,calc(env(safe-area-inset-top)+5.25rem))]">
+      <main className="relative z-10 overflow-x-hidden pt-[max(5.75rem,calc(env(safe-area-inset-top)+4.75rem))] sm:pt-[max(6.25rem,calc(env(safe-area-inset-top)+5.25rem))]">
         {children}
       </main>
     </div>
