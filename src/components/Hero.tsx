@@ -5,6 +5,7 @@ import LusionScene from './LusionScene';
 import StatusQuoSection from './StatusQuoSection';
 import HowItWorksSection from './HowItWorksSection';
 import PrototypePromoSection from './PrototypePromoSection';
+import WhatsAppHomeSection from './WhatsAppHomeSection';
 
 const trustTickerStatements = [
   'No logins. Ever.',
@@ -189,6 +190,7 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
     <StatusQuoSection />
     <HowItWorksSection />
     <PrototypePromoSection onRequestPrototype={onRequestPrototype} />
+    <WhatsAppHomeSection />
     </>
   );
 }
