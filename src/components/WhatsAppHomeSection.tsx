@@ -56,7 +56,7 @@ export default function WhatsAppHomeSection() {
         />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_min(38%,420px)] lg:items-center lg:gap-16">
+      <div className="relative mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_min(38%,420px)] lg:items-center lg:gap-14">
         <div>
           <motion.p
             className="mb-5 text-center font-heading text-[11px] font-semibold uppercase tracking-[0.28em] text-emerald-400/90 sm:mb-6 sm:text-left sm:text-xs"

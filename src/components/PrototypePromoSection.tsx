@@ -94,7 +94,7 @@ export default function PrototypePromoSection({ onRequestPrototype }: PrototypeP
           The £49 prototype
         </motion.p>
 
-        <div className="mx-auto mb-14 max-w-5xl text-center sm:mb-20 md:mb-24">
+        <div className="mx-auto mb-12 max-w-5xl text-center sm:mb-16 md:mb-20">
           <motion.h2
             className="font-heading text-[2.65rem] font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-[4.5rem] xl:leading-[1.05]"
             initial="hidden"
@@ -138,7 +138,7 @@ export default function PrototypePromoSection({ onRequestPrototype }: PrototypeP
               animate={{ opacity: [0.4, 0.75, 0.4], scale: [1, 1.15, 1] }}
               transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             />
-            <div className="relative space-y-4 font-sans text-base leading-relaxed text-gray-400 md:text-lg">
+            <div className="relative space-y-3.5 font-sans text-base leading-relaxed text-gray-400 md:text-lg">
               {paragraphs.map((p, i) => (
                 <motion.p
                   key={i}

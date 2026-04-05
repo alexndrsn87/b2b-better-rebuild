@@ -120,7 +120,7 @@ export default function HowItWorksSection() {
           How it works
         </motion.p>
 
-        <h2 className="mx-auto mb-16 max-w-4xl text-center font-heading text-3xl font-extrabold leading-[1.12] tracking-tight text-white sm:mb-20 sm:text-4xl md:text-5xl lg:text-[2.75rem] lg:leading-tight">
+        <h2 className="mx-auto mb-12 max-w-4xl text-center font-heading text-3xl font-extrabold leading-[1.12] tracking-tight text-white sm:mb-16 sm:text-4xl md:text-5xl lg:mb-14 lg:text-[2.75rem] lg:leading-tight">
           <TextReveal text='From "yes please" to live website in five days.' />
         </h2>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { CheckCircle2, Search } from 'lucide-react';
 import { TextReveal } from './TextReveal';
 
 const bodyBlocks = [
@@ -12,9 +13,57 @@ const bodyBlocks = [
   </>,
 ];
 
+function LocalSearchSketch() {
+  return (
+    <div className="relative overflow-hidden rounded-[1.35rem] border border-white/12 bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-5 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.45)] sm:p-6">
+      <div
+        className="pointer-events-none absolute -right-16 top-0 h-40 w-40 rounded-full bg-cyan-500/10 blur-[50px]"
+        aria-hidden
+      />
+      <div className="relative mb-4 flex items-center gap-2.5 border-b border-white/10 pb-3">
+        <Search className="h-4 w-4 shrink-0 text-gray-500" strokeWidth={2} aria-hidden />
+        <span className="font-sans text-[13px] text-gray-500">plumber near me</span>
+      </div>
+      <ul className="relative space-y-2.5" aria-hidden>
+        {[
+          { title: 'Pro Plumbing Co.', sub: 'Fast booking · clear pricing', strong: true },
+          { title: 'Town Heating Ltd', sub: 'Reviews · service areas', strong: true },
+          { title: '???', sub: 'No site · old Facebook page', strong: false },
+        ].map((row, i) => (
+          <motion.li
+            key={row.title}
+            initial={{ opacity: 0, x: 10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.12 + i * 0.08, duration: 0.4 }}
+            className={`flex items-start gap-3 rounded-xl px-3 py-2.5 ${
+              row.strong
+                ? 'bg-emerald-500/[0.09] ring-1 ring-emerald-400/15'
+                : 'bg-white/[0.03] opacity-[0.72] ring-1 ring-white/[0.06]'
+            }`}
+          >
+            {row.strong ? (
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400/90" strokeWidth={2} />
+            ) : (
+              <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-gray-600" />
+            )}
+            <div className="min-w-0">
+              <p className="font-heading text-sm font-semibold tracking-tight text-white">{row.title}</p>
+              <p className="font-sans text-xs text-gray-500">{row.sub}</p>
+            </div>
+          </motion.li>
+        ))}
+      </ul>
+      <p className="relative mt-4 font-sans text-[11px] leading-snug text-gray-600">
+        Two look legit. One doesn&apos;t show up the same way — guess who gets skipped.
+      </p>
+    </div>
+  );
+}
+
 export default function StatusQuoSection() {
   return (
-    <section className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] py-[var(--section-py)] px-4 sm:px-6 lg:px-8">
+    <section className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] px-4 py-[var(--section-py)] sm:px-6 lg:px-8">
       <div className="pointer-events-none absolute inset-0">
         <motion.div
           animate={{ opacity: [0.2, 0.38, 0.2], scale: [1, 1.06, 1] }}
@@ -35,7 +84,7 @@ export default function StatusQuoSection() {
         />
       </div>
 
-      <div className="relative mx-auto max-w-3xl">
+      <div className="relative mx-auto max-w-6xl">
         <motion.p
           className="mb-5 text-center font-heading text-[11px] font-semibold uppercase tracking-[0.28em] text-cyan-400/85 sm:text-xs"
           initial={{ opacity: 0, y: 10 }}
@@ -46,42 +95,48 @@ export default function StatusQuoSection() {
           Straight talk
         </motion.p>
 
-        <h2 className="mb-12 text-center font-heading text-3xl font-extrabold leading-[1.12] tracking-tight text-white sm:text-4xl md:text-[2.65rem] md:leading-tight">
+        <h2 className="mx-auto mb-12 max-w-4xl text-center font-heading text-3xl font-extrabold leading-[1.12] tracking-tight text-white sm:mb-14 sm:text-4xl md:text-[2.65rem] md:leading-tight">
           <TextReveal text="Every week without a proper website, you're losing work to someone who has one." />
         </h2>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 'some' }}
-          transition={{ duration: 0.55, delay: 0.08 }}
-          className="glass-card border-white/15 p-8 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.5)] md:p-12"
-        >
-          <div className="space-y-5 font-sans text-base leading-relaxed text-gray-400 md:text-lg">
-            {bodyBlocks.map((block, i) => (
-              <p key={i}>{block}</p>
-            ))}
+        <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+          <motion.div
+            className="glass-card border-white/15 p-7 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.5)] sm:p-9 md:p-10 lg:col-span-7"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 'some' }}
+            transition={{ duration: 0.55, delay: 0.06 }}
+          >
+            <div className="space-y-5 font-sans text-base leading-relaxed text-gray-400 md:text-lg">
+              {bodyBlocks.map((block, i) => (
+                <p key={i}>{block}</p>
+              ))}
 
-            <motion.p
-              className="relative border-l-2 border-[var(--color-hero-cta)]/70 py-1 pl-5 font-heading text-lg font-semibold leading-snug text-white md:text-xl"
-              initial={{ opacity: 0, x: -8 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15, duration: 0.4 }}
-            >
-              Guess which one doesn&apos;t get the call.
-            </motion.p>
+              <motion.p
+                className="relative border-l-2 border-[var(--color-hero-cta)]/70 py-1 pl-5 font-heading text-lg font-semibold leading-snug text-white md:text-xl"
+                initial={{ opacity: 0, x: -8 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.12, duration: 0.4 }}
+              >
+                Guess which one doesn&apos;t get the call.
+              </motion.p>
 
-            <p>
-              This isn&apos;t a criticism. Most local businesses have been meaning to sort their website for years.
-            </p>
-            <p>It always gets pushed back because it seems complicated, expensive, and slow.</p>
-            <p className="text-gray-300">
-              We built Built Better specifically to make sure{' '}
-              <span className="font-medium text-white">none of those things are true</span>.
-            </p>
+              <p>
+                This isn&apos;t a criticism. Most local businesses have been meaning to sort their website for years.
+              </p>
+              <p>It always gets pushed back because it seems complicated, expensive, and slow.</p>
+              <p className="text-gray-300">
+                We built Built Better specifically to make sure{' '}
+                <span className="font-medium text-white">none of those things are true</span>.
+              </p>
+            </div>
+          </motion.div>
+
+          <div className="lg:col-span-5 lg:pt-1">
+            <LocalSearchSketch />
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
