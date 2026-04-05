@@ -67,8 +67,8 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
               <NavLink to="/" end className={navItem}>
                 Home
               </NavLink>
-              <NavLink to="/what-we-do" className={navItem}>
-                What We Do
+              <NavLink to="/how-it-works" className={navItem}>
+                How it works
               </NavLink>
               <NavLink to="/pricing" className={navItem}>
                 Pricing

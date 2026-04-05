@@ -41,10 +41,10 @@ export default function WorkPage() {
               See your site in 24 hours — £49
             </button>
             <Link
-              to="/what-we-do"
+              to="/how-it-works"
               className="inline-flex items-center justify-center text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors py-3"
             >
-              How we work →
+              How it works →
             </Link>
           </div>
         </motion.div>

@@ -51,8 +51,8 @@ export default function Footer({ onRequestPrototype }: FooterProps) {
                 </Link>
               </li>
               <li>
-                <Link to="/what-we-do" className="hover:text-blue-400 transition-colors">
-                  What We Do
+                <Link to="/how-it-works" className="hover:text-blue-400 transition-colors">
+                  How it works
                 </Link>
               </li>
               <li>

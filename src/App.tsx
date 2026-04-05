@@ -4,12 +4,12 @@
  */
 
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Footer from './components/Footer';
 import PrototypeModal from './components/PrototypeModal';
 import HomePage from './pages/HomePage';
-import WhatWeDoPage from './pages/WhatWeDoPage';
+import HowItWorksPage from './pages/HowItWorksPage';
 import PricingPage from './pages/PricingPage';
 import WhatsAppPage from './pages/WhatsAppPage';
 import FaqPage from './pages/FaqPage';
@@ -37,7 +37,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LayoutWrapper />}>
           <Route index element={<HomePage />} />
-          <Route path="what-we-do" element={<WhatWeDoPage />} />
+          <Route path="what-we-do" element={<Navigate to="/how-it-works" replace />} />
+          <Route path="how-it-works" element={<HowItWorksPage />} />
           <Route path="pricing" element={<PricingPage />} />
           <Route path="whatsapp" element={<WhatsAppPage />} />
           <Route path="faq" element={<FaqPage />} />
