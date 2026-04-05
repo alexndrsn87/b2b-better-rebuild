@@ -54,7 +54,7 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: 'spring', stiffness: 200, damping: 22 }}
       style={glassStyle}
-      className="fixed top-[max(1.75rem,calc(env(safe-area-inset-top)+0.75rem))] left-1/2 z-[100] flex w-[94%] max-w-6xl -translate-x-1/2 flex-wrap items-center justify-between gap-3 rounded-full px-4 py-3 sm:px-7 sm:py-4 md:flex-nowrap"
+      className="fixed top-[max(1.75rem,calc(env(safe-area-inset-top)+0.75rem))] left-1/2 z-[100] flex w-[94%] max-w-7xl -translate-x-1/2 flex-wrap items-center justify-between gap-3 rounded-full px-4 py-3 sm:px-6 sm:py-4 md:flex-nowrap"
       aria-label="Main navigation"
     >
       <Link to="/" className="flex min-w-0 shrink-0 items-center gap-2.5 sm:gap-3">
@@ -70,7 +70,7 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
         </span>
       </Link>
 
-      <div className="order-3 flex w-full items-center justify-center gap-5 font-medium sm:gap-8 md:order-none md:w-auto md:gap-10">
+      <div className="order-3 flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 font-medium sm:gap-x-6 md:order-none md:w-auto md:gap-x-7 lg:gap-x-9">
         <NavLink to="/" end className={navLinkClass}>
           Home
         </NavLink>
@@ -79,6 +79,9 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
         </NavLink>
         <NavLink to="/pricing" className={navLinkClass}>
           Pricing
+        </NavLink>
+        <NavLink to="/about" className={navLinkClass}>
+          About
         </NavLink>
       </div>
 

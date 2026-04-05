@@ -65,6 +65,11 @@ export default function Footer({ onRequestPrototype }: FooterProps) {
                   Pricing
                 </Link>
               </li>
+              <li>
+                <Link to="/about" className="hover:text-blue-400 transition-colors">
+                  About
+                </Link>
+              </li>
             </ul>
           </div>
 

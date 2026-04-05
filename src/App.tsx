@@ -15,6 +15,7 @@ import WhatsAppPage from './pages/WhatsAppPage';
 import FaqPage from './pages/FaqPage';
 import TermsPage from './pages/TermsPage';
 import WorkPage from './pages/WorkPage';
+import AboutPage from './pages/AboutPage';
 
 function LayoutWrapper() {
   const [prototypeOpen, setPrototypeOpen] = useState(false);
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="faq" element={<FaqPage />} />
           <Route path="terms" element={<TermsPage />} />
           <Route path="work" element={<WorkPage />} />
+          <Route path="about" element={<AboutPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
