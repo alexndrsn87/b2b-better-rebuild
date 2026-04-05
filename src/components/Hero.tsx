@@ -6,6 +6,7 @@ import StatusQuoSection from './StatusQuoSection';
 import HowItWorksSection from './HowItWorksSection';
 import PrototypePromoSection from './PrototypePromoSection';
 import WhatsAppHomeSection from './WhatsAppHomeSection';
+import PricingOverviewSection from './PricingOverviewSection';
 
 const trustTickerStatements = [
   'No logins. Ever.',
@@ -191,6 +192,7 @@ export default function Hero({ onRequestPrototype }: HeroProps) {
     <HowItWorksSection />
     <PrototypePromoSection onRequestPrototype={onRequestPrototype} />
     <WhatsAppHomeSection />
+    <PricingOverviewSection />
     </>
   );
 }
