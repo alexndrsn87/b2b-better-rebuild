@@ -5,12 +5,12 @@ import { TextReveal } from './TextReveal';
 
 const bodyBlocks = [
   <>
-    &quot;It&apos;s not dramatic. It&apos;s just maths.&quot;
+    It&apos;s not dramatic. It&apos;s just maths.
   </>,
   <>
-    &quot;Someone in your town Googles &quot;plumber near me&quot; or &quot;best beautician in your town&quot;. They find
+    Someone in your town Googles &quot;plumber near me&quot; or &quot;best beautician in your town&quot;. They find
     three results. Two have proper websites. One has nothing, or a site that looks like it was built when people still
-    had BlackBerries.&quot;
+    had BlackBerries.
   </>,
 ];
 
@@ -143,27 +143,27 @@ export default function StatusQuoSection() {
             viewport={{ once: true, amount: 'some' }}
             transition={{ duration: 0.55, delay: 0.06 }}
           >
-            <div className="space-y-5 font-sans text-base leading-relaxed text-gray-400 md:text-lg">
+            <div className="space-y-5 font-heading text-lg font-semibold leading-relaxed text-white md:text-xl">
               {bodyBlocks.map((block, i) => (
                 <p key={i}>{block}</p>
               ))}
 
               <motion.p
-                className="relative border-l-2 border-[var(--color-hero-cta)]/70 py-1 pl-5 font-heading text-lg font-semibold leading-snug text-white md:text-xl"
+                className="relative py-1 font-heading text-lg font-semibold leading-snug text-white md:text-xl"
                 initial={{ opacity: 0, x: -8 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.12, duration: 0.4 }}
               >
-                &quot;You already know which one doesn&apos;t get the call.&quot;
+                You already know which one doesn&apos;t get the call.
               </motion.p>
 
               <p>
-                &quot;Most local businesses have been meaning to sort their website for years. It always gets pushed back
-                because it seems complicated, expensive, and slow to deliver.&quot;
+                Most local businesses have been meaning to sort their website for years. It always gets pushed back
+                because it seems complicated, expensive, and slow to deliver.
               </p>
-              <p className="text-gray-300">
-                None of those <span className="font-medium text-white">things are true anymore. We fixed all three!</span>
+              <p>
+                None of those things are true anymore. We fixed all three!
               </p>
             </div>
           </motion.div>
