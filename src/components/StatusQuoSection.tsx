@@ -99,7 +99,7 @@ function LocalSearchSketch() {
 
 export default function StatusQuoSection() {
   return (
-    <section className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] px-4 py-[var(--section-py)] sm:px-6 lg:px-8">
+    <section className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] px-4 pb-14 pt-[var(--section-py)] sm:px-6 sm:pb-16 lg:px-8">
       <div className="pointer-events-none absolute inset-0">
         <motion.div
           animate={{ opacity: [0.2, 0.38, 0.2], scale: [1, 1.06, 1] }}
@@ -163,7 +163,7 @@ export default function StatusQuoSection() {
                 because it seems complicated, expensive, and slow to deliver.&quot;
               </p>
               <p className="text-gray-300">
-                None of those <span className="font-medium text-white">things are true anymore.</span>
+                None of those <span className="font-medium text-white">things are true anymore. We fixed all three!</span>
               </p>
             </div>
           </motion.div>
@@ -173,9 +173,6 @@ export default function StatusQuoSection() {
           </div>
         </div>
 
-        <p className="mt-12 text-center font-heading text-2xl font-extrabold text-white sm:text-3xl">
-          We fixed all three.
-        </p>
       </div>
     </section>
   );
