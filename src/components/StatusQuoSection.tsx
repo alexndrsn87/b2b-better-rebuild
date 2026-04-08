@@ -5,11 +5,12 @@ import { TextReveal } from './TextReveal';
 
 const bodyBlocks = [
   <>
-    It&apos;s not dramatic. It&apos;s just <span className="text-white/90">maths</span>.
+    &quot;It&apos;s not dramatic. It&apos;s just maths.&quot;
   </>,
   <>
-    Someone in your town Googles &ldquo;plumber near me&rdquo; or &ldquo;best beautician in [town]&rdquo;. They find
-    three results. Two have proper websites. One has nothing, or a site that looks like it was built in 2009.
+    &quot;Someone in your town Googles &quot;plumber near me&quot; or &quot;best beautician in your town&quot;. They find
+    three results. Two have proper websites. One has nothing, or a site that looks like it was built when people still
+    had BlackBerries.&quot;
   </>,
 ];
 
@@ -39,7 +40,7 @@ function LocalSearchSketch() {
             className={`flex items-start gap-3 rounded-xl px-3 py-2.5 ${
               row.strong
                 ? 'bg-emerald-500/[0.09] ring-1 ring-emerald-400/15'
-                : 'bg-white/[0.03] opacity-[0.72] ring-1 ring-white/[0.06]'
+                : 'border-l-2 border-rose-400/35 bg-white/[0.03] opacity-40 ring-1 ring-rose-400/20'
             }`}
           >
             {row.strong ? (
@@ -54,9 +55,6 @@ function LocalSearchSketch() {
           </motion.li>
         ))}
       </ul>
-      <p className="relative mt-4 font-sans text-[11px] leading-snug text-gray-600">
-        Two look legit. One doesn&apos;t show up the same way — guess who gets skipped.
-      </p>
     </div>
   );
 }
@@ -119,24 +117,30 @@ export default function StatusQuoSection() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.12, duration: 0.4 }}
               >
-                Guess which one doesn&apos;t get the call.
+                &quot;You already know which one doesn&apos;t get the call.&quot;
               </motion.p>
 
               <p>
-                This isn&apos;t a criticism. Most local businesses have been meaning to sort their website for years.
+                &quot;Most local businesses have been meaning to sort their website for years. It always gets pushed back
+                because it seems complicated, expensive, and slow to deliver.&quot;
               </p>
-              <p>It always gets pushed back because it seems complicated, expensive, and slow.</p>
               <p className="text-gray-300">
-                We built Built Better specifically to make sure{' '}
-                <span className="font-medium text-white">none of those things are true</span>.
+                None of those <span className="font-medium text-white">things are true anymore.</span>
               </p>
             </div>
           </motion.div>
 
           <div className="lg:col-span-5 lg:pt-1">
             <LocalSearchSketch />
+            <p className="mt-3 px-1 font-sans text-[11px] leading-snug text-gray-600 sm:text-xs">
+              46% of all Google searches are looking for local information. Most result in a decision within 24 hours.
+            </p>
           </div>
         </div>
+
+        <p className="mt-12 text-center font-heading text-2xl font-extrabold text-white sm:text-3xl">
+          We fixed all three.
+        </p>
       </div>
     </section>
   );
