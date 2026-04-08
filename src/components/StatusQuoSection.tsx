@@ -16,20 +16,46 @@ const bodyBlocks = [
 
 function LocalSearchSketch() {
   return (
-    <div className="relative overflow-hidden rounded-[1.35rem] border border-white/12 bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-5 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.45)] sm:p-6">
+    <div className="glass-card h-full border-white/15 p-7 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.5)] sm:p-9 md:p-10">
       <div
         className="pointer-events-none absolute -right-16 top-0 h-40 w-40 rounded-full bg-cyan-500/10 blur-[50px]"
         aria-hidden
       />
-      <div className="relative mb-4 flex items-center gap-2.5 border-b border-white/10 pb-3">
-        <Search className="h-4 w-4 shrink-0 text-gray-500" strokeWidth={2} aria-hidden />
-        <span className="font-sans text-[13px] text-gray-500">plumber near me</span>
+      <div className="relative mb-4 flex items-center gap-3 rounded-xl border border-white/20 bg-white/[0.12] px-3 py-2.5">
+        <Search className="h-4 w-4 shrink-0 text-gray-400" strokeWidth={2} aria-hidden />
+        <span className="min-w-0 flex-1 truncate font-sans text-[13px] text-gray-200">plumber near me</span>
+        <span className="shrink-0 font-heading text-sm font-bold tracking-tight" aria-hidden>
+          <span className="text-blue-400">G</span>
+          <span className="text-red-400">o</span>
+          <span className="text-yellow-400">o</span>
+          <span className="text-blue-400">g</span>
+          <span className="text-green-400">l</span>
+          <span className="text-red-400">e</span>
+        </span>
       </div>
       <ul className="relative space-y-2.5" aria-hidden>
         {[
-          { title: 'Pro Plumbing Co.', sub: 'Fast booking · clear pricing', strong: true },
-          { title: 'Town Heating Ltd', sub: 'Reviews · service areas', strong: true },
-          { title: '???', sub: 'No site · old Facebook page', strong: false },
+          {
+            title: 'Pro Plumbing Co.',
+            rating: '★★★★★',
+            reviews: '4.9 (47 reviews)',
+            sub: 'Plumber · Open now · proPlumbing.co.uk',
+            strong: true,
+          },
+          {
+            title: 'Town Heating Ltd',
+            rating: '★★★★☆',
+            reviews: '4.6 (23 reviews)',
+            sub: 'Plumber · Service areas listed · townheating.co.uk',
+            strong: true,
+          },
+          {
+            title: '???',
+            rating: '',
+            reviews: 'No reviews',
+            sub: 'Plumber · No website · Old Facebook page',
+            strong: false,
+          },
         ].map((row, i) => (
           <motion.li
             key={row.title}
@@ -39,22 +65,34 @@ function LocalSearchSketch() {
             transition={{ delay: 0.12 + i * 0.08, duration: 0.4 }}
             className={`flex items-start gap-3 rounded-xl px-3 py-2.5 ${
               row.strong
-                ? 'bg-emerald-500/[0.09] ring-1 ring-emerald-400/15'
+                ? 'border-l-2 border-emerald-400/30 bg-emerald-500/[0.08] ring-1 ring-emerald-400/15'
                 : 'border-l-2 border-rose-400/35 bg-white/[0.03] opacity-40 ring-1 ring-rose-400/20'
             }`}
           >
-            {row.strong ? (
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400/90" strokeWidth={2} />
-            ) : (
-              <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-gray-600" />
-            )}
+            <span
+              className={`mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full ${
+                row.strong ? 'bg-emerald-400' : 'bg-gray-500'
+              }`}
+            />
             <div className="min-w-0">
               <p className="font-heading text-sm font-semibold tracking-tight text-white">{row.title}</p>
-              <p className="font-sans text-xs text-gray-500">{row.sub}</p>
+              <div className="mt-0.5 flex items-center gap-2 text-xs">
+                {row.rating ? <span className="text-amber-300">{row.rating}</span> : null}
+                <span className="text-gray-500">{row.reviews}</span>
+                {!row.strong ? (
+                  <span className="rounded-full border border-rose-400/40 bg-rose-500/12 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-rose-300">
+                    No website
+                  </span>
+                ) : null}
+              </div>
+              <p className="mt-1 font-sans text-xs text-gray-500">{row.sub}</p>
             </div>
           </motion.li>
         ))}
       </ul>
+      <p className="relative mt-4 text-center font-sans text-[11px] leading-snug text-gray-600">
+        Two look legit. One doesn&apos;t show up the same way — guess who gets skipped.
+      </p>
     </div>
   );
 }
@@ -97,9 +135,9 @@ export default function StatusQuoSection() {
           <TextReveal text="Every week without a proper website, you're losing work to someone who has one." />
         </h2>
 
-        <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+        <div className="grid items-stretch gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
           <motion.div
-            className="glass-card border-white/15 p-7 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.5)] sm:p-9 md:p-10 lg:col-span-7"
+            className="glass-card h-full border-white/15 p-7 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.5)] sm:p-9 md:p-10 lg:col-span-7"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 'some' }}
@@ -132,9 +170,6 @@ export default function StatusQuoSection() {
 
           <div className="lg:col-span-5 lg:pt-1">
             <LocalSearchSketch />
-            <p className="mt-3 px-1 font-sans text-[11px] leading-snug text-gray-600 sm:text-xs">
-              46% of all Google searches are looking for local information. Most result in a decision within 24 hours.
-            </p>
           </div>
         </div>
 
