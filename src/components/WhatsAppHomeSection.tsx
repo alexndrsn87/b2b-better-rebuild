@@ -8,7 +8,10 @@ const lines = [
   'New phone number? WhatsApp us.',
   'New prices? WhatsApp us.',
   'New photos from a job you’re proud of? WhatsApp us.',
-  'in no time!!',
+];
+
+const followOn = [
+  'We turn most updates around quickly — often the same day for simple changes — so you’re not stuck in a queue.',
   'No tickets. No dashboards. No “please allow 5–7 business days.” Just a message to a real person who will sort it.',
 ];
 
@@ -79,7 +82,7 @@ export default function WhatsAppHomeSection() {
             className="glass-card border-emerald-500/15 p-7 shadow-[0_24px_70px_-24px_rgba(16,185,129,0.18)] sm:p-9 md:p-10"
           >
             <div className="space-y-4 font-sans text-base leading-relaxed text-gray-400 md:text-[1.05rem]">
-              {lines.slice(0, 3).map((line, i) => (
+              {lines.map((line, i) => (
                 <motion.p
                   key={line}
                   initial={{ opacity: 0, x: -8 }}
@@ -91,24 +94,18 @@ export default function WhatsAppHomeSection() {
                   {line}
                 </motion.p>
               ))}
-              <motion.p
-                initial={{ opacity: 0, y: 6 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2, duration: 0.45 }}
-                className="border-l-2 border-emerald-400/50 py-1 pl-4 font-medium text-white"
-              >
-                {lines[3]}
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 6 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.28, duration: 0.45 }}
-                className="text-gray-400"
-              >
-                {lines[4]}
-              </motion.p>
+              {followOn.map((line, i) => (
+                <motion.p
+                  key={line}
+                  initial={{ opacity: 0, y: 6 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.15 + i * 0.06, duration: 0.45 }}
+                  className={i === 0 ? 'text-gray-300' : 'text-gray-400'}
+                >
+                  {line}
+                </motion.p>
+              ))}
             </div>
 
             <motion.div
