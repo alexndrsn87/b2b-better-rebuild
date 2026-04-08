@@ -20,8 +20,9 @@ const paragraphs = [
   'If you love it and want to proceed, the £49 comes off your setup fee.',
   'If you don’t want to go ahead, you keep the prototype link for seven days — and we part as friends.',
   'For less than a tank of diesel, you get to see exactly what you’d be buying.',
-  'We think that’s the fairest deal in web design.',
 ];
+
+const fairestDealLine = 'We think that’s the fairest deal in web design.';
 
 export default function PrototypePromoSection({ onRequestPrototype }: PrototypePromoSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -43,7 +44,7 @@ export default function PrototypePromoSection({ onRequestPrototype }: PrototypeP
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] py-[var(--section-py)] px-4 sm:px-6 lg:px-8"
+      className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] px-4 pb-10 pt-[var(--section-py)] sm:px-6 sm:pb-12 lg:px-8"
       onPointerMove={(e) => {
         if (!sectionRef.current) return;
         const rect = sectionRef.current.getBoundingClientRect();
@@ -151,6 +152,15 @@ export default function PrototypePromoSection({ onRequestPrototype }: PrototypeP
                   {p}
                 </motion.p>
               ))}
+              <motion.p
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 'some' }}
+                transition={{ delay: 0.08 + paragraphs.length * 0.04, duration: 0.45 }}
+                className="font-heading text-lg font-semibold leading-snug text-orange-200/95 md:text-xl"
+              >
+                {fairestDealLine}
+              </motion.p>
             </div>
 
             <motion.div
@@ -186,14 +196,14 @@ export default function PrototypePromoSection({ onRequestPrototype }: PrototypeP
               style={{ perspective: '1000px' }}
             >
               <motion.div
-                className="relative overflow-hidden rounded-[1.5rem] border border-white/15 bg-gradient-to-br from-white/[0.09] to-white/[0.02] p-1 shadow-[0_28px_80px_-24px_rgba(234,88,12,0.35)] backdrop-blur-xl"
+                className="relative overflow-visible rounded-[1.5rem] border border-white/15 bg-gradient-to-br from-white/[0.09] to-white/[0.02] p-1 shadow-[0_28px_80px_-24px_rgba(234,88,12,0.35)] backdrop-blur-xl"
                 style={{
                   rotateX: cardRotateX,
                   rotateY: cardRotateY,
                   transformStyle: 'preserve-3d',
                 }}
               >
-                <div className="relative rounded-[1.35rem] bg-[#070b14]/90 p-5 md:p-6">
+                <div className="relative overflow-hidden rounded-[1.35rem] bg-[#070b14]/90 p-5 pt-6 md:p-6 md:pt-7">
                   <div className="mb-4 flex items-center gap-2 border-b border-white/10 pb-4">
                     <div className="flex gap-1.5">
                       <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
@@ -216,11 +226,11 @@ export default function PrototypePromoSection({ onRequestPrototype }: PrototypeP
                     </div>
                   </div>
                   <motion.div
-                    className="absolute -right-2 -top-2 flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-3 py-2 text-xs font-bold text-white shadow-lg shadow-orange-500/30 ring-2 ring-white/25"
-                    animate={{ y: [0, -4, 0] }}
+                    className="absolute right-3 top-3 z-10 flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-3.5 py-2 text-sm font-bold text-white shadow-[0_8px_28px_-4px_rgba(234,88,12,0.55)] ring-2 ring-white/35"
+                    animate={{ y: [0, -3, 0] }}
                     transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
                   >
-                    <Sparkles className="h-3.5 w-3.5" />
+                    <Sparkles className="h-4 w-4 shrink-0" />
                     £49 · 24h
                   </motion.div>
                 </div>

@@ -7,8 +7,9 @@ import { TextReveal } from './TextReveal';
 const subBlocks = [
   'No hidden costs. No hourly rates. No surprise invoices.',
   'One clear monthly fee that covers your site, your hosting, your security, and your updates. Forever.',
-  'And if you pay annually, your rate is locked in for life.',
 ];
+
+const annualLockLine = 'And if you pay annually, your rate is locked in for life.';
 
 const included = ['Your website', 'Hosting', 'Security', 'Updates on WhatsApp'];
 
@@ -23,7 +24,7 @@ export default function PricingOverviewSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] py-[var(--section-py)] px-4 sm:px-6 lg:px-8"
+      className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] px-4 pb-[var(--section-py)] pt-10 sm:px-6 sm:pt-12 lg:px-8"
       onPointerMove={(e) => {
         if (!sectionRef.current) return;
         const rect = sectionRef.current.getBoundingClientRect();
@@ -86,11 +87,20 @@ export default function PricingOverviewSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.06 * i, duration: 0.42 }}
-                  className={i === 0 ? 'font-medium text-gray-300' : i === 1 ? 'text-gray-300' : 'text-gray-400'}
+                  className={i === 0 ? 'font-medium text-gray-300' : 'text-gray-300'}
                 >
                   {block}
                 </motion.p>
               ))}
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.18, duration: 0.42 }}
+                className="font-heading text-lg font-semibold leading-snug text-white md:text-xl"
+              >
+                {annualLockLine}
+              </motion.p>
             </div>
 
             <motion.div
@@ -118,7 +128,7 @@ export default function PricingOverviewSection() {
           viewport={{ once: true, amount: 'some' }}
           transition={{ duration: 0.55, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="relative overflow-hidden rounded-[1.75rem] border border-white/12 bg-gradient-to-br from-sky-500/15 via-white/[0.04] to-blue-600/10 p-6 shadow-[0_28px_80px_-28px_rgba(37,99,235,0.35)] sm:p-8">
+          <div className="glass-card border-sky-500/15 p-7 shadow-[0_24px_70px_-24px_rgba(37,99,235,0.2)] sm:p-9 md:p-10">
             <p className="mb-1 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-sky-300/80">
               What you pay
             </p>

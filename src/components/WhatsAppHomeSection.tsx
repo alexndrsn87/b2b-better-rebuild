@@ -8,7 +8,7 @@ const lines = [
   'New phone number? WhatsApp us.',
   'New prices? WhatsApp us.',
   'New photos from a job you’re proud of? WhatsApp us.',
-  'We’ll have it updated within 48 hours.',
+  'in no time!!',
   'No tickets. No dashboards. No “please allow 5–7 business days.” Just a message to a real person who will sort it.',
 ];
 
@@ -23,7 +23,7 @@ export default function WhatsAppHomeSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] py-[var(--section-py)] px-4 sm:px-6 lg:px-8"
+      className="relative z-10 overflow-hidden border-t border-white/[0.06] bg-[var(--color-navy)] px-4 pb-10 pt-10 sm:px-6 sm:pb-12 sm:pt-12 lg:px-8"
       onPointerMove={(e) => {
         if (!sectionRef.current) return;
         const rect = sectionRef.current.getBoundingClientRect();
@@ -164,7 +164,7 @@ export default function WhatsAppHomeSection() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.55, duration: 0.35 }}
               >
-                On it — you’ll see it live within 48 hours. I’ll ping you here when it’s done.
+                of course — just updated! Should be on the site now.
               </motion.div>
               <motion.div
                 className="ml-auto max-w-[70%] rounded-2xl rounded-tr-md bg-emerald-600/25 px-3.5 py-2.5 text-gray-200 ring-1 ring-emerald-400/20"
