@@ -19,7 +19,7 @@ export function TextReveal({ text, className = "" }: { text: string, className?:
       }}
     >
       {words.map((word, i) => (
-        <span key={i} className="overflow-hidden inline-flex">
+        <span key={i} className="inline-flex overflow-hidden pb-[0.14em]">
           <motion.span
             variants={{
               hidden: { y: "100%", opacity: 0, rotate: 5 },
@@ -28,7 +28,7 @@ export function TextReveal({ text, className = "" }: { text: string, className?:
                 transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] }
               }
             }}
-            className="inline-block"
+            className="inline-block leading-normal"
           >
             {word}
           </motion.span>

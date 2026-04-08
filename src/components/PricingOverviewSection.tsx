@@ -68,7 +68,7 @@ export default function PricingOverviewSection() {
             Pricing
           </motion.p>
 
-          <h2 className="mb-10 text-center font-heading text-[1.65rem] font-extrabold leading-[1.15] tracking-tight text-white sm:mb-12 sm:text-left sm:text-3xl md:text-4xl lg:text-[2.35rem] lg:leading-[1.12]">
+          <h2 className="mb-10 text-center font-heading text-[1.65rem] font-extrabold leading-[1.22] tracking-tight text-white sm:mb-12 sm:text-left sm:text-3xl sm:leading-[1.2] md:text-4xl lg:text-[2.35rem] lg:leading-[1.18]">
             <TextReveal text="Professional. Managed. Fixed price. From £49 a month." />
           </h2>
 
