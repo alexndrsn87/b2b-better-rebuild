@@ -143,7 +143,7 @@ export default function StatusQuoSection() {
             viewport={{ once: true, amount: 'some' }}
             transition={{ duration: 0.55, delay: 0.06 }}
           >
-            <div className="space-y-5 font-heading text-lg font-semibold leading-relaxed text-white md:text-xl">
+            <div className="space-y-5 font-sans text-base leading-relaxed text-gray-400 md:text-lg">
               {bodyBlocks.map((block, i) => (
                 <p key={i}>{block}</p>
               ))}
@@ -162,7 +162,7 @@ export default function StatusQuoSection() {
                 Most local businesses have been meaning to sort their website for years. It always gets pushed back
                 because it seems complicated, expensive, and slow to deliver.
               </p>
-              <p>
+              <p className="font-heading text-lg font-semibold leading-snug text-white md:text-xl">
                 None of those things are true anymore. We fixed all three!
               </p>
             </div>
