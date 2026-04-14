@@ -314,15 +314,6 @@ export default function HowItWorksPage() {
 
       <div className="relative mx-auto max-w-7xl">
         <header className="mx-auto mb-20 max-w-4xl text-center md:mb-28">
-          <motion.p
-            className="mb-5 font-heading text-[11px] font-semibold uppercase tracking-[0.28em] text-cyan-400/90 sm:text-xs"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45 }}
-          >
-            How it works
-          </motion.p>
-
           <h1 className="mb-8 font-heading text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[3.5rem]">
             <span className="sr-only">Simple. Fast. Permanent.</span>
             <span aria-hidden className="flex flex-col items-center gap-2 sm:gap-3">

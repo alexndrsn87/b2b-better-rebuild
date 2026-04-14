@@ -104,14 +104,6 @@ export default function AboutPage() {
 
       <div className="relative z-10 mx-auto max-w-7xl space-y-24 px-4 sm:space-y-28 sm:px-6 md:space-y-32 lg:px-8">
         <header className="mx-auto max-w-4xl text-center">
-          <motion.p
-            className="mb-5 font-heading text-[11px] font-semibold uppercase tracking-[0.28em] text-orange-400/90 sm:text-xs"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45 }}
-          >
-            About
-          </motion.p>
           <h1 className="mb-10 font-heading text-[1.85rem] font-extrabold leading-[1.12] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.1rem] lg:leading-[1.08]">
             <TextReveal text="Here’s the truth about Built Better." />
           </h1>

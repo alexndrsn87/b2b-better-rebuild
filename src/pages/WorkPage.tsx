@@ -20,9 +20,6 @@ export default function WorkPage() {
           </Link>
         </motion.p>
 
-        <p className="text-[11px] sm:text-xs tracking-[0.28em] uppercase font-heading text-blue-400/90 mb-5">
-          Proof
-        </p>
         <h1 className="text-5xl md:text-6xl font-heading font-extrabold mb-10 text-white leading-tight">
           <TextReveal text="Our work" />
         </h1>

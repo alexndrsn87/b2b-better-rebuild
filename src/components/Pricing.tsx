@@ -899,7 +899,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
         </section>
 
         {/* Add-ons */}
-        <section aria-labelledby="pricing-addons-heading" className="mx-auto max-w-xl space-y-4">
+        <section aria-labelledby="pricing-addons-heading" className="mx-auto max-w-3xl space-y-6">
           <div className="text-center">
             <h2 id="pricing-addons-heading" className={sectionTitleHome}>
               Need something extra?
@@ -908,16 +908,29 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
               Bolt on any time — no package games. Ask if you need something that isn&rsquo;t listed.
             </p>
           </div>
-          <div className={`divide-y divide-white/[0.06] overflow-hidden ${glassSky}`}>
-            {addOns.map((row) => (
-              <div key={row.label} className="flex flex-col gap-0.5 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                <span className="text-base text-gray-300">{row.label}</span>
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 sm:justify-end sm:text-right">
-                  <span className="text-base font-medium tabular-nums text-white">{row.price}</span>
-                  <span className="text-sm text-gray-500">{row.notes}</span>
-                </div>
-              </div>
-            ))}
+          <div className={`overflow-hidden ${glassSky}`}>
+            <ul className="divide-y divide-white/[0.07]">
+              {addOns.map((row) => (
+                <li
+                  key={row.label}
+                  className="transition-[background] duration-200 hover:bg-white/[0.03] motion-reduce:transition-none"
+                >
+                  <div className="px-5 py-5 sm:px-7 sm:py-6">
+                    <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                      <h3 className="min-w-0 max-w-[min(100%,28rem)] font-heading text-lg font-semibold leading-snug tracking-tight text-white sm:text-xl">
+                        {row.label}
+                      </h3>
+                      <span className="shrink-0 font-heading text-xl font-bold tabular-nums tracking-tight text-cyan-200 sm:text-2xl">
+                        {row.price}
+                      </span>
+                    </div>
+                    <p className="mt-3 text-sm leading-relaxed text-gray-500 sm:mt-3.5 sm:text-base sm:leading-relaxed">
+                      {row.notes}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 

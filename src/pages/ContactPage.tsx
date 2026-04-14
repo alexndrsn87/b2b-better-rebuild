@@ -228,13 +228,6 @@ export default function ContactPage() {
 
         <header className="relative mb-14 md:mb-20">
           <ContactHeroGraphic />
-          <motion.p
-            className="mb-4 font-heading text-[11px] font-semibold uppercase tracking-[0.28em] text-emerald-400/90 sm:text-xs"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            Contact
-          </motion.p>
           <h1 className="relative z-10 mb-6 max-w-[22ch] font-heading text-[1.85rem] font-extrabold leading-[1.12] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.15rem]">
             <TextReveal text="Let's talk. No commitment required." />
           </h1>

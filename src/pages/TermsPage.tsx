@@ -101,9 +101,6 @@ export default function TermsPage() {
         </motion.p>
 
         <div className="mb-12 md:mb-14">
-          <p className="text-[11px] sm:text-xs tracking-[0.28em] uppercase font-heading text-blue-400/90 mb-5">
-            Legal
-          </p>
           <h1 className="text-5xl md:text-6xl font-heading font-extrabold mb-5 text-white leading-tight">
             <TextReveal text="Terms of Service" />
           </h1>

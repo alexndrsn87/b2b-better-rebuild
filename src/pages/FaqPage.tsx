@@ -267,13 +267,6 @@ export default function FaqPage() {
         </motion.p>
 
         <header className="mb-10 text-center md:mb-14">
-          <motion.p
-            className="mb-4 font-heading text-[11px] font-semibold uppercase tracking-[0.28em] text-cyan-400/90 sm:text-xs"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            FAQ
-          </motion.p>
           <h1 className="mb-6 font-heading text-[1.85rem] font-extrabold leading-[1.12] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3rem]">
             <TextReveal text="The questions people actually ask us." />
           </h1>

@@ -32,9 +32,6 @@ export default function WhatsAppPage() {
         </motion.p>
 
         <div className="text-center mb-14 md:mb-16">
-          <p className="text-[11px] sm:text-xs tracking-[0.28em] uppercase font-heading text-emerald-400/90 mb-5">
-            Contact
-          </p>
           <h1 className="text-5xl md:text-6xl font-heading font-extrabold mb-8 text-white leading-tight">
             <TextReveal text="WhatsApp us" />
           </h1>
