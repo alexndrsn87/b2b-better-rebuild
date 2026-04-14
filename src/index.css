@@ -85,6 +85,39 @@ blockquote {
 
 }
 
+/* Pricing: agency vs Built Better — Lusion-style frosted slab + soft cyan rim */
+.pricing-agency-compare-shell {
+  position: relative;
+  border-radius: 1.5rem;
+  isolation: isolate;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.1) 0%, rgba(56, 189, 248, 0.06) 38%, rgba(15, 23, 42, 0.72) 100%),
+    rgba(7, 10, 18, 0.55);
+  backdrop-filter: blur(40px) saturate(220%);
+  -webkit-backdrop-filter: blur(40px) saturate(220%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.12),
+    0 28px 70px -28px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.pricing-agency-compare-shell::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(120% 80% at 50% -20%, rgba(34, 211, 238, 0.18), transparent 55%);
+  opacity: 0.9;
+}
+
+.pricing-agency-compare-inner {
+  position: relative;
+  z-index: 1;
+}
+
 /* Pricing page hero: exactly two rows — fluid type + nowrap so narrow viewports don’t reflow to 3+ lines */
 .pricing-hero-title {
   font-size: clamp(0.75rem, calc(0.38rem + 2.45vw), 3rem);

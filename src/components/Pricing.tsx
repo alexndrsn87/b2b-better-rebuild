@@ -29,6 +29,16 @@ type PricingProps = {
   onRequestPrototype?: () => void;
 };
 
+/** Match home sections (PricingOverviewSection, StatusQuoSection): glass + type scale */
+const glassSky = 'glass-card border-sky-500/15 shadow-[0_24px_70px_-24px_rgba(37,99,235,0.2)]';
+const glassStrong = 'glass-card border-white/15 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.5)]';
+const glassPad = 'p-7 sm:p-9 md:p-10';
+const eyebrowHome = 'font-heading text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-400/90 sm:text-xs';
+const sectionTitleHome =
+  'font-heading text-[1.65rem] font-extrabold leading-[1.22] tracking-tight text-white sm:text-3xl sm:leading-[1.2] md:text-4xl lg:text-[2.35rem] lg:leading-[1.18]';
+const sectionLeadHome = 'mx-auto mt-3 max-w-xl font-sans text-base leading-relaxed text-gray-400 sm:text-lg';
+const bodyHome = 'font-sans text-base leading-relaxed text-gray-400 md:text-lg';
+
 const contrastRows: { feature: string; bb: boolean; agency: boolean }[] = [
   { feature: 'Fixed monthly price', bb: true, agency: false },
   { feature: 'See it before you commit', bb: true, agency: false },
@@ -46,7 +56,6 @@ const planIntros = [
     title: 'Presence',
     Icon: MapPin,
     accent: 'from-sky-500/20 to-cyan-500/10',
-    border: 'border-white/12',
     body: (
       <>
         <p>
@@ -67,7 +76,6 @@ const planIntros = [
     Icon: PhoneForwarded,
     popular: true,
     accent: 'from-orange-500/25 to-amber-500/12',
-    border: 'border-orange-400/50',
     body: (
       <>
         <p>
@@ -86,7 +94,6 @@ const planIntros = [
     title: 'Growth',
     Icon: TrendingUp,
     accent: 'from-violet-500/20 to-fuchsia-500/10',
-    border: 'border-violet-400/25',
     body: (
       <>
         <p>
@@ -186,14 +193,16 @@ function CellContent({ value, hero }: { value: Cell; hero: boolean }) {
     return <span className={hero ? 'text-orange-100' : 'text-rose-200/80'}>{value}</span>;
   }
   return (
-    <span className={`text-sm leading-snug ${hero ? 'text-orange-50' : 'text-gray-300'}`}>{value}</span>
+    <span className={`text-base leading-snug ${hero ? 'text-orange-50' : 'text-gray-300'}`}>{value}</span>
   );
 }
 
-const TABLE_COL = 'min-w-[7.5rem] max-w-[10.5rem] px-2 py-3 align-top text-center sm:min-w-[8.5rem] sm:max-w-none sm:px-3 sm:py-3.5';
-const TABLE_HERO = `${TABLE_COL} bg-orange-500/[0.1]`;
+const TABLE_COL =
+  'max-w-[14rem] min-w-[7.5rem] px-3 py-4 align-top text-center text-base leading-snug [overflow-wrap:anywhere] sm:min-w-[9rem] sm:max-w-none sm:px-4';
+/** Active column body cells only — subtle vertical band (not used in thead; thead is one unified bar). */
+const TABLE_HERO = `${TABLE_COL} bg-orange-500/[0.08]`;
 const TABLE_ROW_HEAD =
-  'w-[32%] min-w-[9.5rem] max-w-[220px] px-3 py-3 text-left text-xs font-medium leading-snug text-gray-300 sm:w-auto sm:max-w-[14rem] sm:py-3.5 sm:text-sm';
+  'w-[34%] min-w-[10rem] max-w-[240px] px-4 py-4 text-left text-sm font-medium leading-snug text-gray-300 sm:w-[30%] sm:max-w-[16rem] sm:text-base';
 
 type PlanKey = 'presence' | 'active' | 'growth';
 
@@ -238,12 +247,8 @@ function BuildYourPackage() {
   return (
     <section className="space-y-6">
       <div className="text-center">
-        <h2 className="font-heading text-xl font-extrabold text-white sm:text-2xl md:text-3xl">
-          Build your package
-        </h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-gray-400 sm:text-base">
-          Pick your plan, bolt on the extras you want, and see your total.
-        </p>
+        <h2 className={sectionTitleHome}>Build your package</h2>
+        <p className={sectionLeadHome}>Pick your plan, bolt on the extras you want, and see your total.</p>
       </div>
 
       <div className="mx-auto max-w-lg space-y-5">
@@ -273,7 +278,7 @@ function BuildYourPackage() {
         </div>
 
         {/* Plan selector */}
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+        <div className={`overflow-hidden p-5 ${glassSky}`}>
           <p className="mb-3 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
             Base plan
           </p>
@@ -303,7 +308,7 @@ function BuildYourPackage() {
         </div>
 
         {/* Recurring extras */}
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+        <div className={`overflow-hidden ${glassSky}`}>
           <p className="px-5 pb-2 pt-5 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
             Subscription extras
           </p>
@@ -316,12 +321,12 @@ function BuildYourPackage() {
               return (
                 <div key={id} className="flex items-center justify-between gap-4 px-5 py-4">
                   <div className="min-w-0 flex-1">
-                    <label htmlFor={id} className="cursor-pointer font-sans text-sm font-medium text-gray-200">
+                    <label htmlFor={id} className="cursor-pointer font-sans text-base font-medium text-gray-200">
                       {label}
                     </label>
-                    <p className="text-xs text-gray-500">{sub}</p>
+                    <p className="text-sm text-gray-500">{sub}</p>
                   </div>
-                  <span className={`shrink-0 text-sm tabular-nums font-medium ${checked ? 'text-emerald-300' : 'text-gray-500'}`}>
+                  <span className={`shrink-0 text-base tabular-nums font-medium ${checked ? 'text-emerald-300' : 'text-gray-500'}`}>
                     {displayPrice}
                   </span>
                   <Toggle id={id} checked={checked} onChange={set} />
@@ -332,19 +337,19 @@ function BuildYourPackage() {
         </div>
 
         {/* Annual extras */}
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+        <div className={`overflow-hidden ${glassSky}`}>
           <p className="px-5 pb-2 pt-5 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
             One-off annual add-on
           </p>
           <div className="divide-y divide-white/[0.06]">
             <div className="flex items-center justify-between gap-4 px-5 py-4">
               <div className="min-w-0 flex-1">
-                <label htmlFor="domain" className="cursor-pointer font-sans text-sm font-medium text-gray-200">
+                <label htmlFor="domain" className="cursor-pointer font-sans text-base font-medium text-gray-200">
                   Domain sourcing & management
                 </label>
-                <p className="text-xs text-gray-500">We source, register & renew — you never think about it</p>
+                <p className="text-sm text-gray-500">We source, register & renew — you never think about it</p>
               </div>
-              <span className={`shrink-0 text-sm tabular-nums font-medium ${domainManagement ? 'text-emerald-300' : 'text-gray-500'}`}>
+              <span className={`shrink-0 text-base tabular-nums font-medium ${domainManagement ? 'text-emerald-300' : 'text-gray-500'}`}>
                 +£35/yr
               </span>
               <Toggle id="domain" checked={domainManagement} onChange={setDomainManagement} />
@@ -355,7 +360,7 @@ function BuildYourPackage() {
         {/* Total */}
         <motion.div
           layout
-          className="rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-cyan-500/5 px-6 py-5"
+          className="rounded-[1.5rem] border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-cyan-500/5 px-6 py-5 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.45)] backdrop-blur-sm"
         >
           <div className="flex items-end justify-between gap-4">
             <div>
@@ -415,7 +420,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
     <section
       ref={rootRef}
       id="pricing"
-      className="relative z-10 overflow-x-hidden py-[var(--section-py)]"
+      className="relative z-10 overflow-x-hidden bg-[var(--color-navy)] py-[var(--section-py)]"
       onPointerMove={(e) => {
         if (!rootRef.current) return;
         const rect = rootRef.current.getBoundingClientRect();
@@ -448,173 +453,235 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl space-y-16 px-4 sm:space-y-20 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl space-y-16 px-4 sm:space-y-20 sm:px-6 lg:px-8">
         {/* Hero */}
-        <header className="mx-auto max-w-2xl text-center">
-          <motion.p
-            className="mb-3 font-heading text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-400/90 sm:mb-3.5 sm:text-xs sm:tracking-[0.24em]"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            Clarity first
-          </motion.p>
-          <h1 className="pricing-hero-title font-heading text-white">
-            <motion.span
-              className="pricing-hero-title-line px-1 sm:px-2"
-              initial={{ opacity: 0, y: 14 }}
+        <header className="mx-auto max-w-4xl text-center">
+          <div className={`${glassSky} ${glassPad}`}>
+            <motion.p
+              className={`mb-5 sm:mb-6 ${eyebrowHome}`}
+              initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.4 }}
             >
-              One clear price. Everything included.
-            </motion.span>
-            <motion.span
-              className="pricing-hero-title-line mt-2.5 px-1 sm:mt-3 sm:px-2"
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            >
-              No surprises.{' '}
+              Clarity first
+            </motion.p>
+            <h1 className="pricing-hero-title font-heading text-white">
               <motion.span
-                className="text-orange-400"
-                initial={{ opacity: 0, y: 6 }}
+                className="pricing-hero-title-line px-1 sm:px-2"
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               >
-                Ever.
+                One clear price. Everything included.
               </motion.span>
-            </motion.span>
-          </h1>
-          <motion.p
-            className="mx-auto mt-7 max-w-xl font-sans text-[0.98rem] font-medium leading-relaxed text-gray-300/95 sm:mt-8 sm:text-[1.05rem] md:text-lg"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.45 }}
-          >
-            No hourly rates. No hosting invoices. No &lsquo;that&rsquo;ll cost extra.&rsquo; Just one monthly fee that
-            covers your site, your hosting, your security, and your updates. Permanently.
-          </motion.p>
+              <motion.span
+                className="pricing-hero-title-line mt-2.5 px-1 sm:mt-3 sm:px-2"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              >
+                No surprises.{' '}
+                <motion.span
+                  className="text-orange-400"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  Ever.
+                </motion.span>
+              </motion.span>
+            </h1>
+            <motion.p
+              className="mx-auto mt-8 max-w-xl font-sans text-base font-medium leading-relaxed text-gray-200 sm:mt-10 md:text-lg"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.45 }}
+            >
+              No hourly rates. No hosting invoices. No &lsquo;that&rsquo;ll cost extra.&rsquo; Just one monthly fee that
+              covers your site, your hosting, your security, and your updates. Permanently.
+            </motion.p>
+          </div>
         </header>
 
         {/* Contrast */}
         <section aria-labelledby="pricing-contrast-heading" className="space-y-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2
-              id="pricing-contrast-heading"
-              className="font-heading text-xl font-extrabold tracking-tight text-white sm:text-2xl md:text-3xl"
-            >
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 id="pricing-contrast-heading" className={sectionTitleHome}>
               What you&rsquo;re{' '}
               <span className="bg-gradient-to-r from-rose-200 via-orange-200 to-amber-100 bg-clip-text text-transparent">
                 not
               </span>{' '}
               paying for
             </h2>
-            <p className="mt-3 text-xs font-medium uppercase tracking-[0.16em] text-gray-500 sm:text-sm sm:normal-case sm:tracking-normal sm:text-gray-400">
+            <p className="mt-3 font-sans text-base text-gray-500 sm:text-lg sm:text-gray-400">
               Most local businesses are paying for three things when they think they&rsquo;re paying for one.
             </p>
           </div>
 
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
-            <div className="space-y-4 font-sans text-base leading-relaxed text-gray-400">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-14">
+            <div className="mx-auto flex max-w-xl flex-col justify-center space-y-6 font-sans text-lg font-normal leading-relaxed text-gray-300 md:max-w-none md:text-xl">
               <p>
                 A traditional agency charges a build fee. Then a hosting fee. Then an hourly rate every time you want
                 something changed. And the agency that was so attentive pre-sale? Gone. You&rsquo;re in a ticket system
                 now. Add it up over 12 months and the average local business website costs between{' '}
-                <span className="text-gray-300">£3,000 and £10,000 in year one</span>. For a site that might not even
-                work properly on a phone.
+                <span className="font-medium text-white">£3,000 and £10,000 in year one</span>. For a site that might not
+                even work properly on a phone.
               </p>
-              <p className="text-gray-300">
+              <p className="font-medium text-white">
                 Built Better wraps everything — design, hosting, security, updates, support — into one fixed monthly fee.
                 So you always know what you&rsquo;re paying. And you never deal with a ticket system.
               </p>
             </div>
 
-            <div className="mx-auto flex w-full max-w-sm flex-col gap-3 lg:mx-0 lg:max-w-none" aria-hidden>
-              {([Receipt, Server, Timer] as const).map((Icon, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5"
-                >
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-gray-400">
-                    <Icon className="h-4 w-4" strokeWidth={1.75} />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-heading text-xs font-semibold text-white/90 sm:text-sm">
-                      {i === 0 ? 'Build invoice' : i === 1 ? 'Hosting renewal' : 'Hourly change'}
-                    </p>
-                    <p className="text-[10px] text-gray-500 sm:text-xs">Separate bill · extra login</p>
-                  </div>
-                  <Ban className="h-4 w-4 shrink-0 text-rose-400/75" />
+            <div className="mx-auto flex w-full max-w-md flex-col lg:mx-0 lg:max-w-none" aria-hidden>
+              <div className={`flex flex-col overflow-hidden ${glassStrong} p-0`}>
+                <div className="divide-y divide-white/[0.08]">
+                  {([Receipt, Server, Timer] as const).map((Icon, i) => (
+                    <div key={i} className="flex gap-3 px-5 py-4 sm:px-6 sm:py-4">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/[0.08] text-gray-400">
+                        <Icon className="h-5 w-5" strokeWidth={1.75} />
+                      </div>
+                      <div className="flex min-w-0 flex-1 items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="font-heading text-base font-semibold tracking-tight text-white sm:text-lg">
+                            {i === 0 ? 'Build invoice' : i === 1 ? 'Hosting renewal' : 'Hourly change'}
+                          </p>
+                          <p className="mt-0.5 text-sm text-gray-500 sm:text-[0.9375rem]">
+                            Separate bill · extra login
+                          </p>
+                        </div>
+                        <Ban className="mt-0.5 h-5 w-5 shrink-0 text-rose-400/80" aria-hidden />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-              <div className="rounded-xl border border-emerald-500/35 bg-gradient-to-b from-emerald-500/12 to-cyan-500/8 px-4 py-3 text-center">
-                <FileStack className="mx-auto h-7 w-7 text-emerald-300" strokeWidth={1.5} />
-                <p className="mt-1.5 font-heading text-sm font-bold text-white">One fee. All of it.</p>
-                <p className="text-[10px] text-emerald-200/75 sm:text-xs">Design · host · secure · WhatsApp</p>
+                <div className="border-t border-emerald-500/25 bg-gradient-to-b from-emerald-500/[0.14] to-cyan-500/[0.06] px-5 py-6 text-center sm:px-6">
+                  <FileStack className="mx-auto h-8 w-8 text-emerald-300" strokeWidth={1.5} />
+                  <p className="mt-3 font-heading text-lg font-bold tracking-tight text-white sm:text-xl">
+                    One fee. All of it.
+                  </p>
+                  <p className="mt-1 text-sm font-medium text-emerald-200/90 sm:text-base">
+                    Design · host · secure · WhatsApp
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[480px] border-collapse text-left text-sm">
-                <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="px-4 py-3 pl-4 sm:pl-5" />
-                    <th className="px-4 py-3 font-heading font-bold text-white">Built Better</th>
-                    <th className="px-4 py-3 pr-4 font-heading font-bold text-gray-400 sm:pr-5">Traditional agency</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {contrastRows.map((row) => (
-                    <tr key={row.feature} className="border-b border-white/[0.06]">
-                      <th scope="row" className="px-4 py-3 pl-4 text-left font-normal text-gray-300 sm:pl-5">
-                        {row.feature}
+          <div className="mx-auto w-full max-w-4xl px-0 sm:px-2">
+            <div className="pricing-agency-compare-shell overflow-hidden">
+              <div className="pricing-agency-compare-inner overflow-x-auto">
+                <table className="w-full min-w-[420px] border-separate border-spacing-0 text-left">
+                  <thead>
+                    <tr className="border-b border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-transparent">
+                      <th scope="col" className="w-[46%] px-5 py-6 text-left sm:w-[44%] sm:px-7 sm:py-7">
+                        <span className="sr-only">Feature</span>
                       </th>
-                      <td className="px-4 py-3">
-                        <div className="flex justify-center sm:justify-start">
-                          {row.bb ? (
-                            <Check className="h-5 w-5 text-emerald-400" strokeWidth={2.5} aria-label="Yes" />
-                          ) : (
-                            <X className="h-5 w-5 text-rose-400/80" strokeWidth={2.25} aria-label="No" />
-                          )}
-                        </div>
+                      <th
+                        scope="col"
+                        className="border-l border-white/[0.08] px-4 py-6 text-center sm:px-6 sm:py-7"
+                      >
+                        <span className="font-heading text-lg font-extrabold tracking-tight text-white sm:text-xl">
+                          Built Better
+                        </span>
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-l border-white/[0.08] px-4 py-6 text-center sm:px-6 sm:py-7"
+                      >
+                        <span className="font-heading text-base font-semibold tracking-tight text-gray-400 sm:text-lg">
+                          Traditional agency
+                        </span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {contrastRows.map((row) => (
+                      <tr
+                        key={row.feature}
+                        className="border-b border-white/[0.05] transition-colors hover:bg-white/[0.03]"
+                      >
+                        <th
+                          scope="row"
+                          className="px-5 py-4 text-left text-base font-normal leading-snug text-gray-300 sm:px-7 sm:py-5 sm:text-[1.05rem]"
+                        >
+                          {row.feature}
+                        </th>
+                        <td className="border-l border-white/[0.06] px-3 py-4 text-center sm:px-5 sm:py-5">
+                          <div className="flex justify-center">
+                            {row.bb ? (
+                              <Check
+                                className="h-6 w-6 text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.45)]"
+                                strokeWidth={2.35}
+                                aria-label="Yes"
+                              />
+                            ) : (
+                              <X
+                                className="h-6 w-6 text-rose-400/90 drop-shadow-[0_0_10px_rgba(251,113,133,0.35)]"
+                                strokeWidth={2.25}
+                                aria-label="No"
+                              />
+                            )}
+                          </div>
+                        </td>
+                        <td className="border-l border-white/[0.06] px-3 py-4 text-center sm:px-5 sm:py-5">
+                          <div className="flex justify-center">
+                            {row.agency ? (
+                              <Check
+                                className="h-6 w-6 text-emerald-400/55 drop-shadow-[0_0_8px_rgba(52,211,153,0.25)]"
+                                strokeWidth={2.5}
+                                aria-label="Yes"
+                              />
+                            ) : (
+                              <X
+                                className="h-6 w-6 text-rose-400/85 drop-shadow-[0_0_10px_rgba(251,113,133,0.35)]"
+                                strokeWidth={2.25}
+                                aria-label="No"
+                              />
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                    <tr className="border-t border-cyan-400/15 bg-gradient-to-r from-cyan-500/[0.07] via-white/[0.02] to-rose-500/[0.06]">
+                      <th
+                        scope="row"
+                        className="px-5 py-5 text-left text-base font-semibold text-gray-100 sm:px-7 sm:text-lg"
+                      >
+                        Setup cost
+                      </th>
+                      <td className="border-l border-white/[0.08] px-3 py-5 text-center sm:px-5">
+                        <span className="font-heading text-base font-bold tabular-nums text-cyan-200 drop-shadow-[0_0_14px_rgba(34,211,238,0.35)] sm:text-lg">
+                          None — ever
+                        </span>
                       </td>
-                      <td className="px-4 py-3 pr-4 sm:pr-5">
-                        <div className="flex justify-center sm:justify-start">
-                          {row.agency ? (
-                            <Check className="h-5 w-5 text-emerald-400/45" strokeWidth={2.5} aria-label="Yes" />
-                          ) : (
-                            <X className="h-5 w-5 text-rose-400/75" strokeWidth={2.25} aria-label="No" />
-                          )}
-                        </div>
+                      <td className="border-l border-white/[0.08] px-3 py-5 text-center sm:px-5">
+                        <span className="font-heading text-base tabular-nums text-gray-400 sm:text-lg">
+                          £2,000 – £8,000
+                        </span>
                       </td>
                     </tr>
-                  ))}
-                  <tr className="border-t border-white/10 bg-white/[0.02]">
-                    <th scope="row" className="px-4 py-3.5 pl-4 text-left font-medium text-gray-200 sm:pl-5">
-                      Setup cost
-                    </th>
-                    <td className="px-4 py-3.5 font-heading font-semibold tabular-nums text-emerald-300">
-                      None — ever
-                    </td>
-                    <td className="px-4 py-3.5 pr-4 font-heading tabular-nums text-gray-400 sm:pr-5">
-                      £2,000 – £8,000
-                    </td>
-                  </tr>
-                  <tr className="bg-white/[0.02]">
-                    <th scope="row" className="px-4 py-3.5 pl-4 text-left font-medium text-gray-200 sm:pl-5">
-                      Typical monthly cost
-                    </th>
-                    <td className="px-4 py-3.5 font-heading font-semibold tabular-nums text-emerald-300">
-                      From £49/mo
-                    </td>
-                    <td className="px-4 py-3.5 pr-4 font-heading tabular-nums text-gray-400 sm:pr-5">
-                      £100–£500+/mo
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    <tr className="bg-white/[0.02] transition-colors hover:bg-white/[0.04]">
+                      <th
+                        scope="row"
+                        className="rounded-bl-2xl px-5 py-5 text-left text-base font-semibold text-gray-100 sm:px-7 sm:text-lg"
+                      >
+                        Typical monthly cost
+                      </th>
+                      <td className="border-l border-white/[0.08] px-3 py-5 text-center sm:px-5">
+                        <span className="font-heading text-base font-bold tabular-nums text-cyan-200 drop-shadow-[0_0_14px_rgba(34,211,238,0.35)] sm:text-lg">
+                          From £49/mo
+                        </span>
+                      </td>
+                      <td className="rounded-br-2xl border-l border-white/[0.08] px-3 py-5 text-center sm:px-5">
+                        <span className="font-heading text-base tabular-nums text-gray-400 sm:text-lg">
+                          £100–£500+/mo
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </section>
@@ -622,46 +689,53 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
         {/* Plan intros */}
         <section aria-labelledby="pricing-journey-heading" className="space-y-8">
           <div className="text-center">
-            <h2
-              id="pricing-journey-heading"
-              className="font-heading text-xl font-extrabold text-white sm:text-2xl md:text-3xl"
-            >
+            <h2 id="pricing-journey-heading" className={sectionTitleHome}>
               Three ways to grow online
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm text-gray-400 sm:text-base">
-              From showing up, to winning enquiries, to owning your patch — pick the stage that fits.
-            </p>
+            <p className={sectionLeadHome}>From showing up, to winning enquiries, to owning your patch — pick the stage that fits.</p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 pt-6 md:gap-10 lg:grid-cols-3 lg:gap-8">
             {planIntros.map((plan) => (
-              <article
-                key={plan.id}
-                className={`relative flex flex-col overflow-hidden rounded-2xl border ${plan.border} bg-gradient-to-b from-white/[0.06] to-white/[0.02] p-6 shadow-lg md:p-7`}
-              >
-                <div
-                  className={`pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-gradient-to-br ${plan.accent} blur-2xl opacity-90`}
-                />
+              <div key={plan.id} className="relative">
                 {plan.popular ? (
-                  <span className="relative mb-4 inline-flex w-fit items-center gap-1.5 rounded-full border border-orange-400/40 bg-orange-500/20 px-3 py-1 font-heading text-[10px] font-bold uppercase tracking-wider text-orange-100">
-                    <Sparkles className="h-3 w-3" aria-hidden />
-                    Most popular
-                  </span>
-                ) : null}
-                <div className="relative mb-4 flex items-center gap-3">
                   <div
-                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/12 bg-white/[0.07] ${
-                      plan.popular ? 'text-orange-200' : 'text-cyan-200'
-                    }`}
+                    className="pointer-events-none absolute left-1/2 top-0 z-30 -translate-x-1/2 -translate-y-[42%] sm:-translate-y-[48%]"
+                    aria-hidden
                   >
-                    <plan.Icon className="h-6 w-6" strokeWidth={1.6} aria-hidden />
+                    <div className="flex rotate-[-6deg] items-center gap-2 rounded-full border border-orange-200/55 bg-gradient-to-b from-orange-400 via-amber-500 to-amber-700 px-4 py-2.5 shadow-[0_10px_40px_-4px_rgba(234,88,12,0.65),inset_0_1px_0_rgba(255,255,255,0.35)] ring-[3px] ring-orange-400/25">
+                      <Sparkles className="h-4 w-4 shrink-0 text-white drop-shadow-sm" strokeWidth={2} aria-hidden />
+                      <span className="font-heading text-[11px] font-extrabold uppercase tracking-[0.18em] text-white drop-shadow-sm sm:text-xs sm:tracking-[0.22em]">
+                        Most popular
+                      </span>
+                    </div>
                   </div>
-                  <h3 className="font-heading text-lg font-extrabold text-white md:text-xl">{plan.title}</h3>
-                </div>
-                <div className="relative flex flex-1 flex-col gap-3 text-sm leading-relaxed text-gray-400">
-                  {plan.body}
-                </div>
-              </article>
+                ) : null}
+                <article
+                  className={`relative flex h-full flex-col overflow-hidden ${glassStrong} p-8 sm:p-9 md:p-10 ring-1 ${
+                    plan.id === 'active' ? 'ring-orange-400/50' : plan.id === 'growth' ? 'ring-violet-400/25' : 'ring-white/12'
+                  }`}
+                >
+                  <div
+                    className={`pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-gradient-to-br ${plan.accent} blur-2xl opacity-90`}
+                  />
+                  <div className="relative z-10 mb-6 flex flex-col items-center text-center">
+                    <div
+                      className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.08] shadow-inner sm:h-16 sm:w-16 ${
+                        plan.popular ? 'text-orange-200' : plan.id === 'growth' ? 'text-violet-200' : 'text-cyan-200'
+                      }`}
+                    >
+                      <plan.Icon className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={1.5} aria-hidden />
+                    </div>
+                    <h3 className="font-heading text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+                      {plan.title}
+                    </h3>
+                  </div>
+                  <div className="relative z-10 flex flex-1 flex-col gap-4 text-left text-base leading-relaxed text-gray-400 md:text-lg">
+                    {plan.body}
+                  </div>
+                </article>
+              </div>
             ))}
           </div>
         </section>
@@ -670,14 +744,14 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
         <BuildYourPackage />
 
         {/* Annual lock */}
-        <section className="relative overflow-hidden rounded-2xl border border-orange-400/25 bg-gradient-to-br from-orange-500/[0.12] to-[var(--color-navy)] p-6 md:p-10">
+        <section className="relative overflow-hidden rounded-[1.5rem] border border-orange-400/25 bg-gradient-to-br from-orange-500/[0.12] to-[var(--color-navy)] p-6 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.45)] backdrop-blur-sm md:p-10">
           <div className="pointer-events-none absolute -right-16 top-0 h-56 w-56 rounded-full bg-orange-400/12 blur-[80px]" />
           <div className="relative grid gap-8 lg:grid-cols-[1fr_280px] lg:items-center">
             <div>
-              <h2 className="mb-4 font-heading text-xl font-extrabold text-white sm:text-2xl md:text-3xl">
+              <h2 className={`mb-4 ${sectionTitleHome}`}>
                 Pay once a year. <span className="text-orange-200">Lock your rate in forever.</span>
               </h2>
-              <div className="space-y-4 text-sm leading-relaxed text-orange-50/90 md:text-base">
+              <div className="space-y-4 font-sans text-base leading-relaxed text-orange-50/90 md:text-lg">
                 <p>
                   Annual subscribers pay for ten months and get twelve. But the more important benefit is this:{' '}
                   <strong className="font-semibold text-white">your rate never goes up.</strong>
@@ -687,13 +761,13 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
                   30 days&rsquo; notice. Annual subscribers are immune to this — permanently — as long as they remain
                   subscribed.
                 </p>
-                <p className="text-sm text-orange-100/70">
+                <p className="text-base text-orange-100/70">
                   This is our way of rewarding the clients who back us early.
                 </p>
               </div>
             </div>
             <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/20 px-4 py-3">
+              <div className="flex items-center gap-3 rounded-xl border border-white/12 bg-black/20 px-4 py-3 backdrop-blur-sm">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-rose-300/90">
                   <TrendingUp className="h-5 w-5" strokeWidth={1.75} aria-hidden />
                 </div>
@@ -703,7 +777,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
                 </div>
                 <ArrowUpRight className="h-4 w-4 shrink-0 text-rose-300/50" aria-hidden />
               </div>
-              <div className="flex items-center gap-3 rounded-xl border border-orange-300/35 bg-orange-500/10 px-4 py-3">
+              <div className="flex items-center gap-3 rounded-xl border border-orange-300/35 bg-orange-500/10 px-4 py-3 backdrop-blur-sm">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-400/25 text-orange-100">
                   <Lock className="h-5 w-5" strokeWidth={1.75} aria-hidden />
                 </div>
@@ -720,33 +794,43 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
         {/* Full comparison */}
         <section aria-labelledby="pricing-full-heading" className="space-y-6">
           <div className="text-center">
-            <h2 id="pricing-full-heading" className="font-heading text-xl font-extrabold text-white sm:text-2xl md:text-3xl">
+            <h2 id="pricing-full-heading" className={sectionTitleHome}>
               Compare plans in full
             </h2>
-            <p className="mx-auto mt-2 max-w-lg text-sm text-gray-500">
+            <p className="mx-auto mt-3 max-w-lg font-sans text-base text-gray-500 sm:text-lg">
               Scroll sideways on smaller screens. <span className="text-gray-400">★ Active</span> is what most
               people choose.
             </p>
           </div>
 
-          <div className="-mx-4 rounded-2xl border border-white/10 bg-white/[0.025] sm:mx-0">
-            <div className="overflow-x-auto overscroll-x-contain px-4 pb-1 pt-1 sm:px-0">
-              <table className="w-full min-w-[640px] border-collapse sm:min-w-0">
+          <div className={`-mx-4 sm:mx-0 ${glassSky}`}>
+            <div className="overflow-x-auto overscroll-x-contain px-4 pb-2 pt-2 sm:px-5 sm:pb-3 sm:pt-3">
+              <table className="w-full min-w-[640px] border-separate border-spacing-0 sm:min-w-0">
                 <thead>
-                  <tr className="border-b border-white/10 bg-[var(--color-navy)]">
-                    <th className={`${TABLE_ROW_HEAD} bg-[var(--color-navy)] py-4 align-bottom`} />
-                    <th className={`${TABLE_COL} bg-[var(--color-navy)] pb-3 pt-4 font-heading text-xs font-bold text-white sm:text-sm`}>
+                  <tr>
+                    <th
+                      scope="col"
+                      className={`${TABLE_ROW_HEAD} rounded-tl-xl border-b border-white/[0.1] bg-white/[0.04] align-middle sm:rounded-tl-2xl`}
+                    />
+                    <th
+                      scope="col"
+                      className="border-b border-white/[0.1] bg-white/[0.04] px-3 py-5 text-center align-middle font-heading text-lg font-extrabold tracking-tight text-white sm:px-4 sm:text-xl"
+                    >
                       Presence
                     </th>
                     <th
-                      className={`${TABLE_HERO} pb-3 pt-4 font-heading text-xs font-bold text-orange-100 sm:text-sm`}
+                      scope="col"
+                      className="border-b border-white/[0.1] bg-white/[0.06] px-3 py-5 text-center align-middle font-heading text-lg font-extrabold tracking-tight text-white sm:px-4 sm:text-xl"
                     >
-                      <span className="text-orange-400" aria-hidden>
-                        ★{' '}
+                      <span className="mr-1.5 inline-block text-orange-400" aria-hidden>
+                        ★
                       </span>
-                      Active
+                      <span className="text-orange-100">Active</span>
                     </th>
-                    <th className={`${TABLE_COL} bg-[var(--color-navy)] pb-3 pt-4 font-heading text-xs font-bold text-white sm:text-sm`}>
+                    <th
+                      scope="col"
+                      className="rounded-tr-xl border-b border-white/[0.1] bg-white/[0.04] px-3 py-5 text-center align-middle font-heading text-lg font-extrabold tracking-tight text-white sm:rounded-tr-2xl sm:px-4 sm:text-xl"
+                    >
                       Growth
                     </th>
                   </tr>
@@ -754,46 +838,49 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
                 <tbody>
                   {detailRows.map((row) => (
                     <tr key={row.label} className="border-b border-white/[0.06]">
-                      <th scope="row" className={`${TABLE_ROW_HEAD} bg-[var(--color-navy)]`}>
+                      <th scope="row" className={`${TABLE_ROW_HEAD} bg-white/[0.03]`}>
                         {row.label}
                       </th>
                       {row.cells.map((cell, ci) => {
                         const isHero = ci === 1;
                         return (
-                          <td key={ci} className={isHero ? TABLE_HERO : `${TABLE_COL} bg-transparent`}>
+                          <td key={ci} className={isHero ? `${TABLE_HERO} border-x border-orange-400/10` : `${TABLE_COL} bg-white/[0.02]`}>
                             <CellContent value={cell} hero={isHero} />
                           </td>
                         );
                       })}
                     </tr>
                   ))}
-                  <tr className="border-t border-white/10">
-                    <th scope="row" className={`${TABLE_ROW_HEAD} bg-[var(--color-navy)] py-4 font-medium text-gray-200`}>
+                  <tr className="border-t border-white/[0.1]">
+                    <th
+                      scope="row"
+                      className={`${TABLE_ROW_HEAD} rounded-bl-xl bg-white/[0.04] py-5 font-medium text-gray-200 sm:rounded-bl-2xl`}
+                    >
                       Next step
                     </th>
-                    <td className={`${TABLE_COL} py-4`}>
+                    <td className={`${TABLE_COL} bg-white/[0.02] py-5`}>
                       <button
                         type="button"
                         onClick={() => onRequestPrototype?.()}
-                        className="w-full rounded-lg border border-white/15 bg-white/[0.06] py-2 text-xs font-semibold text-white hover:border-cyan-400/35 sm:text-sm"
+                        className="w-full rounded-xl border border-white/15 bg-white/[0.06] px-2 py-2.5 text-sm font-semibold text-white transition-colors hover:border-cyan-400/35 sm:text-base"
                       >
                         Get started →
                       </button>
                     </td>
-                    <td className={`${TABLE_HERO} py-4`}>
+                    <td className={`${TABLE_HERO} border-x border-orange-400/10 py-5`}>
                       <button
                         type="button"
                         onClick={() => onRequestPrototype?.()}
-                        className="w-full rounded-lg border border-orange-400/45 bg-orange-500/20 py-2 text-xs font-semibold text-orange-50 hover:bg-orange-500/30 sm:text-sm"
+                        className="w-full rounded-xl border border-orange-400/45 bg-orange-500/20 px-2 py-2.5 text-sm font-semibold text-orange-50 transition-colors hover:bg-orange-500/30 sm:text-base"
                       >
                         Get started →
                       </button>
                     </td>
-                    <td className={`${TABLE_COL} py-4`}>
+                    <td className={`${TABLE_COL} rounded-br-xl bg-white/[0.02] py-5 sm:rounded-br-2xl`}>
                       <button
                         type="button"
                         onClick={() => onRequestPrototype?.()}
-                        className="w-full rounded-lg border border-white/15 bg-white/[0.06] py-2 text-xs font-semibold text-white hover:border-cyan-400/35 sm:text-sm"
+                        className="w-full rounded-xl border border-white/15 bg-white/[0.06] px-2 py-2.5 text-sm font-semibold text-white transition-colors hover:border-cyan-400/35 sm:text-base"
                       >
                         Get started →
                       </button>
@@ -808,20 +895,20 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
         {/* Add-ons */}
         <section aria-labelledby="pricing-addons-heading" className="mx-auto max-w-xl space-y-4">
           <div className="text-center">
-            <h2 id="pricing-addons-heading" className="font-heading text-lg font-bold text-white md:text-xl">
+            <h2 id="pricing-addons-heading" className={sectionTitleHome}>
               Need something extra?
             </h2>
-            <p className="mt-2 text-xs leading-relaxed text-gray-500 md:text-sm">
+            <p className="mt-3 font-sans text-base leading-relaxed text-gray-500 sm:text-lg">
               Bolt on any time — no package games. Ask if you need something that isn&rsquo;t listed.
             </p>
           </div>
-          <div className="divide-y divide-white/[0.06] rounded-xl border border-white/[0.06] bg-white/[0.02]">
+          <div className={`divide-y divide-white/[0.06] overflow-hidden ${glassSky}`}>
             {addOns.map((row) => (
               <div key={row.label} className="flex flex-col gap-0.5 px-4 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                <span className="text-sm text-gray-300">{row.label}</span>
+                <span className="text-base text-gray-300">{row.label}</span>
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 sm:justify-end sm:text-right">
-                  <span className="text-sm font-medium tabular-nums text-white">{row.price}</span>
-                  <span className="text-xs text-gray-500">{row.notes}</span>
+                  <span className="text-base font-medium tabular-nums text-white">{row.price}</span>
+                  <span className="text-sm text-gray-500">{row.notes}</span>
                 </div>
               </div>
             ))}
@@ -829,7 +916,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
         </section>
 
         {/* Footer CTA */}
-        <footer className="relative overflow-hidden rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-white/[0.05] to-cyan-950/10 px-5 py-10 text-center md:px-10 md:py-14">
+        <footer className={`relative overflow-hidden border-cyan-400/25 px-5 py-10 text-center md:px-10 md:py-14 ${glassSky}`}>
           <div className="pointer-events-none absolute inset-0 opacity-40">
             <div className="absolute -left-20 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-cyan-500/15 blur-[64px]" />
             <div className="absolute -right-12 bottom-0 h-40 w-40 rounded-full bg-emerald-500/10 blur-[56px]" />
@@ -838,10 +925,8 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
             <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-xl border border-cyan-400/25 bg-cyan-500/10 text-cyan-200">
               <KeyRound className="h-7 w-7" strokeWidth={1.5} aria-hidden />
             </div>
-            <h2 className="mb-4 font-heading text-xl font-extrabold text-white sm:text-2xl md:text-3xl">
-              Not ready to commit? See your site first.
-            </h2>
-            <div className="space-y-3 text-sm leading-relaxed text-gray-400">
+            <h2 className={`mb-4 ${sectionTitleHome}`}>Not ready to commit? See your site first.</h2>
+            <div className={`space-y-3 ${bodyHome}`}>
               <p>
                 For £49, we&rsquo;ll build you a working homepage prototype in 24 hours. If you go ahead, the £49 comes
                 off your first month.
