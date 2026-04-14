@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import { Link, NavLink } from 'react-router-dom';
+import NavGetStartedButton from './NavGetStartedButton';
 
 type NavbarProps = {
   onRequestPrototype?: () => void;
@@ -87,15 +88,9 @@ export default function Navbar({ onRequestPrototype }: NavbarProps) {
         </NavLink>
       </div>
 
-      <motion.button
-        type="button"
-        onClick={() => onRequestPrototype?.()}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="btn-primary btn-shimmer shrink-0 rounded-full px-5 py-2.5 text-[0.95rem] font-semibold tracking-[-0.02em] shadow-lg shadow-blue-900/30 sm:px-7 sm:py-3 sm:text-[1.0625rem]"
-      >
-        Get Started
-      </motion.button>
+      <div className="shrink-0">
+        <NavGetStartedButton onClick={() => onRequestPrototype?.()} />
+      </div>
     </motion.nav>
   );
 }
