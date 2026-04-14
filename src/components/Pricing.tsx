@@ -450,30 +450,37 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
 
       <div className="relative z-10 mx-auto max-w-6xl space-y-16 px-4 sm:space-y-20 sm:px-6 lg:px-8">
         {/* Hero */}
-        <header className="mx-auto max-w-3xl text-center">
+        <header className="mx-auto max-w-2xl text-balance text-center">
           <motion.p
-            className="mb-4 font-heading text-[11px] font-semibold uppercase tracking-[0.28em] text-cyan-400/85 sm:text-xs"
+            className="mb-3 font-heading text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-400/90 sm:mb-3.5 sm:text-xs sm:tracking-[0.24em]"
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
             Clarity first
           </motion.p>
-          <h1 className="mb-6 font-heading text-[1.75rem] font-extrabold leading-[1.15] tracking-tight text-white sm:text-4xl md:text-5xl">
+          <h1 className="font-heading text-[1.75rem] font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl">
             <span className="block">
-              <TextReveal text="One clear price. Everything included. No surprises." />
+              <TextReveal text="One clear price. Everything included." />
             </span>
-            <motion.span
-              className="mt-1 inline-block text-orange-400"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Ever.
-            </motion.span>
+            <span className="mt-2.5 block sm:mt-3">
+              <span className="inline-flex flex-wrap items-baseline justify-center gap-x-2 gap-y-0.5">
+                <span className="text-white">
+                  <TextReveal text="No surprises." />
+                </span>
+                <motion.span
+                  className="text-orange-400"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.72, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  Ever.
+                </motion.span>
+              </span>
+            </span>
           </h1>
           <motion.p
-            className="font-sans text-base leading-relaxed text-gray-400 md:text-lg"
+            className="mx-auto mt-7 max-w-xl font-sans text-[0.98rem] font-medium leading-relaxed text-gray-300/95 sm:mt-8 sm:text-[1.05rem] md:text-lg"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.45 }}
