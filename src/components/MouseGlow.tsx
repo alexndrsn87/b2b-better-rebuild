@@ -46,7 +46,7 @@ export default function MouseGlow() {
     };
   }, [enabled, x, y]);
 
-  const background = useMotionTemplate`radial-gradient(520px circle at ${sx}px ${sy}px, rgba(56, 189, 248, 0.09) 0%, rgba(37, 99, 235, 0.04) 35%, transparent 65%)`;
+  const background = useMotionTemplate`radial-gradient(520px circle at ${sx}px ${sy}px, rgba(34, 211, 238, 0.1) 0%, rgba(96, 165, 250, 0.05) 35%, transparent 65%)`;
 
   if (!enabled) return null;
 

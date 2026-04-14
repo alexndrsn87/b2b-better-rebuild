@@ -203,7 +203,7 @@ export default function PrototypePromoSection({ onRequestPrototype }: PrototypeP
                   transformStyle: 'preserve-3d',
                 }}
               >
-                <div className="relative overflow-hidden rounded-[1.35rem] bg-[#070b14]/90 p-5 pt-6 md:p-6 md:pt-7">
+                <div className="relative overflow-hidden rounded-[1.35rem] bg-[#070a12]/90 p-5 pt-6 md:p-6 md:pt-7">
                   <div className="mb-4 flex items-center gap-2 border-b border-white/10 pb-4">
                     <div className="flex gap-1.5">
                       <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />

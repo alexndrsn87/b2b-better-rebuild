@@ -40,7 +40,7 @@ export default function Layout({ children, onRequestPrototype }: LayoutProps) {
           className="absolute inset-0 opacity-[0.14]"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(56,189,248,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.12) 1px, transparent 1px)',
+              'linear-gradient(rgba(34,211,238,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.12) 1px, transparent 1px)',
             backgroundSize: '80px 80px',
             maskImage: 'linear-gradient(to bottom, black 8%, transparent 45%)',
             WebkitMaskImage: 'linear-gradient(to bottom, black 8%, transparent 45%)',

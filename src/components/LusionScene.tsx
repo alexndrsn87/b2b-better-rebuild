@@ -3,7 +3,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 const PARTICLE_COUNT = 48;
-const COLORS = ['#38BDF8', '#A855F7', '#F472B6', '#34D399', '#FBBF24'];
+const COLORS = ['#22D3EE', '#60A5FA', '#A855F7', '#34D399', '#F59E0B'];
 
 const vertexShader = `
   varying vec3 vColor;
