@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   motion,
@@ -15,7 +15,6 @@ import {
   KeyRound,
   Lock,
   MapPin,
-  MessageCircle,
   PhoneForwarded,
   Receipt,
   Server,
@@ -26,11 +25,6 @@ import {
 } from 'lucide-react';
 import { TextReveal } from './TextReveal';
 import { whatsappUrlWithPrefill } from '../lib/whatsapp';
-
-const BUYOUT_WHATSAPP = whatsappUrlWithPrefill(
-  undefined,
-  "Hi — I'd like to ask about the buyout option for my website.",
-);
 
 type PricingProps = {
   onRequestPrototype?: () => void;
@@ -49,17 +43,17 @@ const contrastRows: { feature: string; bb: boolean; agency: boolean }[] = [
 
 const planIntros = [
   {
-    id: 'found',
-    title: 'Getting Found',
+    id: 'presence',
+    title: 'Presence',
     Icon: MapPin,
     accent: 'from-sky-500/20 to-cyan-500/10',
     border: 'border-white/12',
     body: (
       <>
         <p>
-          Getting Found is for the business owner who&rsquo;s been meaning to sort this for a while. You don&rsquo;t
-          need anything complicated. You need to exist online properly — with a number people can find, a site that loads
-          on a phone, and the confidence that someone competent is looking after it.
+          Presence is for the business owner who&rsquo;s been meaning to sort this for a while. You don&rsquo;t need
+          anything complicated — just a professional site that loads on a phone, a number people can find, and the
+          confidence that someone competent is looking after it.
         </p>
         <p className="text-gray-500">
           You&rsquo;re not trying to dominate Google. You just want to{' '}
@@ -69,8 +63,8 @@ const planIntros = [
     ),
   },
   {
-    id: 'win',
-    title: 'Winning Work',
+    id: 'active',
+    title: 'Active',
     Icon: PhoneForwarded,
     popular: true,
     accent: 'from-orange-500/25 to-amber-500/12',
@@ -78,9 +72,9 @@ const planIntros = [
     body: (
       <>
         <p>
-          Winning Work is where most of our clients land. You don&rsquo;t just want a website that exists — you want one
-          that makes people pick up the phone. We write the copy for you, build out the pages, and structure everything
-          around one goal: turning visitors into enquiries.
+          Active is where most of our clients land. You don&rsquo;t just want a website that exists — you want one that
+          makes people pick up the phone. We write the copy, build the pages, and send you a monthly snapshot so you can
+          see it working.
         </p>
         <p className="font-medium text-orange-100/90">
           The most popular plan. And the one we&rsquo;d recommend for most local businesses.
@@ -89,21 +83,20 @@ const planIntros = [
     ),
   },
   {
-    id: 'own',
-    title: 'Owning Your Area',
+    id: 'growth',
+    title: 'Growth',
     Icon: TrendingUp,
     accent: 'from-violet-500/20 to-fuchsia-500/10',
     border: 'border-violet-400/25',
     body: (
       <>
         <p>
-          Owning Your Area is for the business that wants to be the first name people think of in their town. We set up
-          your Google Business Profile, lay the local SEO foundations, and send you a monthly report so you can see
-          exactly how you&rsquo;re performing. For the business owner who is serious about growth.
+          Growth is for the business that wants to be the first name people think of in their town. We handle your
+          Google Business Profile, write a monthly blog post, and lay the local SEO foundations that compound over time.
         </p>
         <p className="text-gray-500">
           If you want to <span className="font-medium text-violet-200/90">dominate</span> your local area online, this
-          is how you start.
+          is how you do it.
         </p>
       </>
     ),
@@ -112,67 +105,68 @@ const planIntros = [
 
 type Cell = string;
 
-const detailRows: { label: string; cells: [Cell, Cell, Cell, Cell] }[] = [
+const detailRows: { label: string; cells: [Cell, Cell, Cell] }[] = [
   {
     label: "Who it's for",
     cells: [
       'Just starting out or keeping it simple',
       'Most local businesses that want work coming in',
       'Serious about dominating your local area',
-      'Prefer to own outright with no monthly fee',
     ],
   },
-  { label: 'Setup fee', cells: ['£299', '£499', '£799', 'Setup + buyout'] },
-  { label: 'Monthly', cells: ['£49/mo', '£89/mo', '£149/mo', 'None'] },
+  { label: 'Monthly', cells: ['£49/mo', '£99/mo', '£149/mo'] },
   {
     label: 'Annual (pay upfront)',
-    cells: ['£490/yr', '£890/yr — save £178', '£1,490/yr — save £298', 'n/a'],
+    cells: ['£490/yr — save £98', '£990/yr — save £198', '£1,490/yr — save £298'],
   },
-  { label: 'Pages', cells: ['3 pages', '6 pages', '6 pages', 'As chosen plan'] },
+  { label: 'Pages', cells: ['3 pages', '5 pages', '6 pages'] },
   {
     label: 'Copy written for you',
-    cells: ['ICON_X', 'ICON_CHECK', 'ICON_CHECK', 'Quoted separately'],
-  },
-  {
-    label: 'Domain management',
-    cells: ['ICON_CHECK', '✓ Included', '✓ Included', '✓ Transferred to you'],
+    cells: ['ICON_X', 'ICON_CHECK', 'ICON_CHECK'],
   },
   {
     label: 'Hosting & security',
-    cells: ['✓ Included', '✓ Included', '✓ Included', 'Your responsibility'],
+    cells: ['✓ Included', '✓ Included', '✓ Included'],
   },
   {
-    label: 'Unlimited WhatsApp updates',
-    cells: ['ICON_CHECK', 'ICON_CHECK', 'ICON_CHECK', '✗ Pay per change'],
+    label: 'WhatsApp updates',
+    cells: ['Up to 3/month', '✓ Unlimited', '✓ Unlimited'],
   },
   {
-    label: 'Google Business Profile setup',
-    cells: ['ICON_X', 'ICON_X', '✓ Included', 'ICON_X'],
+    label: 'Monthly performance snapshot',
+    cells: ['ICON_X', 'ICON_CHECK', 'ICON_CHECK'],
   },
   {
-    label: 'Local SEO foundations',
-    cells: ['Basic', 'Strong foundations', 'Full local SEO pack', 'Basic'],
+    label: 'Google Business Profile',
+    cells: ['ICON_X', 'ICON_X', '✓ Included'],
   },
   {
-    label: 'Monthly performance report',
-    cells: ['ICON_X', 'ICON_X', '✓ Included', 'ICON_X'],
+    label: 'Monthly blog post',
+    cells: ['ICON_X', 'ICON_X', '✓ Included'],
+  },
+  {
+    label: 'Local SEO',
+    cells: ['Basic', 'Strong foundations', 'Full local SEO pack'],
   },
   {
     label: 'Price-locked forever (annual)',
-    cells: ['ICON_CHECK', '✓ Yes', '✓ Yes', 'n/a'],
+    cells: ['ICON_CHECK', 'ICON_CHECK', 'ICON_CHECK'],
   },
 ];
 
 const addOns = [
-  { label: 'Extra page', price: '£49', notes: 'Added any time' },
-  { label: 'Booking widget', price: '£75 one-off', notes: 'Calendly, Acuity, etc.' },
+  { label: 'Domain sourcing & management', price: '£35/yr', notes: 'We source, register & renew — you never think about it' },
+  { label: 'Extra page', price: '£49 one-off', notes: 'Added any time' },
+  { label: 'Booking / enquiry widget', price: '£75 one-off', notes: 'Calendly, Acuity, Tally — embedded & styled' },
+  { label: 'Google Business Profile setup', price: '£75 one-off', notes: 'Optimised listing, photos, categories' },
+  { label: 'Review collection page', price: '£39 one-off', notes: 'A single link that sends customers straight to your Google review form' },
   { label: 'Monthly blog post', price: '£60/mo', notes: 'Written & published for you' },
-  { label: 'Social media graphics pack', price: '£75/mo', notes: '4 branded posts per month' },
   { label: 'Logo design', price: '£199 one-off', notes: '3 concepts, 2 revision rounds' },
+  { label: 'Annual site refresh', price: '£149 one-off', notes: 'New look, updated copy, fresh photos — once a year' },
   {
-    label: 'Priority 24hr update turnaround',
-    price: '£20/mo add-on',
-    notes: 'Jump the queue on any changes',
+    label: 'Priority same-day updates',
+    price: '£20/mo',
+    notes: 'Jump the queue — changes turned around the same day',
   },
 ];
 
@@ -201,6 +195,213 @@ const TABLE_COL = 'min-w-[7.5rem] max-w-[10.5rem] px-2 py-3 align-top text-cente
 const TABLE_HERO = `${TABLE_COL} bg-orange-500/[0.1]`;
 const TABLE_ROW_HEAD =
   'w-[32%] min-w-[9.5rem] max-w-[220px] px-3 py-3 text-left text-xs font-medium leading-snug text-gray-300 sm:w-auto sm:max-w-[14rem] sm:py-3.5 sm:text-sm';
+
+type PlanKey = 'presence' | 'active' | 'growth';
+
+const BASE_PRICES: Record<PlanKey, number> = { presence: 49, active: 99, growth: 149 };
+const PLAN_LABELS: Record<PlanKey, string> = { presence: 'Presence', active: 'Active', growth: 'Growth' };
+
+function Toggle({ checked, onChange, id }: { checked: boolean; onChange: (v: boolean) => void; id: string }) {
+  return (
+    <button
+      id={id}
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      onClick={() => onChange(!checked)}
+      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400 ${
+        checked ? 'border-orange-400 bg-orange-500' : 'border-white/20 bg-white/10'
+      }`}
+    >
+      <span
+        className={`inline-block h-4 w-4 rounded-full bg-white shadow-sm transition-transform duration-200 ${
+          checked ? 'translate-x-5' : 'translate-x-0.5'
+        }`}
+      />
+    </button>
+  );
+}
+
+function BuildYourPackage() {
+  const [plan, setPlan] = useState<PlanKey>('active');
+  const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly');
+  const [blogPost, setBlogPost] = useState(false);
+  const [priorityUpdates, setPriorityUpdates] = useState(false);
+  const [domainManagement, setDomainManagement] = useState(false);
+
+  const baseMonthly = BASE_PRICES[plan];
+  const extrasMonthly = (blogPost ? 60 : 0) + (priorityUpdates ? 20 : 0);
+  const totalMonthly = baseMonthly + extrasMonthly;
+  // Annual = 10 months price (2 months free)
+  const totalAnnual = totalMonthly * 10;
+  const annualSaving = totalMonthly * 2;
+
+  return (
+    <section className="space-y-6">
+      <div className="text-center">
+        <h2 className="font-heading text-xl font-extrabold text-white sm:text-2xl md:text-3xl">
+          Build your package
+        </h2>
+        <p className="mx-auto mt-3 max-w-xl text-sm text-gray-400 sm:text-base">
+          Pick your plan, bolt on the extras you want, and see your total.
+        </p>
+      </div>
+
+      <div className="mx-auto max-w-lg space-y-5">
+        {/* Billing toggle */}
+        <div className="flex items-center justify-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1">
+          {(['monthly', 'annual'] as const).map((b) => (
+            <button
+              key={b}
+              type="button"
+              onClick={() => setBilling(b)}
+              className={`flex-1 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-150 ${
+                billing === b
+                  ? 'bg-orange-500 text-white shadow-sm'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              {b === 'monthly' ? 'Monthly' : (
+                <span className="flex items-center justify-center gap-2">
+                  Annual
+                  <span className="rounded-full bg-emerald-500/25 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
+                    2 months free
+                  </span>
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Plan selector */}
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+          <p className="mb-3 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+            Base plan
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            {(Object.keys(BASE_PRICES) as PlanKey[]).map((key) => {
+              const mo = BASE_PRICES[key];
+              const displayPrice = billing === 'annual' ? `£${mo * 10}/yr` : `£${mo}/mo`;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setPlan(key)}
+                  className={`rounded-xl border py-3 text-center transition-all duration-150 ${
+                    plan === key
+                      ? 'border-orange-400/60 bg-orange-500/20 text-white'
+                      : 'border-white/10 bg-white/[0.04] text-gray-400 hover:border-white/20 hover:text-white'
+                  }`}
+                >
+                  <span className="block font-heading text-sm font-bold">{PLAN_LABELS[key]}</span>
+                  <span className={`block text-xs tabular-nums ${plan === key ? 'text-orange-200' : 'text-gray-500'}`}>
+                    {displayPrice}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Recurring extras */}
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+          <p className="px-5 pb-2 pt-5 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+            Subscription extras
+          </p>
+          <div className="divide-y divide-white/[0.06]">
+            {[
+              { id: 'blog', label: 'Monthly blog post', sub: 'Written & published for you', mo: 60, checked: blogPost, set: setBlogPost },
+              { id: 'priority', label: 'Priority same-day updates', sub: 'Jump the queue on any changes', mo: 20, checked: priorityUpdates, set: setPriorityUpdates },
+            ].map(({ id, label, sub, mo, checked, set }) => {
+              const displayPrice = billing === 'annual' ? `+£${mo * 10}/yr` : `+£${mo}/mo`;
+              return (
+                <div key={id} className="flex items-center justify-between gap-4 px-5 py-4">
+                  <div className="min-w-0 flex-1">
+                    <label htmlFor={id} className="cursor-pointer font-sans text-sm font-medium text-gray-200">
+                      {label}
+                    </label>
+                    <p className="text-xs text-gray-500">{sub}</p>
+                  </div>
+                  <span className={`shrink-0 text-sm tabular-nums font-medium ${checked ? 'text-emerald-300' : 'text-gray-500'}`}>
+                    {displayPrice}
+                  </span>
+                  <Toggle id={id} checked={checked} onChange={set} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Annual extras */}
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+          <p className="px-5 pb-2 pt-5 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+            One-off annual add-on
+          </p>
+          <div className="divide-y divide-white/[0.06]">
+            <div className="flex items-center justify-between gap-4 px-5 py-4">
+              <div className="min-w-0 flex-1">
+                <label htmlFor="domain" className="cursor-pointer font-sans text-sm font-medium text-gray-200">
+                  Domain sourcing & management
+                </label>
+                <p className="text-xs text-gray-500">We source, register & renew — you never think about it</p>
+              </div>
+              <span className={`shrink-0 text-sm tabular-nums font-medium ${domainManagement ? 'text-emerald-300' : 'text-gray-500'}`}>
+                +£35/yr
+              </span>
+              <Toggle id="domain" checked={domainManagement} onChange={setDomainManagement} />
+            </div>
+          </div>
+        </div>
+
+        {/* Total */}
+        <motion.div
+          layout
+          className="rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-cyan-500/5 px-6 py-5"
+        >
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300/80">
+                Your total
+              </p>
+              {billing === 'monthly' ? (
+                <div className="mt-1 flex items-baseline gap-1.5">
+                  <span className="font-heading text-4xl font-extrabold tabular-nums text-white">
+                    £{totalMonthly}
+                  </span>
+                  <span className="text-sm text-gray-400">/month</span>
+                </div>
+              ) : (
+                <>
+                  <div className="mt-1 flex items-baseline gap-1.5">
+                    <span className="font-heading text-4xl font-extrabold tabular-nums text-white">
+                      £{totalAnnual}
+                    </span>
+                    <span className="text-sm text-gray-400">/year</span>
+                  </div>
+                  <p className="mt-1 text-xs font-medium text-emerald-300">
+                    saving £{annualSaving} vs monthly
+                  </p>
+                </>
+              )}
+              {domainManagement && (
+                <p className="mt-1 text-xs text-gray-500">+ £35/yr for domain</p>
+              )}
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-gray-500">{PLAN_LABELS[plan]} plan</p>
+              {billing === 'annual' && (
+                <p className="text-xs text-emerald-300/70">2 months free</p>
+              )}
+            </div>
+          </div>
+          <p className="mt-4 border-t border-white/[0.06] pt-3 text-[11px] text-gray-600">
+            All prices exclude VAT.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
 export default function Pricing({ onRequestPrototype }: PricingProps) {
   const rootRef = useRef<HTMLElement>(null);
@@ -379,10 +580,10 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
                   ))}
                   <tr className="border-t border-white/10 bg-white/[0.02]">
                     <th scope="row" className="px-4 py-3.5 pl-4 text-left font-medium text-gray-200 sm:pl-5">
-                      Typical setup cost
+                      Setup cost
                     </th>
                     <td className="px-4 py-3.5 font-heading font-semibold tabular-nums text-emerald-300">
-                      From £299
+                      None — ever
                     </td>
                     <td className="px-4 py-3.5 pr-4 font-heading tabular-nums text-gray-400 sm:pr-5">
                       £2,000 – £8,000
@@ -452,6 +653,9 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
           </div>
         </section>
 
+        {/* Build your package */}
+        <BuildYourPackage />
+
         {/* Annual lock */}
         <section className="relative overflow-hidden rounded-2xl border border-orange-400/25 bg-gradient-to-br from-orange-500/[0.12] to-[var(--color-navy)] p-6 md:p-10">
           <div className="pointer-events-none absolute -right-16 top-0 h-56 w-56 rounded-full bg-orange-400/12 blur-[80px]" />
@@ -507,7 +711,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
               Compare plans in full
             </h2>
             <p className="mx-auto mt-2 max-w-lg text-sm text-gray-500">
-              Scroll sideways on smaller screens. <span className="text-gray-400">★ Winning Work</span> is what most
+              Scroll sideways on smaller screens. <span className="text-gray-400">★ Active</span> is what most
               people choose.
             </p>
           </div>
@@ -519,7 +723,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
                   <tr className="border-b border-white/10 bg-[var(--color-navy)]">
                     <th className={`${TABLE_ROW_HEAD} bg-[var(--color-navy)] py-4 align-bottom`} />
                     <th className={`${TABLE_COL} bg-[var(--color-navy)] pb-3 pt-4 font-heading text-xs font-bold text-white sm:text-sm`}>
-                      Getting Found
+                      Presence
                     </th>
                     <th
                       className={`${TABLE_HERO} pb-3 pt-4 font-heading text-xs font-bold text-orange-100 sm:text-sm`}
@@ -527,16 +731,10 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
                       <span className="text-orange-400" aria-hidden>
                         ★{' '}
                       </span>
-                      Winning Work
+                      Active
                     </th>
                     <th className={`${TABLE_COL} bg-[var(--color-navy)] pb-3 pt-4 font-heading text-xs font-bold text-white sm:text-sm`}>
-                      Owning Your Area
-                    </th>
-                    <th className={`${TABLE_COL} bg-[var(--color-navy)] pb-3 pt-4 font-heading text-xs font-bold leading-tight text-amber-100/90 sm:text-sm`}>
-                      <span className="block">Buyout</span>
-                      <span className="block font-sans text-[10px] font-normal text-amber-200/60 sm:text-xs">
-                        Own it outright
-                      </span>
+                      Growth
                     </th>
                   </tr>
                 </thead>
@@ -587,17 +785,6 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
                         Get started →
                       </button>
                     </td>
-                    <td className={`${TABLE_COL} py-4`}>
-                      <a
-                        href={BUYOUT_WHATSAPP}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex w-full items-center justify-center gap-1 rounded-lg border border-amber-400/30 bg-amber-500/10 py-2 text-center text-xs font-semibold text-amber-100 hover:bg-amber-500/20 sm:text-sm"
-                      >
-                        <MessageCircle className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                        Ask buyout →
-                      </a>
-                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -644,7 +831,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
             <div className="space-y-3 text-sm leading-relaxed text-gray-400">
               <p>
                 For £49, we&rsquo;ll build you a working homepage prototype in 24 hours. If you go ahead, the £49 comes
-                off your setup fee.
+                off your first month.
               </p>
               <p className="text-gray-500">
                 If not, you&rsquo;ve spent less than a tank of diesel to decide with your eyes open.
