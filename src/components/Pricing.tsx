@@ -120,6 +120,7 @@ const detailRows: { label: string; cells: [Cell, Cell, Cell] }[] = [
       'Serious about dominating your local area',
     ],
   },
+  { label: 'No setup fee', cells: ['ICON_CHECK', 'ICON_CHECK', 'ICON_CHECK'] },
   { label: 'Monthly', cells: ['£49/mo', '£99/mo', '£149/mo'] },
   {
     label: 'Annual (pay upfront)',
@@ -132,30 +133,30 @@ const detailRows: { label: string; cells: [Cell, Cell, Cell] }[] = [
   },
   {
     label: 'Hosting & security',
-    cells: ['✓ Included', '✓ Included', '✓ Included'],
+    cells: ['ICON_CHECK', 'ICON_CHECK', 'ICON_CHECK'],
   },
   {
     label: 'WhatsApp updates',
-    cells: ['Up to 3/month', '✓ Unlimited', '✓ Unlimited'],
+    cells: ['3 per month', 'ICON_CHECK', 'ICON_CHECK'],
   },
   {
-    label: 'Monthly performance snapshot',
+    label: 'Monthly snapshot',
     cells: ['ICON_X', 'ICON_CHECK', 'ICON_CHECK'],
   },
   {
     label: 'Google Business Profile',
-    cells: ['ICON_X', 'ICON_X', '✓ Included'],
+    cells: ['ICON_X', 'ICON_X', 'ICON_CHECK'],
   },
   {
     label: 'Monthly blog post',
-    cells: ['ICON_X', 'ICON_X', '✓ Included'],
+    cells: ['ICON_X', 'ICON_X', 'ICON_CHECK'],
   },
   {
     label: 'Local SEO',
     cells: ['Basic', 'Strong foundations', 'Full local SEO pack'],
   },
   {
-    label: 'Price-locked forever (annual)',
+    label: 'Annual price lock',
     cells: ['ICON_CHECK', 'ICON_CHECK', 'ICON_CHECK'],
   },
 ];
@@ -191,6 +192,11 @@ function CellContent({ value, hero }: { value: Cell; hero: boolean }) {
   }
   if (value.startsWith('✗')) {
     return <span className={hero ? 'text-orange-100' : 'text-rose-200/80'}>{value}</span>;
+  }
+  if (hero && value.startsWith('£')) {
+    return (
+      <span className="text-lg font-extrabold leading-tight tracking-tight text-orange-100">{value}</span>
+    );
   }
   return (
     <span className={`text-base leading-snug ${hero ? 'text-orange-50' : 'text-gray-300'}`}>{value}</span>
