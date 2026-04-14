@@ -85,6 +85,20 @@ blockquote {
 
 }
 
+/* Pricing page hero: exactly two rows — fluid type + nowrap so narrow viewports don’t reflow to 3+ lines */
+.pricing-hero-title {
+  font-size: clamp(0.75rem, calc(0.38rem + 2.45vw), 3rem);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  text-align: center;
+}
+
+.pricing-hero-title-line {
+  display: block;
+  white-space: nowrap;
+}
+
 /* ── Hero main headline: line reveals + word treatments (Space Grotesk via .font-heading) ── */
 .hero-headline-glow {
   position: relative;

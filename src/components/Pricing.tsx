@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   motion,
@@ -23,7 +23,6 @@ import {
   TrendingUp,
   X,
 } from 'lucide-react';
-import { TextReveal } from './TextReveal';
 import { whatsappUrlWithPrefill } from '../lib/whatsapp';
 
 type PricingProps = {
@@ -406,51 +405,6 @@ function BuildYourPackage() {
 export default function Pricing({ onRequestPrototype }: PricingProps) {
   const rootRef = useRef<HTMLElement>(null);
 
-  // #region agent log
-  useLayoutEffect(() => {
-    const run = () => {
-      const root = document.getElementById('pricing-hero-debug');
-      if (!root) return;
-      const r = root.getBoundingClientRect();
-      const b1 = root.querySelector('[data-debug-line="1"]')?.getBoundingClientRect();
-      const b2 = root.querySelector('[data-debug-line="2"]')?.getBoundingClientRect();
-      const cR = r.left + r.width / 2;
-      const c1 = b1 ? b1.left + b1.width / 2 : null;
-      const c2 = b2 ? b2.left + b2.width / 2 : null;
-      fetch('http://127.0.0.1:7845/ingest/c02a393e-6f74-409f-9a7c-a8fef6edcd78', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '6a30ce' },
-        body: JSON.stringify({
-          sessionId: '6a30ce',
-          runId: 'post-fix',
-          hypothesisId: 'H1-H2',
-          location: 'Pricing.tsx:useLayoutEffect',
-          message: 'pricing hero centerline geometry',
-          data: {
-            windowWidth: window.innerWidth,
-            headerCenterX: Math.round(cR * 100) / 100,
-            line1CenterX: c1 != null ? Math.round(c1 * 100) / 100 : null,
-            line2CenterX: c2 != null ? Math.round(c2 * 100) / 100 : null,
-            deltaLine1VsHeader: c1 != null ? Math.round((c1 - cR) * 100) / 100 : null,
-            deltaLine2VsHeader: c2 != null ? Math.round((c2 - cR) * 100) / 100 : null,
-            deltaLine2VsLine1: c1 != null && c2 != null ? Math.round((c2 - c1) * 100) / 100 : null,
-            line1Width: b1?.width,
-            line2Width: b2?.width,
-          },
-          timestamp: Date.now(),
-        }),
-      }).catch(() => {});
-    };
-    run();
-    window.addEventListener('resize', run);
-    const t = window.setTimeout(run, 900);
-    return () => {
-      window.removeEventListener('resize', run);
-      window.clearTimeout(t);
-    };
-  }, []);
-  // #endregion
-
   const mouseX = useMotionValue(50);
   const mouseY = useMotionValue(32);
   const smoothX = useSpring(mouseX, { stiffness: 48, damping: 38 });
@@ -496,7 +450,7 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
 
       <div className="relative z-10 mx-auto max-w-6xl space-y-16 px-4 sm:space-y-20 sm:px-6 lg:px-8">
         {/* Hero */}
-        <header id="pricing-hero-debug" className="mx-auto max-w-2xl text-center">
+        <header className="mx-auto max-w-2xl text-center">
           <motion.p
             className="mb-3 font-heading text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-400/90 sm:mb-3.5 sm:text-xs sm:tracking-[0.24em]"
             initial={{ opacity: 0, y: 6 }}
@@ -505,30 +459,31 @@ export default function Pricing({ onRequestPrototype }: PricingProps) {
           >
             Clarity first
           </motion.p>
-          <h1 className="flex flex-col items-center font-heading text-[1.75rem] font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl">
-            <div className="flex w-full justify-center px-1 sm:px-2">
-              <span data-debug-line="1" className="inline-block max-w-full text-center">
-                <TextReveal className="justify-center" text="One clear price. Everything included." />
-              </span>
-            </div>
-            <div className="mt-2.5 flex w-full justify-center px-1 sm:mt-3 sm:px-2">
-              <span
-                data-debug-line="2"
-                className="inline-flex max-w-full flex-wrap items-baseline justify-center gap-x-2 gap-y-0.5 text-center"
+          <h1 className="pricing-hero-title font-heading text-white">
+            <motion.span
+              className="pricing-hero-title-line px-1 sm:px-2"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            >
+              One clear price. Everything included.
+            </motion.span>
+            <motion.span
+              className="pricing-hero-title-line mt-2.5 px-1 sm:mt-3 sm:px-2"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            >
+              No surprises.{' '}
+              <motion.span
+                className="text-orange-400"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               >
-                <span className="text-white">
-                  <TextReveal className="justify-center" text="No surprises." />
-                </span>
-                <motion.span
-                  className="shrink-0 text-orange-400"
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.72, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  Ever.
-                </motion.span>
-              </span>
-            </div>
+                Ever.
+              </motion.span>
+            </motion.span>
           </h1>
           <motion.p
             className="mx-auto mt-7 max-w-xl font-sans text-[0.98rem] font-medium leading-relaxed text-gray-300/95 sm:mt-8 sm:text-[1.05rem] md:text-lg"
