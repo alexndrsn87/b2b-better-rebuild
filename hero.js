@@ -6,6 +6,15 @@
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) return;
 
+  // #region agent log
+  const nav = document.getElementById('siteNav');
+  const scrollHint = document.querySelector('#top .scroll-hint');
+  const heroRect = heroCard.getBoundingClientRect();
+  const navRect = nav ? nav.getBoundingClientRect() : null;
+  const hintRect = scrollHint ? scrollHint.getBoundingClientRect() : null;
+  window.__agentLog && window.__agentLog({hypothesisId:'H3',location:'hero.js:14',message:'hero card and fold spacing snapshot',data:{heroLeft:Math.round(heroRect.left),heroRight:Math.round(heroRect.right),heroCenter:Math.round(heroRect.left+heroRect.width/2),viewportCenter:Math.round(window.innerWidth/2),navBottom:navRect?Math.round(navRect.bottom):null,heroTop:Math.round(heroRect.top),heroFromNav:navRect?Math.round(heroRect.top-navRect.bottom):null,heroToScrollHint:hintRect?Math.round(hintRect.top-heroRect.bottom):null}});
+  // #endregion
+
   heroCard.addEventListener('pointermove', (e) => {
     const r = heroCard.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
@@ -74,6 +83,12 @@
     trigger: pcanvas, start: 'top bottom', end: 'bottom top',
     onUpdate: (self) => { morph = self.progress; },
   });
+  // #region agent log
+  const problemRect = problemHead ? problemHead.getBoundingClientRect() : null;
+  const promiseHead = document.getElementById('promise-head');
+  const promiseRect = promiseHead ? promiseHead.getBoundingClientRect() : null;
+  window.__agentLog && window.__agentLog({hypothesisId:'H4',location:'hero.js:85',message:'problem promise layout and dna target snapshot',data:{problemRight:problemRect?Math.round(problemRect.right):null,promiseTop:promiseRect?Math.round(promiseRect.top):null,dnaColumnTargetX:Math.round(pw*0.48),canvasWidth:pw,canvasCssWidth:pcanvas.getBoundingClientRect().width}});
+  // #endregion
   (function draw() {
     pctx.clearRect(0, 0, pw, ph);
     const cx = pw * 0.48, cy = ph * 0.55, colH = ph * 0.5;
@@ -91,6 +106,33 @@
     });
     requestAnimationFrame(draw);
   })();
+})();
+
+/* ---- Stage diagram diagnostics ---- */
+(function stageDiagramDiagnostics() {
+  const guest = document.querySelector('.stage-diagram--guest .diag-network');
+  if (guest) {
+    const n1 = guest.querySelector('.n1');
+    const n2 = guest.querySelector('.n2');
+    const l1 = guest.querySelector('.l1');
+    if (n1 && n2 && l1) {
+      const gr = guest.getBoundingClientRect();
+      const n1r = n1.getBoundingClientRect();
+      const n2r = n2.getBoundingClientRect();
+      const l1r = l1.getBoundingClientRect();
+      // #region agent log
+      window.__agentLog && window.__agentLog({hypothesisId:'H5',location:'hero.js:122',message:'guest graph join geometry snapshot',data:{guestW:Math.round(gr.width),n1Center:[Math.round(n1r.left+n1r.width/2-gr.left),Math.round(n1r.top+n1r.height/2-gr.top)],n2Center:[Math.round(n2r.left+n2r.width/2-gr.left),Math.round(n2r.top+n2r.height/2-gr.top)],link1Rect:[Math.round(l1r.left-gr.left),Math.round(l1r.top-gr.top),Math.round(l1r.width),Math.round(l1r.height)]}});
+      // #endregion
+    }
+  }
+
+  document.querySelectorAll('.stage-diagram').forEach((diagram) => {
+    diagram.addEventListener('mouseenter', () => {
+      // #region agent log
+      window.__agentLog && window.__agentLog({hypothesisId:'H5',location:'hero.js:130',message:'stage diagram hover observed',data:{diagramClasses:diagram.className}});
+      // #endregion
+    });
+  });
 })();
 
 /* ---- Engine stages reveal ---- */
