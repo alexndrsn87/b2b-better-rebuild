@@ -263,30 +263,17 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .compound-text {
   display: inline-block;
   position: relative;
-  transition: text-shadow .3s ease, transform .3s ease;
-}
-.compound-text::after {
-  content: "";
-  position: absolute;
-  left: -2%;
-  right: -2%;
-  bottom: 0.06em;
-  height: 0.18em;
-  border-radius: 99px;
-  opacity: 0;
-  transform: scaleX(.9);
-  transition: opacity .3s ease, transform .3s ease;
-  background: linear-gradient(90deg, rgba(255, 242, 0, .08), rgba(95, 201, 255, .25), rgba(255, 242, 0, .08));
+  transition: text-shadow .28s ease, transform .28s ease, letter-spacing .28s ease, color .28s ease;
 }
 .hero-copy-glass:hover .compound-text,
 #promise-head:hover .compound-text {
-  text-shadow: 0 0 18px rgba(95, 201, 255, .35), 0 0 10px rgba(255, 242, 0, .25);
-  transform: translateY(-1px);
-}
-.hero-copy-glass:hover .compound-text::after,
-#promise-head:hover .compound-text::after {
-  opacity: 1;
-  transform: scaleX(1);
+  color: #fbfbe6;
+  letter-spacing: -0.012em;
+  text-shadow:
+    0 0 14px rgba(95, 201, 255, .34),
+    0 0 8px rgba(255, 242, 0, .28),
+    0 0 2px rgba(255, 255, 255, .45);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .engine-section {
@@ -362,36 +349,133 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   background: linear-gradient(150deg, rgba(250,250,247,.08), rgba(250,250,247,.02));
   box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 22px 42px rgba(0,0,0,.28);
 }
-.stage-diagram .iso-main {
-  width: 88px;
-  height: 58px;
+.stage-diagram .diag-map,
+.stage-diagram .diag-network,
+.stage-diagram .diag-timeline,
+.stage-diagram .diag-stack,
+.stage-diagram .diag-branch {
+  width: 96px;
+  height: 64px;
   margin-inline: auto;
-  transform: perspective(600px) rotateX(50deg) rotateZ(-24deg);
+  position: relative;
+}
+
+.diag-map .cell {
+  position: absolute;
+  width: 24px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(250,250,247,.28);
+  background: rgba(250,250,247,.05);
+}
+.diag-map .c1 { left: 0; top: 0; }
+.diag-map .c2 { left: 34px; top: 0; }
+.diag-map .c3 { left: 68px; top: 0; }
+.diag-map .c4 { left: 0; top: 24px; }
+.diag-map .c5 { left: 34px; top: 24px; }
+.diag-map .c6 { left: 68px; top: 24px; }
+.diag-map .target {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  right: -4px;
+  bottom: -6px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,242,0,.8);
+  box-shadow: 0 0 12px rgba(255,242,0,.45);
+}
+
+.diag-network .node {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(95,201,255,.75);
+  box-shadow: 0 0 8px rgba(95,201,255,.4);
+}
+.diag-network .n1 { left: 4px; top: 8px; }
+.diag-network .n2 { left: 42px; top: 2px; }
+.diag-network .n3 { right: 2px; top: 16px; }
+.diag-network .n4 { left: 20px; bottom: 4px; }
+.diag-network .n5 { right: 18px; bottom: 8px; }
+.diag-network .link {
+  position: absolute;
+  height: 1px;
+  background: rgba(250,250,247,.32);
+  transform-origin: left center;
+}
+.diag-network .l1 { left: 10px; top: 12px; width: 34px; transform: rotate(-11deg); }
+.diag-network .l2 { left: 48px; top: 9px; width: 38px; transform: rotate(14deg); }
+.diag-network .l3 { left: 10px; top: 13px; width: 24px; transform: rotate(54deg); }
+.diag-network .l4 { left: 46px; top: 12px; width: 24px; transform: rotate(54deg); }
+
+.diag-timeline .track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 28px;
+  height: 2px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 242, 0, .6);
-  background: linear-gradient(140deg, rgba(255, 242, 0, .4), rgba(255, 242, 0, .1));
-  box-shadow: 0 12px 24px rgba(255, 242, 0, .24);
+  background: rgba(250,250,247,.26);
 }
-.stage-diagram--strategy .iso-main {
-  background: linear-gradient(140deg, rgba(255, 242, 0, .45), rgba(255, 162, 0, .12));
+.diag-timeline .clip {
+  position: absolute;
+  width: 16px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, rgba(255,242,0,.7), rgba(95,201,255,.45));
+  box-shadow: 0 0 12px rgba(255,242,0,.22);
 }
-.stage-diagram--guest .iso-main {
-  background: linear-gradient(140deg, rgba(95, 201, 255, .4), rgba(95, 201, 255, .1));
+.diag-timeline .k1 { left: 6px; top: 20px; height: 18px; }
+.diag-timeline .k2 { left: 30px; top: 14px; height: 28px; }
+.diag-timeline .k3 { left: 56px; top: 22px; height: 16px; }
+.diag-timeline .k4 { left: 78px; top: 12px; height: 32px; }
+
+.diag-stack .card {
+  position: absolute;
+  width: 70px;
+  height: 42px;
+  border-radius: 9px;
+  border: 1px solid rgba(250,250,247,.28);
+  background: linear-gradient(145deg, rgba(172,243,119,.25), rgba(95,201,255,.14));
+  box-shadow: 0 8px 18px rgba(0,0,0,.25);
 }
-.stage-diagram--production .iso-main {
-  background: linear-gradient(140deg, rgba(255, 242, 0, .3), rgba(95, 201, 255, .2));
+.diag-stack .s1 { left: 10px; top: 4px; transform: rotate(-7deg); }
+.diag-stack .s2 { left: 16px; top: 13px; transform: rotate(-2deg); }
+.diag-stack .s3 { left: 22px; top: 22px; transform: rotate(3deg); }
+
+.diag-branch .hub {
+  position: absolute;
+  left: 43px;
+  top: 27px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,242,0,.9);
+  box-shadow: 0 0 10px rgba(255,242,0,.5);
 }
-.stage-diagram--enablement .iso-main {
-  background: linear-gradient(140deg, rgba(172, 243, 119, .35), rgba(95, 201, 255, .1));
+.diag-branch .branch {
+  position: absolute;
+  width: 20px;
+  height: 1px;
+  background: rgba(250,250,247,.32);
+  transform-origin: left center;
 }
-.stage-diagram--distribution .iso-main {
-  background: linear-gradient(140deg, rgba(255, 125, 189, .25), rgba(95, 201, 255, .2));
+.diag-branch .b1 { left: 50px; top: 29px; transform: rotate(-30deg); }
+.diag-branch .b2 { left: 50px; top: 29px; transform: rotate(-8deg); }
+.diag-branch .b3 { left: 50px; top: 29px; transform: rotate(12deg); }
+.diag-branch .b4 { left: 50px; top: 29px; transform: rotate(36deg); }
+.diag-branch .end {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(95,201,255,.86);
+  box-shadow: 0 0 8px rgba(95,201,255,.45);
 }
-.stage-diagram--strategy .iso-node { border-radius: 5px; }
-.stage-diagram--guest .iso-node { border-radius: 50%; }
-.stage-diagram--production .iso-node { transform: rotate(45deg); border-radius: 4px; }
-.stage-diagram--enablement .iso-node { border-radius: 10px; }
-.stage-diagram--distribution .iso-node { border-radius: 6px 12px 6px 12px; }
+.diag-branch .e1 { left: 73px; top: 16px; }
+.diag-branch .e2 { left: 77px; top: 25px; }
+.diag-branch .e3 { left: 78px; top: 36px; }
+.diag-branch .e4 { left: 73px; top: 47px; }
 .stage-diagram p {
   margin-top: 14px;
   text-align: center;
@@ -400,29 +484,6 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-.stage-diagram .iso-node {
-  position: absolute;
-  width: 26px;
-  height: 26px;
-  border-radius: 7px;
-  border: 1px solid rgba(250,250,247,.36);
-  background: rgba(250,250,247,.08);
-}
-.stage-diagram .iso-node::after {
-  content: "";
-  position: absolute;
-  width: 14px;
-  height: 1px;
-  background: rgba(250,250,247,.28);
-}
-.stage-diagram .iso-node.a { top: 18px; left: 16px; }
-.stage-diagram .iso-node.b { top: 18px; right: 16px; }
-.stage-diagram .iso-node.c { bottom: 18px; left: 30px; }
-.stage-diagram .iso-node.d { bottom: 18px; right: 30px; }
-.stage-diagram .iso-node.a::after { right: -14px; top: 12px; }
-.stage-diagram .iso-node.b::after { left: -14px; top: 12px; }
-.stage-diagram .iso-node.c::after { right: -14px; top: 12px; }
-.stage-diagram .iso-node.d::after { left: -14px; top: 12px; }
 
 .packages-section {
   background:

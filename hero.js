@@ -76,7 +76,7 @@
   });
   (function draw() {
     pctx.clearRect(0, 0, pw, ph);
-    const cx = pw * 0.6, cy = ph * 0.55, colH = ph * 0.5;
+    const cx = pw * 0.48, cy = ph * 0.55, colH = ph * 0.5;
     particles.forEach((p, i) => {
       const tx = cx + Math.sin(i * 0.7) * 8;
       const ty = cy - colH / 2 + (i / particles.length) * colH;
