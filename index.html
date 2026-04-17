@@ -1,14 +1,355 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <title>Built Better</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>B2B Better — Content that compounds.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/shared.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'] },
+    colors: { ink:'#0B0B0C', surface:'#101114', paper:'#FAFAF7', muted:'#6B6B70', line:'#1E1F23', yolk:'#FFF200' },
+  }}};
+</script>
+</head>
+<body class="overflow-x-hidden">
 
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<header id="siteNav" class="nav-frost fixed top-0 inset-x-0 z-50">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
+    <a href="/" class="flex items-baseline gap-[3px] text-paper font-bold text-lg tracking-tight"><span>IIB</span><span class="w-2 h-2 rounded-full bg-yolk"></span></a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-paper/75">
+      <a class="link-underline hover:text-paper transition" href="/packages">Packages</a>
+      <a class="link-underline hover:text-paper transition" href="/insights">Insights</a>
+      <a class="link-underline hover:text-paper transition" href="/assessment">Assessment</a>
+      <a class="link-underline hover:text-paper transition" href="/about">About</a>
+      <a class="link-underline hover:text-paper transition" href="/referral">Referral</a>
+    </nav>
+    <div class="hidden md:block">
+      <a href="/premise-pitch" class="btn-primary !py-3 !px-5 text-sm">Free premise pitch
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <button id="burger" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" aria-label="Open menu">
+      <span class="w-5 h-[2px] bg-paper"></span><span class="w-5 h-[2px] bg-paper"></span>
+    </button>
+  </div>
+</header>
+<div id="menuOverlay" class="menu-overlay fixed inset-0 z-40 hidden flex-col px-6 pt-24 pb-10 gap-6 text-paper md:!hidden">
+  <a class="text-3xl font-semibold tracking-tight" href="/packages">Packages.</a>
+  <a class="text-3xl font-semibold tracking-tight" href="/insights">Insights.</a>
+  <a class="text-3xl font-semibold tracking-tight" href="/assessment">Assessment.</a>
+  <a class="text-3xl font-semibold tracking-tight" href="/about">About.</a>
+  <a class="text-3xl font-semibold tracking-tight" href="/referral">Referral.</a>
+  <div class="mt-auto"><a href="/premise-pitch" class="btn-primary">Free premise pitch</a></div>
+</div>
+
+<!-- HERO -->
+<section id="top" class="relative min-h-[100svh] flex items-center overflow-hidden noise text-scrim">
+  <canvas id="hero-canvas" class="absolute inset-0 w-full h-full"></canvas>
+  <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 pt-32 pb-24 w-full">
+    <div class="eyebrow text-paper/60 mb-6" data-reveal>B2B Better — owned media engine</div>
+    <h1 class="display text-[clamp(2.6rem,8.5vw,8.5rem)] text-paper max-w-[16ch]">
+      <span data-reveal>Content that</span><br>
+      <span data-reveal>compounds<span class="inline-block align-[0.1em] ml-[0.05em] w-[0.32em] h-[0.32em] rounded-full bg-yolk"></span></span>
+    </h1>
+    <p class="mt-8 text-paper/75 text-lg md:text-xl max-w-[52ch]" data-reveal>
+      We build video-first owned media systems for service-based B2B brands —
+      story-led shows that open enterprise doors, expand pipeline, and turn
+      every episode into sales fuel.
+    </p>
+    <div class="mt-10 flex flex-wrap items-center gap-4" data-reveal>
+      <a href="#cta" class="btn-primary">Book a strategy call
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#engine" class="btn-ghost">See the engine</a>
+    </div>
+  </div>
+
+  <!-- Cursor interaction hint -->
+  <div id="cursorHint" class="cursor-hint hidden md:inline-flex" style="right: 8%; top: 50%; transform: translateY(-50%);">
+    <span class="dot"></span> <span>Move your cursor</span>
+  </div>
+
+  <div class="scroll-hint"><span>Scroll</span><span class="bar"></span></div>
+</section>
+
+<!-- CLIENT MARQUEE -->
+<section class="relative py-10 border-y border-line overflow-hidden">
+  <div class="flex gap-16 marquee-track whitespace-nowrap text-paper/40 text-2xl md:text-3xl tracking-tight">
+    <div class="flex gap-16"><span>Gong</span><span>•</span><span>Chili Piper</span><span>•</span><span>Cognism</span><span>•</span><span>Refine Labs</span><span>•</span><span>Pavilion</span><span>•</span><span>Lavender</span><span>•</span><span>Apollo</span><span>•</span><span>Salesloft</span><span>•</span><span>Outreach</span><span>•</span></div>
+    <div class="flex gap-16" aria-hidden="true"><span>Gong</span><span>•</span><span>Chili Piper</span><span>•</span><span>Cognism</span><span>•</span><span>Refine Labs</span><span>•</span><span>Pavilion</span><span>•</span><span>Lavender</span><span>•</span><span>Apollo</span><span>•</span><span>Salesloft</span><span>•</span><span>Outreach</span><span>•</span></div>
+  </div>
+</section>
+
+<!-- PROBLEM (pinned) -->
+<section id="problemPin" class="relative py-36 md:py-56 overflow-hidden">
+  <div class="problem-content max-w-[1440px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-10 items-start">
+    <div class="md:col-span-5">
+      <div class="eyebrow text-paper/50 mb-8">The problem</div>
+      <h2 class="display text-[clamp(2rem,5.5vw,4.5rem)] text-paper/70" id="problem-head">
+        Most B2B content<br>fades<span class="inline-block w-3 h-3 rounded-full bg-paper/40 ml-1 align-middle"></span>
+      </h2>
+      <p class="mt-6 text-paper/50 max-w-sm">
+        Campaigns launch. Budgets burn. Six weeks later the deck is in a drawer
+        and the pipeline hasn't moved.
+      </p>
+    </div>
+  </div>
+  <canvas id="particles" class="absolute inset-0 w-full h-full pointer-events-none opacity-60"></canvas>
+</section>
+
+<!-- PROMISE -->
+<section class="relative py-36 md:py-56 overflow-hidden">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-6 md:col-start-7">
+      <div class="eyebrow text-yolk mb-8">The promise</div>
+      <h2 class="display text-[clamp(2.4rem,7vw,6rem)] text-paper" id="promise-head">
+        Yours should<br>compound<span class="inline-block w-4 h-4 rounded-full bg-yolk ml-1 align-middle"></span>
+      </h2>
+      <p class="mt-10 text-paper/70 text-lg md:text-xl max-w-[52ch]">
+        Campaigns fade. Engines stack. We architect shows that earn attention
+        once and keep paying back — in meetings booked, deals influenced,
+        and reply rates that actually move.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- ENGINE -->
+<section id="engine" class="relative py-28 md:py-40">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10 mb-20 md:mb-28">
+    <div class="eyebrow text-paper/50 mb-6">The engine</div>
+    <h2 class="display text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[18ch]" data-reveal-scroll>
+      Five moving parts.<br>One pipeline<span class="inline-block w-3 h-3 md:w-4 md:h-4 rounded-full bg-yolk ml-1 align-middle"></span>
+    </h2>
+    <p class="mt-6 text-paper/60 text-lg max-w-[52ch]" data-reveal-scroll>
+      Every stage is engineered around your sales motion — not creative
+      trophies. Here's what the ride looks like.
+    </p>
+  </div>
+
+  <div class="max-w-[1100px] mx-auto px-6 md:px-10 rail">
+    <div class="space-y-28 md:space-y-40">
+      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+        <div class="md:col-span-5 md:text-right md:pr-12 order-2 md:order-1">
+          <div class="eyebrow text-yolk mb-3">Stage 01</div>
+          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Strategy</h3>
+          <p class="text-paper/70">ICP diagnosis, show thesis, commercial goals. A blueprint that ties every episode to a sales outcome before a single camera rolls.</p>
+        </div>
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2 relative"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
+        <div class="md:col-span-5 order-3 hidden md:block"></div>
+      </div>
+      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+        <div class="md:col-span-5 order-2 md:order-1 hidden md:block"></div>
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
+        <div class="md:col-span-5 md:pl-12 order-3">
+          <div class="eyebrow text-yolk mb-3">Stage 02</div>
+          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Guest booking</h3>
+          <p class="text-paper/70">Curated pipeline of target-account guests. Your next guest is also your next deal conversation — and every invitation opens a door your reps couldn't.</p>
+        </div>
+      </div>
+      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+        <div class="md:col-span-5 md:text-right md:pr-12 order-2 md:order-1">
+          <div class="eyebrow text-yolk mb-3">Stage 03</div>
+          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Production</h3>
+          <p class="text-paper/70">Studio-grade video, editing, and episodic packaging. We remove the ops burden so you ship on cadence — not on willpower.</p>
+        </div>
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
+        <div class="md:col-span-5 order-3 hidden md:block"></div>
+      </div>
+      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+        <div class="md:col-span-5 order-2 md:order-1 hidden md:block"></div>
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
+        <div class="md:col-span-5 md:pl-12 order-3">
+          <div class="eyebrow text-yolk mb-3">Stage 04</div>
+          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Rep enablement</h3>
+          <p class="text-paper/70">Episodes become cold-open ammo. Sales get clips, quotes, and openers that get replies — the content finally shows up where deals are won.</p>
+        </div>
+      </div>
+      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+        <div class="md:col-span-5 md:text-right md:pr-12 order-2 md:order-1">
+          <div class="eyebrow text-yolk mb-3">Stage 05</div>
+          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Distribution</h3>
+          <p class="text-paper/70">Multi-channel rollout across social, email, and paid. One recording, weeks of pipeline — compounding every time it ships.</p>
+        </div>
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
+        <div class="md:col-span-5 order-3 hidden md:block"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- PROOF -->
+<section class="relative py-28 md:py-40">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10">
+    <div class="eyebrow text-paper/50 mb-6">The proof</div>
+    <h2 class="display text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[20ch]" data-reveal-scroll>Numbers over vanity<span class="inline-block w-3 h-3 md:w-4 md:h-4 rounded-full bg-yolk ml-1 align-middle"></span></h2>
+    <p class="mt-6 text-paper/60 text-lg max-w-[52ch]" data-reveal-scroll>
+      Placeholder metrics — replace with your real client results.
+    </p>
+    <div class="mt-16 grid md:grid-cols-3 gap-4 md:gap-6">
+      <div class="tilt relative p-8 md:p-10 bg-surface border border-line rounded-3xl overflow-hidden min-h-[280px] flex flex-col justify-between">
+        <div class="eyebrow text-yolk">Reply rate</div>
+        <div>
+          <div class="display text-6xl md:text-7xl text-paper" data-count="2.4">0<span class="text-yolk">×</span></div>
+          <div class="text-paper/60 mt-3">vs. outbound-only baselines, across 12 programmes.</div>
+        </div>
+      </div>
+      <div class="tilt relative p-8 md:p-10 bg-surface border border-line rounded-3xl overflow-hidden min-h-[280px] flex flex-col justify-between">
+        <div class="eyebrow text-yolk">Pipeline influenced</div>
+        <div>
+          <div class="display text-6xl md:text-7xl text-paper"><span class="text-yolk">$</span><span data-count="48">0</span>M+</div>
+          <div class="text-paper/60 mt-3">attributable to guest-led shows we've produced.</div>
+        </div>
+      </div>
+      <div class="tilt relative p-8 md:p-10 bg-surface border border-line rounded-3xl overflow-hidden min-h-[280px] flex flex-col justify-between">
+        <div class="eyebrow text-yolk">Enterprise guests</div>
+        <div>
+          <div class="display text-6xl md:text-7xl text-paper" data-count="310">0<span class="text-yolk">+</span></div>
+          <div class="text-paper/60 mt-3">target-account conversations booked via the engine.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- PACKAGES -->
+<section id="packages" class="relative py-28 md:py-40">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10">
+    <div class="flex items-end justify-between flex-wrap gap-6 mb-16">
+      <div>
+        <div class="eyebrow text-paper/50 mb-6">Packages</div>
+        <h2 class="display text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[20ch]" data-reveal-scroll>Four ways in<span class="inline-block w-3 h-3 md:w-4 md:h-4 rounded-full bg-yolk ml-1 align-middle"></span></h2>
+      </div>
+      <p class="text-paper/60 max-w-sm">Start where it hurts. Scale when it works.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+      <article class="relative bg-surface border border-line rounded-3xl p-8 md:p-10 flex flex-col">
+        <div class="flex items-center gap-2 mb-6"><span class="w-2 h-2 rounded-full bg-yolk"></span><span class="eyebrow text-paper/60">Blueprint</span></div>
+        <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Strategy workshop</h3>
+        <p class="text-paper/60 mb-8">Fixed-fee engagement to architect your owned media system. You walk out with a show, a plan, and a pipeline model.</p>
+        <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— ICP & show thesis</li><li>— Content-to-pipeline model</li><li>— Distribution playbook</li></ul>
+        <a class="btn-ghost self-start mt-auto" href="/packages">Learn more</a>
+      </article>
+      <article class="relative bg-surface border border-line rounded-3xl p-8 md:p-10 flex flex-col">
+        <div class="flex items-center gap-2 mb-6"><span class="w-2 h-2 rounded-full bg-yolk"></span><span class="eyebrow text-paper/60">Production</span></div>
+        <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Production partner</h3>
+        <p class="text-paper/60 mb-8">You own strategy and distribution. We run the studio so every episode ships on cadence without draining your team.</p>
+        <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— Pre-production & guest ops</li><li>— Full-stack editing</li><li>— Episodic packaging</li></ul>
+        <a class="btn-ghost self-start mt-auto" href="/packages">Learn more</a>
+      </article>
+      <article class="relative bg-surface border border-line rounded-3xl p-8 md:p-10 flex flex-col">
+        <div class="flex items-center gap-2 mb-6"><span class="w-2 h-2 rounded-full bg-yolk"></span><span class="eyebrow text-paper/60">Advisory</span></div>
+        <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Strategic advisory</h3>
+        <p class="text-paper/60 mb-8">Monthly retainer for in-house media teams. We hold the standards, you keep the muscle.</p>
+        <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— Weekly working sessions</li><li>— Editorial calibration</li><li>— Revenue reporting cadence</li></ul>
+        <a class="btn-ghost self-start mt-auto" href="/packages">Learn more</a>
+      </article>
+      <article class="relative bg-ink border-2 border-yolk rounded-3xl p-8 md:p-10 flex flex-col">
+        <div class="flex items-center gap-2 mb-6"><span class="w-2 h-2 rounded-full bg-yolk"></span><span class="eyebrow text-yolk">Full-stack · recommended</span></div>
+        <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Owned media engine</h3>
+        <p class="text-paper/60 mb-8">The complete system. Strategy, guests, production, enablement, distribution. One partner, one number to hit.</p>
+        <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— End-to-end ownership</li><li>— Rep enablement library</li><li>— Pipeline-linked reporting</li></ul>
+        <a class="btn-primary self-start mt-auto" href="#cta">Book a strategy call
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- TEAM -->
+<section id="about" class="relative py-28 md:py-40">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-5">
+      <div class="eyebrow text-paper/50 mb-6">Built by operators</div>
+      <h2 class="display text-[clamp(2.4rem,5vw,4rem)] text-paper leading-[0.95]" data-reveal-scroll>
+        A small team.<br>Ruthless on outcomes<span class="inline-block w-3 h-3 rounded-full bg-yolk ml-1 align-middle"></span>
+      </h2>
+      <p class="mt-6 text-paper/60 text-lg max-w-[46ch]">
+        We've sat in the marketing seat, the founder seat, and the sales seat.
+        The studio exists because we got tired of "content" that didn't cash.
+      </p>
+      <a href="/about" class="btn-ghost mt-8">Meet the studio</a>
+    </div>
+    <div class="md:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
+      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-br from-yolk/30 via-transparent to-surface"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Jane Doe — Strategy</div></div>
+      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-tr from-paper/10 via-transparent to-yolk/20"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Alex Roe — Producer</div></div>
+      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-bl from-yolk/20 via-transparent to-paper/5"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Sam Poe — Growth</div></div>
+      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative hidden md:block"><div class="absolute inset-0 bg-gradient-to-t from-yolk/15 via-transparent to-paper/5"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Kim Noe — Post</div></div>
+      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative hidden md:block"><div class="absolute inset-0 bg-gradient-to-tr from-paper/5 via-transparent to-yolk/15"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Jo Voe — Client Partner</div></div>
+      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative hidden md:block"><div class="absolute inset-0 bg-gradient-to-br from-yolk/25 via-transparent to-paper/5"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Ray Woe — Studio</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- INSIGHTS -->
+<section id="insights" class="relative py-28 md:py-40">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10">
+    <div class="flex items-end justify-between flex-wrap gap-6 mb-14">
+      <div><div class="eyebrow text-paper/50 mb-6">Insights</div><h2 class="display text-[clamp(2.2rem,5vw,4.5rem)] text-paper" data-reveal-scroll>Notes from the studio<span class="inline-block w-3 h-3 rounded-full bg-yolk ml-1 align-middle"></span></h2></div>
+      <a href="/insights" class="btn-ghost">Read the archive</a>
+    </div>
+    <div class="grid md:grid-cols-3 gap-4 md:gap-6">
+      <a href="/insights" class="group p-8 bg-surface border border-line rounded-3xl block hover:border-yolk/40 transition"><div class="eyebrow text-paper/40">Owned media · 7 min</div><h3 class="display text-2xl md:text-3xl text-paper mt-6 leading-tight">Why "campaigns" will always lose to "engines."</h3><div class="mt-10 text-paper/60 text-sm inline-flex items-center gap-2 group-hover:text-yolk">Read article →</div></a>
+      <a href="/insights" class="group p-8 bg-surface border border-line rounded-3xl block hover:border-yolk/40 transition"><div class="eyebrow text-paper/40">Sales · 5 min</div><h3 class="display text-2xl md:text-3xl text-paper mt-6 leading-tight">Turning every episode into cold-open ammo.</h3><div class="mt-10 text-paper/60 text-sm inline-flex items-center gap-2 group-hover:text-yolk">Read article →</div></a>
+      <a href="/insights" class="group p-8 bg-surface border border-line rounded-3xl block hover:border-yolk/40 transition"><div class="eyebrow text-paper/40">Strategy · 9 min</div><h3 class="display text-2xl md:text-3xl text-paper mt-6 leading-tight">The ICP-to-guest map every B2B show needs.</h3><div class="mt-10 text-paper/60 text-sm inline-flex items-center gap-2 group-hover:text-yolk">Read article →</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" class="relative py-40 md:py-56 overflow-hidden">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10 text-center">
+    <div class="eyebrow text-yolk mb-6">Say hello</div>
+    <h2 class="display text-[clamp(2.6rem,10vw,9rem)] text-paper leading-[0.9] max-w-[14ch] mx-auto">Ready to<br>compound<span class="inline-block align-[0.08em] ml-[0.05em] w-[0.3em] h-[0.3em] rounded-full bg-yolk" id="cta-period"></span></h2>
+    <p class="mt-8 text-paper/60 text-lg md:text-xl max-w-[46ch] mx-auto">30-minute strategy call. No deck. We diagnose your funnel, stress-test the show thesis, and you leave with a plan.</p>
+    <div class="mt-12 flex flex-wrap justify-center gap-4">
+      <a href="#" class="btn-primary text-base md:text-lg !px-8 !py-5">Book a strategy call
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="/assessment" class="btn-ghost text-base md:text-lg !px-8 !py-5">Get a podcast assessment</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-line">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10 py-16 grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-5">
+      <a href="/" class="flex items-baseline gap-[3px] text-paper font-bold text-xl tracking-tight mb-6"><span>IIB</span><span class="w-2.5 h-2.5 rounded-full bg-yolk"></span></a>
+      <p class="text-paper/50 max-w-sm">B2B Better is an owned media agency turning podcasts into pipeline for service-based B2B brands.</p>
+    </div>
+    <div class="md:col-span-2"><div class="eyebrow text-paper/40 mb-4">Studio</div><ul class="space-y-2 text-paper/70 text-sm"><li><a class="link-underline" href="/about">About</a></li><li><a class="link-underline" href="/packages">Packages</a></li><li><a class="link-underline" href="/referral">Referral Programme</a></li></ul></div>
+    <div class="md:col-span-2"><div class="eyebrow text-paper/40 mb-4">Resources</div><ul class="space-y-2 text-paper/70 text-sm"><li><a class="link-underline" href="/insights">Insights</a></li><li><a class="link-underline" href="/assessment">Podcast Assessment</a></li><li><a class="link-underline" href="/premise-pitch">Free Premise Pitch</a></li></ul></div>
+    <div class="md:col-span-3"><div class="eyebrow text-paper/40 mb-4">Contact</div><ul class="space-y-2 text-paper/70 text-sm"><li>hello@b2b-better.com</li><li>London · Remote</li><li><a class="link-underline" href="/privacy">Privacy Policy</a></li></ul></div>
+  </div>
+  <div class="border-t border-line"><div class="max-w-[1440px] mx-auto px-6 md:px-10 py-6 flex justify-between text-xs text-paper/40"><span>© B2B Better, 2026</span><span>Mockup — prototype only</span></div></div>
+</footer>
+
+<script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.161.0/build/three.module.js" } }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="/shared.js"></script>
+<script type="module" src="/hero.js"></script>
+</body>
+</html>
