@@ -12,27 +12,33 @@ window.__lenis = lenis;
 (function cursor() {
   const dot = document.getElementById('cursorDot');
   const ring = document.getElementById('cursorRing');
-  if (!dot || !ring) return;
+  if (!dot) return;
   let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
   addEventListener('mousemove', (e) => {
     mx = e.clientX; my = e.clientY;
     dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
   });
-  (function loop() {
-    rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
-    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-    requestAnimationFrame(loop);
-  })();
+  if (ring) {
+    (function loop() {
+      rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    })();
+  }
   document.querySelectorAll('a, button, .tilt').forEach((el) => {
     el.addEventListener('mouseenter', () => {
       dot.style.width = '6px'; dot.style.height = '6px';
-      ring.style.borderColor = '#FFF200';
-      ring.style.width = '52px'; ring.style.height = '52px';
+      if (ring) {
+        ring.style.borderColor = '#FFF200';
+        ring.style.width = '52px'; ring.style.height = '52px';
+      }
     });
     el.addEventListener('mouseleave', () => {
       dot.style.width = '14px'; dot.style.height = '14px';
-      ring.style.borderColor = 'rgba(250,250,247,.35)';
-      ring.style.width = '40px'; ring.style.height = '40px';
+      if (ring) {
+        ring.style.borderColor = 'rgba(250,250,247,.35)';
+        ring.style.width = '40px'; ring.style.height = '40px';
+      }
     });
   });
 })();

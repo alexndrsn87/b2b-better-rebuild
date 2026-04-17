@@ -26,14 +26,14 @@
     ScrollTrigger.create({
       trigger: pinEl,
       start: 'top 20%',
-      end: '+=700',
+      end: '+=420',
       pin: '.problem-content',
       pinSpacing: true,
     });
     // Hold the headline crisp for a long range, then fade late
     gsap.timeline({
       scrollTrigger: {
-        trigger: pinEl, start: 'top 20%', end: '+=700', scrub: true,
+        trigger: pinEl, start: 'top 20%', end: '+=420', scrub: true,
       },
     })
       .to({}, { duration: 0.6 }) // hold
