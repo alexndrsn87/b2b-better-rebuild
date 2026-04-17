@@ -45,14 +45,24 @@ window.__lenis = lenis;
   const livelyTargets = document.querySelectorAll('.nav-logo, .nav-cta');
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let freezeNavMotion = false;
   if (navEl) {
     const update = () => navEl.classList.toggle('is-scrolled', window.scrollY > 24);
     update(); addEventListener('scroll', update, { passive: true });
+    navEl.addEventListener('mouseenter', () => {
+      freezeNavMotion = true;
+      livelyTargets.forEach((el) => {
+        el.style.setProperty('--mx', '0px');
+        el.style.setProperty('--my', '0px');
+      });
+    });
+    navEl.addEventListener('mouseleave', () => { freezeNavMotion = false; });
   }
 
   if (!prefersReducedMotion) {
     livelyTargets.forEach((el) => {
       el.addEventListener('pointermove', (e) => {
+        if (freezeNavMotion) return;
         const rect = el.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
         const y = ((e.clientY - rect.top) / rect.height - 0.5) * 6;

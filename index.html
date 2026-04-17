@@ -23,7 +23,7 @@
 
 <!-- NAV -->
 <header id="siteNav" class="nav-frost fixed top-0 inset-x-0 z-50">
-  <div class="max-w-[1440px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
+  <div class="nav-shell mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
     <a href="/" class="inline-flex items-center nav-logo" aria-label="B2B Better home"><img src="/b2b-logo.png" alt="B2B Better" class="h-8 w-auto md:h-9" /></a>
     <nav class="hidden md:flex items-center gap-8 text-sm text-paper/75">
       <a class="nav-link link-underline hover:text-paper transition" href="/packages">Packages</a>
@@ -54,22 +54,25 @@
 <!-- HERO -->
 <section id="top" class="relative min-h-[100svh] flex items-center overflow-hidden noise text-scrim">
   <canvas id="hero-canvas" class="absolute inset-0 w-full h-full"></canvas>
+  <div class="hero-ambient" aria-hidden="true"></div>
   <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 pt-32 pb-24 w-full">
-    <div class="eyebrow text-paper/60 mb-6" data-reveal>B2B Better — owned media engine</div>
-    <h1 class="display text-[clamp(2.6rem,8.5vw,8.5rem)] text-paper max-w-[16ch]">
-      <span data-reveal>Content that</span><br>
-      <span data-reveal>compounds<span class="inline-block align-[0.1em] ml-[0.05em] w-[0.32em] h-[0.32em] rounded-full bg-yolk"></span></span>
-    </h1>
-    <p class="mt-8 text-paper/75 text-lg md:text-xl max-w-[52ch]" data-reveal>
-      We build video-first owned media systems for service-based B2B brands —
-      story-led shows that open enterprise doors, expand pipeline, and turn
-      every episode into sales fuel.
-    </p>
-    <div class="mt-10 flex flex-wrap items-center gap-4" data-reveal>
-      <a href="#cta" class="btn-primary">Book a strategy call
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="#engine" class="btn-ghost">See the engine</a>
+    <div class="hero-copy-glass">
+      <div class="eyebrow text-paper/60 mb-6" data-reveal>B2B Better — owned media engine</div>
+      <h1 class="display text-[clamp(2.6rem,8.5vw,8.5rem)] text-paper max-w-[16ch]">
+        <span data-reveal>Content that</span><br>
+        <span data-reveal>compounds<span class="inline-block align-[0.1em] ml-[0.05em] w-[0.32em] h-[0.32em] rounded-full bg-yolk"></span></span>
+      </h1>
+      <p class="mt-8 text-paper/75 text-lg md:text-xl max-w-[52ch]" data-reveal>
+        We build video-first owned media systems for service-based B2B brands —
+        story-led shows that open enterprise doors, expand pipeline, and turn
+        every episode into sales fuel.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4" data-reveal>
+        <a href="#cta" class="btn-primary">Book a strategy call
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#engine" class="btn-ghost">See the engine</a>
+      </div>
     </div>
   </div>
 
@@ -126,7 +129,7 @@
 <div class="hairline"></div>
 
 <!-- ENGINE -->
-<section id="engine" class="relative py-28 md:py-40">
+<section id="engine" class="engine-section relative py-28 md:py-40">
   <div class="max-w-[1440px] mx-auto px-6 md:px-10 mb-20 md:mb-28">
     <div class="eyebrow text-paper/50 mb-6">The engine</div>
     <h2 class="display text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[18ch]" data-reveal-scroll>
@@ -140,49 +143,54 @@
 
   <div class="max-w-[1100px] mx-auto px-6 md:px-10 rail">
     <div class="space-y-28 md:space-y-40">
-      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
-        <div class="md:col-span-5 md:text-right md:pr-12 order-2 md:order-1">
+      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+        <div class="md:col-span-5 md:text-right md:pr-12 order-2 md:order-1 stage-panel tilt">
+          <div class="stage-badge ml-auto">S1</div>
           <div class="eyebrow text-yolk mb-3">Stage 01</div>
           <h3 class="display text-4xl md:text-5xl text-paper mb-4">Strategy</h3>
           <p class="text-paper/70">ICP diagnosis, show thesis, commercial goals. A blueprint that ties every episode to a sales outcome before a single camera rolls.</p>
         </div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2 relative"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2 relative"><div class="stage-core stage-dot relative z-10"></div></div>
         <div class="md:col-span-5 order-3 hidden md:block"></div>
       </div>
-      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-10 items-center">
         <div class="md:col-span-5 order-2 md:order-1 hidden md:block"></div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
-        <div class="md:col-span-5 md:pl-12 order-3">
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="stage-core stage-dot relative z-10"></div></div>
+        <div class="md:col-span-5 md:pl-12 order-3 stage-panel tilt">
+          <div class="stage-badge">S2</div>
           <div class="eyebrow text-yolk mb-3">Stage 02</div>
           <h3 class="display text-4xl md:text-5xl text-paper mb-4">Guest booking</h3>
           <p class="text-paper/70">Curated pipeline of target-account guests. Your next guest is also your next deal conversation — and every invitation opens a door your reps couldn't.</p>
         </div>
       </div>
-      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
-        <div class="md:col-span-5 md:text-right md:pr-12 order-2 md:order-1">
+      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+        <div class="md:col-span-5 md:text-right md:pr-12 order-2 md:order-1 stage-panel tilt">
+          <div class="stage-badge ml-auto">S3</div>
           <div class="eyebrow text-yolk mb-3">Stage 03</div>
           <h3 class="display text-4xl md:text-5xl text-paper mb-4">Production</h3>
           <p class="text-paper/70">Studio-grade video, editing, and episodic packaging. We remove the ops burden so you ship on cadence — not on willpower.</p>
         </div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="stage-core stage-dot relative z-10"></div></div>
         <div class="md:col-span-5 order-3 hidden md:block"></div>
       </div>
-      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-10 items-center">
         <div class="md:col-span-5 order-2 md:order-1 hidden md:block"></div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
-        <div class="md:col-span-5 md:pl-12 order-3">
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="stage-core stage-dot relative z-10"></div></div>
+        <div class="md:col-span-5 md:pl-12 order-3 stage-panel tilt">
+          <div class="stage-badge">S4</div>
           <div class="eyebrow text-yolk mb-3">Stage 04</div>
           <h3 class="display text-4xl md:text-5xl text-paper mb-4">Rep enablement</h3>
           <p class="text-paper/70">Episodes become cold-open ammo. Sales get clips, quotes, and openers that get replies — the content finally shows up where deals are won.</p>
         </div>
       </div>
-      <div class="stage grid md:grid-cols-12 gap-6 md:gap-10 items-center">
-        <div class="md:col-span-5 md:text-right md:pr-12 order-2 md:order-1">
+      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+        <div class="md:col-span-5 md:text-right md:pr-12 order-2 md:order-1 stage-panel tilt">
+          <div class="stage-badge ml-auto">S5</div>
           <div class="eyebrow text-yolk mb-3">Stage 05</div>
           <h3 class="display text-4xl md:text-5xl text-paper mb-4">Distribution</h3>
           <p class="text-paper/70">Multi-channel rollout across social, email, and paid. One recording, weeks of pipeline — compounding every time it ships.</p>
         </div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="w-9 h-9 rounded-full bg-yolk stage-dot relative z-10"></div></div>
+        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="stage-core stage-dot relative z-10"></div></div>
         <div class="md:col-span-5 order-3 hidden md:block"></div>
       </div>
     </div>
@@ -228,7 +236,7 @@
 <div class="hairline"></div>
 
 <!-- PACKAGES -->
-<section id="packages" class="relative py-28 md:py-40">
+<section id="packages" class="packages-section relative py-28 md:py-40">
   <div class="max-w-[1440px] mx-auto px-6 md:px-10">
     <div class="flex items-end justify-between flex-wrap gap-6 mb-16">
       <div>
@@ -238,29 +246,29 @@
       <p class="text-paper/60 max-w-sm">Start where it hurts. Scale when it works.</p>
     </div>
     <div class="grid md:grid-cols-2 gap-4 md:gap-6">
-      <article class="relative bg-surface border border-line rounded-3xl p-8 md:p-10 flex flex-col">
-        <div class="flex items-center gap-2 mb-6"><span class="w-2 h-2 rounded-full bg-yolk"></span><span class="eyebrow text-paper/60">Blueprint</span></div>
+      <article class="package-card tilt relative p-8 md:p-10 flex flex-col">
+        <div class="flex items-center gap-3 mb-6"><span class="package-icon">BP</span><span class="eyebrow text-paper/60">Blueprint</span></div>
         <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Strategy workshop</h3>
         <p class="text-paper/60 mb-8">Fixed-fee engagement to architect your owned media system. You walk out with a show, a plan, and a pipeline model.</p>
         <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— ICP & show thesis</li><li>— Content-to-pipeline model</li><li>— Distribution playbook</li></ul>
         <a class="btn-ghost self-start mt-auto" href="/packages">Learn more</a>
       </article>
-      <article class="relative bg-surface border border-line rounded-3xl p-8 md:p-10 flex flex-col">
-        <div class="flex items-center gap-2 mb-6"><span class="w-2 h-2 rounded-full bg-yolk"></span><span class="eyebrow text-paper/60">Production</span></div>
+      <article class="package-card tilt relative p-8 md:p-10 flex flex-col">
+        <div class="flex items-center gap-3 mb-6"><span class="package-icon">PR</span><span class="eyebrow text-paper/60">Production</span></div>
         <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Production partner</h3>
         <p class="text-paper/60 mb-8">You own strategy and distribution. We run the studio so every episode ships on cadence without draining your team.</p>
         <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— Pre-production & guest ops</li><li>— Full-stack editing</li><li>— Episodic packaging</li></ul>
         <a class="btn-ghost self-start mt-auto" href="/packages">Learn more</a>
       </article>
-      <article class="relative bg-surface border border-line rounded-3xl p-8 md:p-10 flex flex-col">
-        <div class="flex items-center gap-2 mb-6"><span class="w-2 h-2 rounded-full bg-yolk"></span><span class="eyebrow text-paper/60">Advisory</span></div>
+      <article class="package-card tilt relative p-8 md:p-10 flex flex-col">
+        <div class="flex items-center gap-3 mb-6"><span class="package-icon">AD</span><span class="eyebrow text-paper/60">Advisory</span></div>
         <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Strategic advisory</h3>
         <p class="text-paper/60 mb-8">Monthly retainer for in-house media teams. We hold the standards, you keep the muscle.</p>
         <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— Weekly working sessions</li><li>— Editorial calibration</li><li>— Revenue reporting cadence</li></ul>
         <a class="btn-ghost self-start mt-auto" href="/packages">Learn more</a>
       </article>
-      <article class="relative bg-ink border-2 border-yolk rounded-3xl p-8 md:p-10 flex flex-col">
-        <div class="flex items-center gap-2 mb-6"><span class="w-2 h-2 rounded-full bg-yolk"></span><span class="eyebrow text-yolk">Full-stack · recommended</span></div>
+      <article class="package-card tilt relative bg-ink border-2 border-yolk p-8 md:p-10 flex flex-col">
+        <div class="flex items-center gap-3 mb-6"><span class="package-icon">FS</span><span class="eyebrow text-yolk">Full-stack · recommended</span></div>
         <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Owned media engine</h3>
         <p class="text-paper/60 mb-8">The complete system. Strategy, guests, production, enablement, distribution. One partner, one number to hit.</p>
         <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— End-to-end ownership</li><li>— Rep enablement library</li><li>— Pipeline-linked reporting</li></ul>

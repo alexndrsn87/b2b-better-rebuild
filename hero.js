@@ -1,4 +1,4 @@
-/* ============ Homepage hero — tamer sphere + obvious cursor control ============ */
+/* ============ Homepage hero — saturn-like orb + responsive glow ============ */
 import * as THREE from 'three';
 
 const canvas = document.getElementById('hero-canvas');
@@ -25,12 +25,14 @@ if (canvas) {
       uMouseStrength: { value: 0 },
       uColor: { value: new THREE.Color('#FFF200') },
       uScroll: { value: 0 },
+      uHeat: { value: 0 },
     },
     vertexShader: `
       uniform float uTime;
       uniform vec2 uMouse;
       uniform float uMouseStrength;
       uniform float uScroll;
+      uniform float uHeat;
       varying vec3 vNormal;
       varying float vDisplace;
       vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
@@ -58,7 +60,8 @@ if (canvas) {
         // Mouse pull — distorts toward cursor direction
         vec3 mouseDir = normalize(vec3(uMouse.x, uMouse.y, 0.2));
         float pull = max(dot(normalize(pos), mouseDir), 0.0);
-        float displace = n * 0.22 + n2 * 0.06 + pull * uMouseStrength * 0.6 - uScroll * 0.1;
+        float displace = n * 0.16 + n2 * 0.04 + pull * uMouseStrength * 0.35 - uScroll * 0.03;
+        displace += uHeat * 0.04;
         vDisplace = displace;
         pos += normal * displace;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
@@ -66,6 +69,7 @@ if (canvas) {
     `,
     fragmentShader: `
       uniform vec3 uColor;
+      uniform float uHeat;
       varying vec3 vNormal;
       varying float vDisplace;
       void main(){
@@ -73,6 +77,9 @@ if (canvas) {
         vec3 col = mix(uColor * 0.35, uColor, rim);
         col += rim * 0.3;
         col += vec3(vDisplace * 0.25);
+        col = mix(col, vec3(1.0, 0.94, 0.5), uHeat * 0.18);
+        vec3 cherenkov = vec3(0.2, 0.68, 1.0) * pow(rim, 2.8) * uHeat * 1.8;
+        col += cherenkov;
         gl_FragColor = vec4(col, 1.0);
       }
     `,
@@ -80,12 +87,23 @@ if (canvas) {
   const sphere = new THREE.Mesh(geo, mat);
   scene.add(sphere);
 
-  // Soft ring accent
-  const ring = new THREE.Mesh(
-    new THREE.RingGeometry(2.0, 2.02, 128),
-    new THREE.MeshBasicMaterial({ color: '#FFF200', transparent: true, opacity: 0.18 })
+  // Saturn-style ring system
+  const ringA = new THREE.Mesh(
+    new THREE.TorusGeometry(1.58, 0.03, 16, 180),
+    new THREE.MeshBasicMaterial({ color: '#FFF200', transparent: true, opacity: 0.24 })
   );
-  ring.rotation.x = Math.PI / 2.4; scene.add(ring);
+  const ringB = new THREE.Mesh(
+    new THREE.TorusGeometry(1.85, 0.02, 16, 220),
+    new THREE.MeshBasicMaterial({ color: '#5fc9ff', transparent: true, opacity: 0.2 })
+  );
+  const ringC = new THREE.Mesh(
+    new THREE.TorusGeometry(2.05, 0.016, 12, 200),
+    new THREE.MeshBasicMaterial({ color: '#FFF200', transparent: true, opacity: 0.14 })
+  );
+  ringA.rotation.set(Math.PI / 2.42, 0.2, 0.45);
+  ringB.rotation.set(Math.PI / 2.25, -0.15, -0.32);
+  ringC.rotation.set(Math.PI / 2.58, 0.32, 0.2);
+  scene.add(ringA, ringB, ringC);
 
   resize(); addEventListener('resize', resize);
 
@@ -115,7 +133,9 @@ if (canvas) {
     onUpdate: (self) => { scrollNorm = self.progress; },
   });
 
-  const baseX = 3.8, baseY = -0.15;
+  const baseX = 3.45, baseY = -0.16;
+  const projected = new THREE.Vector3();
+  let heat = 0;
 
   function render(t) {
     mat.uniforms.uTime.value = t * 0.001;
@@ -125,17 +145,32 @@ if (canvas) {
     mat.uniforms.uMouseStrength.value = mouseStrength;
     mat.uniforms.uScroll.value = scrollNorm;
 
-    // Sphere visibly responds to cursor + drifts out as you scroll
-    sphere.position.x = baseX + mouse.x * 1.1 + scrollNorm * 1.2;
-    sphere.position.y = baseY + mouse.y * 0.9 - scrollNorm * 0.3;
-    const s = 1 - scrollNorm * 0.35;
+    // Keep orb near its anchored position with subtle cursor sway
+    sphere.position.x = baseX + mouse.x * 0.3;
+    sphere.position.y = baseY + mouse.y * 0.18;
+    const s = 1 - scrollNorm * 0.14;
     sphere.scale.set(s, s, s);
-    sphere.rotation.y += 0.003 + mouse.x * 0.004;
-    sphere.rotation.x += 0.0015 - mouse.y * 0.003;
+    sphere.rotation.y += 0.0018 + mouse.x * 0.0012;
+    sphere.rotation.x += 0.001 - mouse.y * 0.0008;
 
-    ring.position.copy(sphere.position);
-    ring.scale.set(s, s, s);
-    ring.rotation.z += 0.0015;
+    projected.copy(sphere.position).project(camera);
+    const proximity = Math.max(0, 1 - Math.hypot(mouse.x - projected.x, mouse.y - projected.y) * 1.8);
+    const heatTarget = proximity * Math.max(0.4, mouseStrength);
+    heat += (heatTarget - heat) * 0.08;
+    mat.uniforms.uHeat.value = heat;
+
+    ringA.position.copy(sphere.position);
+    ringB.position.copy(sphere.position);
+    ringC.position.copy(sphere.position);
+    ringA.scale.setScalar(s * 0.98);
+    ringB.scale.setScalar(s * 1.02);
+    ringC.scale.setScalar(s * 1.05);
+    ringA.rotation.z += 0.006;
+    ringB.rotation.z -= 0.0045;
+    ringC.rotation.z += 0.003;
+    ringB.material.opacity = 0.16 + heat * 0.46;
+    ringC.material.opacity = 0.1 + heat * 0.24;
+    ringB.material.color.setRGB(0.35 + heat * 0.55, 0.72 + heat * 0.2, 1.0);
 
     renderer.render(scene, camera);
     requestAnimationFrame(render);
