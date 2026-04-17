@@ -1,12 +1,6 @@
 /* ============ B2B Better — Shared interactions ============ */
 gsap.registerPlugin(ScrollTrigger);
 
-// #region agent log
-window.__agentLog = function(payload) {
-  fetch('http://127.0.0.1:7355/ingest/59b67c2b-f119-482c-b1d9-9ec204749100',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'e8152b'},body:JSON.stringify({sessionId:'e8152b',runId:'run1',timestamp:Date.now(),...payload})}).catch(()=>{});
-};
-// #endregion
-
 /* ---- Lenis smooth scroll ---- */
 const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
 lenis.on('scroll', ScrollTrigger.update);
@@ -19,9 +13,6 @@ window.__lenis = lenis;
   const dot = document.getElementById('cursorDot');
   const ring = document.getElementById('cursorRing');
   if (!dot || !ring) return;
-  // #region agent log
-  window.__agentLog({hypothesisId:'H1',location:'shared.js:19',message:'cursor elements initial state',data:{dotDisplay:getComputedStyle(dot).display,ringDisplay:getComputedStyle(ring).display,dotW:dot.offsetWidth,ringW:ring.offsetWidth}});
-  // #endregion
   let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
   addEventListener('mousemove', (e) => {
     mx = e.clientX; my = e.clientY;
@@ -58,13 +49,6 @@ window.__lenis = lenis;
   if (navEl) {
     const update = () => navEl.classList.toggle('is-scrolled', window.scrollY > 24);
     update(); addEventListener('scroll', update, { passive: true });
-    // #region agent log
-    const heroCard = document.querySelector('#top .hero-copy-glass');
-    const navLinks = document.querySelectorAll('#siteNav nav a');
-    const navRect = navEl.getBoundingClientRect();
-    const heroRect = heroCard ? heroCard.getBoundingClientRect() : null;
-    window.__agentLog({hypothesisId:'H2',location:'shared.js:61',message:'nav and hero spacing snapshot',data:{navBottom:Math.round(navRect.bottom),heroTop:heroRect?Math.round(heroRect.top):null,heroGap:heroRect?Math.round(heroRect.top-navRect.bottom):null,navFontSize:navLinks.length?getComputedStyle(navLinks[0]).fontSize:null}});
-    // #endregion
     navEl.addEventListener('mouseenter', () => {
       freezeNavMotion = true;
       livelyTargets.forEach((el) => {
