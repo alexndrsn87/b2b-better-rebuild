@@ -90,7 +90,10 @@ window.__lenis = lenis;
   };
 
   const convertToSlide = (p) => {
-    p.y = roofY - 1;
+    // Give each slide particle a small vertical offset so they form a
+    // thick band along the roof rather than a single 1px line.
+    p.rowOffset = (Math.random() - 0.45) * 5.5;
+    p.y = roofY - 1 + p.rowOffset;
     const dir = p.x >= coreX ? 1 : -1;
     const offset = (p.x - coreX) * 0.012;
     // Slower lateral launch → particles cluster near the impact, creating the
@@ -99,8 +102,8 @@ window.__lenis = lenis;
     p.vy = 0;
     p.mode = 1;
     p.life = 1;
-    p.alpha = 0.28 + Math.random() * 0.48;
-    p.size = 0.72 + Math.random() * 1.04;
+    p.alpha = 0.3 + Math.random() * 0.48;
+    p.size = 0.8 + Math.random() * 1.1;
   };
 
   const initParticles = () => {
@@ -210,9 +213,18 @@ window.__lenis = lenis;
     ctx.clearRect(0, 0, cw, ch);
     ctx.globalCompositeOperation = 'lighter';
 
-    // Tiny bright ribbon along the roof — enforces the "hit line" look
-    ctx.fillStyle = 'rgba(255, 246, 130, 0.55)';
-    ctx.fillRect(Math.max(0, coreX - 160), roofY - 1, Math.min(cw, 320), 1.1);
+    // Thick glowing hit bar along the roof — layered rects produce a soft
+    // vertical falloff and a bright centre, without needing a gradient alloc.
+    const hitW = Math.min(cw, 820);
+    const hitX = Math.max(0, coreX - hitW / 2);
+    ctx.fillStyle = 'rgba(255, 246, 150, 0.18)';
+    ctx.fillRect(hitX, roofY - 6, hitW, 11);
+    ctx.fillStyle = 'rgba(255, 246, 150, 0.28)';
+    ctx.fillRect(hitX, roofY - 3.5, hitW, 6);
+    ctx.fillStyle = 'rgba(255, 246, 150, 0.55)';
+    ctx.fillRect(hitX, roofY - 1.8, hitW, 3);
+    ctx.fillStyle = 'rgba(255, 248, 180, 0.85)';
+    ctx.fillRect(hitX, roofY - 0.6, hitW, 1.2);
 
     // Smaller, more localised cursor influence — a splash, not a force field.
     const influenceRadius = Math.max(58, cw * 0.05);
@@ -267,7 +279,10 @@ window.__lenis = lenis;
         nextParticles.push(p);
       } else if (p.mode === 1) {
         p.x += p.vx;
-        p.y = (roofY - 1.2) + Math.sin((p.x * 0.09) + p.phase) * 0.4;
+        // Each slide particle keeps its own vertical offset so the roof
+        // reads as a thick band instead of a single-pixel line.
+        const row = p.rowOffset || 0;
+        p.y = (roofY - 1.2) + row + Math.sin((p.x * 0.09) + p.phase) * 0.5;
         // Gentle outward acceleration — particles drift away from the impact
         // point instead of being flung.
         p.vx += ((p.x - coreX) / Math.max(coreX, 1)) * 0.009;

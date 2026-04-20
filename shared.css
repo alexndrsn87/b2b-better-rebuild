@@ -304,8 +304,8 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   position: absolute;
   bottom: calc(var(--beam-roof-gap) - 22px);
   left: var(--beam-core-x);
-  width: min(58vw, 680px);
-  height: 160px;
+  width: min(64vw, 780px);
+  height: 170px;
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at center 60%,
@@ -318,6 +318,31 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   opacity: calc(0.85 + var(--beam-heat) * 0.15);
   z-index: 2;
   pointer-events: none;
+}
+
+/* Horizontal rail along the ticker roof — a soft, wide luminous bar that
+   gives the hit line real body across the marquee, fading gently into the
+   ticker's edge haze on either side. */
+.beam-rail {
+  position: absolute;
+  bottom: calc(var(--beam-roof-gap) - 2px);
+  left: 0;
+  right: 0;
+  height: 14px;
+  transform: translateY(50%);
+  background: linear-gradient(
+    to right,
+    rgba(255, 246, 150, 0) 0%,
+    rgba(255, 246, 150, 0.18) 12%,
+    rgba(255, 246, 150, 0.55) 50%,
+    rgba(255, 246, 150, 0.18) 88%,
+    rgba(255, 246, 150, 0) 100%
+  );
+  filter: blur(6px);
+  opacity: calc(0.55 + var(--beam-heat) * 0.35);
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 /* Canvas — particle dust layer. Internal compositing is already additive
