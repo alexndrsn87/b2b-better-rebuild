@@ -173,36 +173,6 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   padding-top: 8px;
   padding-bottom: 4px;
 }
-.ticker-beam-hit {
-  position: absolute;
-  left: 50%;
-  top: -24px;
-  width: min(30vw, 420px);
-  height: 80px;
-  transform: translateX(-50%);
-  pointer-events: none;
-  border-radius: 999px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 242, 0, .16) 0%,
-    rgba(255, 242, 0, .1) 42%,
-    rgba(255, 242, 0, 0) 80%
-  );
-  filter: blur(16px);
-  z-index: 3;
-  opacity: .92;
-}
-.ticker-beam-canvas {
-  position: absolute;
-  left: 0;
-  top: -220px;
-  width: 100%;
-  height: 360px;
-  display: block;
-  pointer-events: none;
-  z-index: 4;
-  mix-blend-mode: screen;
-}
 .ticker-shell::before,
 .ticker-shell::after {
   content: "";
@@ -258,28 +228,108 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   background: radial-gradient(circle, rgba(64, 172, 255, .16), rgba(64, 172, 255, 0) 72%);
 }
 
-.hero-beam {
+/* Beam stage: unified container for hero + ticker + beam host */
+.beam-stage {
+  position: relative;
+}
+
+/* Unified beam host — single absolute-positioned layer that spans from
+   hero top down to the ticker roof. One canvas, one particle system,
+   plus CSS core + glow + base flare for the solid Huly-style column. */
+.beam-host {
+  --beam-core-x: 80%;
+  --beam-width: 220px;
+  --beam-heat: 0.75;
   --beam-cx: 50%;
   --beam-cy: 42%;
+  --beam-roof-gap: 72px; /* distance from beam-host bottom up to the roof */
   position: absolute;
   top: 0;
-  bottom: -56px;
-  left: clamp(75%, 80vw, 86%);
-  width: min(18vw, 210px);
+  bottom: -64px;           /* extend past the ticker roof for spill */
+  left: 50%;
   transform: translateX(-50%);
+  width: min(100%, 1400px);
   pointer-events: none;
-  z-index: 2;
+  z-index: 4;
   overflow: visible;
-  opacity: .98;
+  mix-blend-mode: normal;
 }
-.hero-beam-canvas {
+
+/* Outer soft glow — wide, blurred, gives atmospheric "light shaft" feel */
+.beam-glow {
+  position: absolute;
+  top: 0;
+  bottom: var(--beam-roof-gap);
+  left: var(--beam-core-x);
+  width: var(--beam-width);
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 242, 0, 0) 0%,
+    rgba(255, 242, 0, 0.08) 20%,
+    rgba(255, 242, 0, 0.16) 55%,
+    rgba(255, 242, 0, 0.24) 88%,
+    rgba(255, 242, 0, 0.2) 100%
+  );
+  filter: blur(26px);
+  opacity: calc(0.7 + var(--beam-heat) * 0.3);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Bright confident core line — 2px, almost solid at the base, fades at top */
+.beam-core {
+  position: absolute;
+  top: 0;
+  bottom: var(--beam-roof-gap);
+  left: var(--beam-core-x);
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 242, 0, 0) 0%,
+    rgba(255, 246, 130, 0.55) 18%,
+    rgba(255, 246, 130, 0.9) 55%,
+    rgba(255, 246, 130, 1) 92%,
+    rgba(255, 246, 130, 0.85) 100%
+  );
+  filter: blur(0.6px);
+  opacity: calc(0.75 + var(--beam-heat) * 0.25);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Base flare — the bright bloom where the beam hits the ticker roof */
+.beam-flare {
+  position: absolute;
+  bottom: calc(var(--beam-roof-gap) - 14px);
+  left: var(--beam-core-x);
+  width: min(46vw, 540px);
+  height: 110px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center 62%,
+    rgba(255, 246, 130, 0.55) 0%,
+    rgba(255, 242, 0, 0.28) 24%,
+    rgba(255, 242, 0, 0.08) 55%,
+    rgba(255, 242, 0, 0) 80%
+  );
+  filter: blur(10px);
+  opacity: calc(0.8 + var(--beam-heat) * 0.2);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Canvas — particle dust layer, mix-blend screen so it adds light additively */
+.beam-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   display: block;
+  pointer-events: none;
   mix-blend-mode: screen;
-  opacity: 1;
+  z-index: 4;
 }
 
 .hero-copy-glass {
@@ -686,20 +736,12 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 }
 @media (min-width: 768px) { .page-hero { padding-top: 12rem; padding-bottom: 8rem; } }
 @media (max-width: 900px) {
-  .hero-beam {
-    left: 76%;
-    width: min(24vw, 180px);
+  .beam-host {
+    --beam-core-x: 82%;
+    --beam-width: 180px;
   }
   .ticker-shell {
     width: calc(100vw - 1.6rem);
-  }
-  .ticker-beam-canvas {
-    top: -180px;
-    height: 300px;
-  }
-  .ticker-beam-hit {
-    width: min(44vw, 320px);
-    height: 64px;
   }
   .hero-copy-left {
     margin-inline: auto;
@@ -718,6 +760,6 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   .stage-panel {
     transition: none !important;
   }
-  .hero-beam-canvas { opacity: .85; }
+  .beam-canvas { opacity: .85; }
   .marquee-track { animation-play-state: paused; }
 }
