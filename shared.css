@@ -255,7 +255,9 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   mix-blend-mode: normal;
 }
 
-/* Outer soft glow — wide, blurred, gives atmospheric "light shaft" feel */
+/* Outer soft glow — wide, blurred, gives atmospheric "light shaft" feel.
+   Top two-thirds kept deliberately restrained; intensity builds toward
+   the roof so the top of the beam doesn't feel too "hot". */
 .beam-glow {
   position: absolute;
   top: 0;
@@ -266,13 +268,14 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   background: linear-gradient(
     to bottom,
     rgba(255, 242, 0, 0) 0%,
-    rgba(255, 242, 0, 0.08) 20%,
-    rgba(255, 242, 0, 0.14) 55%,
-    rgba(255, 242, 0, 0.2) 88%,
-    rgba(255, 242, 0, 0.18) 100%
+    rgba(255, 242, 0, 0) 18%,
+    rgba(255, 242, 0, 0.035) 34%,
+    rgba(255, 242, 0, 0.08) 58%,
+    rgba(255, 242, 0, 0.17) 88%,
+    rgba(255, 242, 0, 0.2) 100%
   );
   filter: blur(34px);
-  opacity: calc(0.7 + var(--beam-heat) * 0.3);
+  opacity: calc(0.5 + var(--beam-heat) * 0.3);
   z-index: 1;
   pointer-events: none;
 }
@@ -288,13 +291,14 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   background: linear-gradient(
     to bottom,
     rgba(255, 242, 0, 0) 0%,
-    rgba(255, 246, 150, 0.28) 22%,
-    rgba(255, 246, 150, 0.55) 60%,
-    rgba(255, 246, 150, 0.78) 94%,
-    rgba(255, 246, 150, 0.7) 100%
+    rgba(255, 246, 150, 0) 20%,
+    rgba(255, 246, 150, 0.11) 38%,
+    rgba(255, 246, 150, 0.32) 62%,
+    rgba(255, 246, 150, 0.62) 94%,
+    rgba(255, 246, 150, 0.55) 100%
   );
   filter: blur(4px);
-  opacity: calc(0.75 + var(--beam-heat) * 0.25);
+  opacity: calc(0.55 + var(--beam-heat) * 0.25);
   z-index: 3;
   pointer-events: none;
 }
@@ -351,8 +355,13 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
    edge fades). */
 .beam-canvas {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
+  bottom: 0;
+  /* Extends beyond the 1400px host on each side so particles spilling off
+     the beam can drift outward without being clipped at the ticker's edge. */
+  left: -14vw;
+  right: -14vw;
+  width: auto;
   height: 100%;
   display: block;
   pointer-events: none;

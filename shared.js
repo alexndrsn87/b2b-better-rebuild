@@ -64,6 +64,8 @@ window.__lenis = lenis;
   let coreX = 0;       // canvas-local x of the beam core
   let roofY = 0;       // canvas-local y of the ticker roof line
   let columnHalf = 22; // half-width of the particle column (tight near base)
+  let hostLeftX = 0;   // canvas-local x of the host's left edge (visual ticker edge)
+  let hostRightX = 0;  // canvas-local x of the host's right edge
 
   let particles = [];
   const pointer = { active: false, x: 0, y: 0 };
@@ -117,9 +119,13 @@ window.__lenis = lenis;
   };
 
   const updateGeometry = () => {
+    // Canvas extends beyond the 1400px host on each side so particles can
+    // spill past the ticker edge. Translate everything we care about into
+    // the wider canvas's local coordinate system.
     const hostRect = host.getBoundingClientRect();
-    cw = Math.max(120, Math.floor(hostRect.width));
-    ch = Math.max(280, Math.floor(hostRect.height));
+    const canvasRect = canvas.getBoundingClientRect();
+    cw = Math.max(120, Math.floor(canvasRect.width));
+    ch = Math.max(280, Math.floor(canvasRect.height));
 
     const hostStyle = getComputedStyle(host);
     const coreStyle = hostStyle.getPropertyValue('--beam-core-x').trim();
@@ -127,9 +133,11 @@ window.__lenis = lenis;
 
     let corePct = 0.8;
     if (coreStyle.endsWith('%')) corePct = parseFloat(coreStyle) / 100;
-    else if (coreStyle.endsWith('px')) corePct = parseFloat(coreStyle) / cw;
+    else if (coreStyle.endsWith('px')) corePct = parseFloat(coreStyle) / Math.max(hostRect.width, 1);
 
-    coreX = clamp(Math.round(cw * corePct), 8, cw - 8);
+    hostLeftX = Math.round(hostRect.left - canvasRect.left);
+    hostRightX = hostLeftX + Math.round(hostRect.width);
+    coreX = clamp(Math.round(hostLeftX + hostRect.width * corePct), 8, cw - 8);
 
     let coreWidthPx = 220;
     if (coreWidthStr.endsWith('px')) coreWidthPx = parseFloat(coreWidthStr);
@@ -137,7 +145,7 @@ window.__lenis = lenis;
     // Compute the actual roof Y by reading the ticker track-clip's position.
     if (trackClip) {
       const clipRect = trackClip.getBoundingClientRect();
-      roofY = clamp(Math.round(clipRect.top - hostRect.top) + 1, 42, ch - 8);
+      roofY = clamp(Math.round(clipRect.top - canvasRect.top) + 1, 42, ch - 8);
     } else {
       roofY = clamp(ch - 72, 42, ch - 8);
     }
@@ -152,7 +160,7 @@ window.__lenis = lenis;
   };
 
   const resize = () => {
-    const rect = host.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     const w = Math.max(120, Math.floor(rect.width));
     const h = Math.max(280, Math.floor(rect.height));
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -213,18 +221,27 @@ window.__lenis = lenis;
     ctx.clearRect(0, 0, cw, ch);
     ctx.globalCompositeOperation = 'lighter';
 
-    // Thick glowing hit bar along the roof — layered rects produce a soft
-    // vertical falloff and a bright centre, without needing a gradient alloc.
-    const hitW = Math.min(cw, 820);
-    const hitX = Math.max(0, coreX - hitW / 2);
-    ctx.fillStyle = 'rgba(255, 246, 150, 0.18)';
+    // Thick glowing hit bar along the roof — layered rects create vertical
+    // depth, each filled with a horizontal gradient so the ends fade softly
+    // instead of chopping off at a hard rectangle edge.
+    const hitW = 880;
+    const hitX = coreX - hitW / 2;
+    const hitGrad = ctx.createLinearGradient(hitX, 0, hitX + hitW, 0);
+    hitGrad.addColorStop(0, 'rgba(255,246,150,0)');
+    hitGrad.addColorStop(0.18, 'rgba(255,246,150,0.7)');
+    hitGrad.addColorStop(0.5, 'rgba(255,246,150,1)');
+    hitGrad.addColorStop(0.82, 'rgba(255,246,150,0.7)');
+    hitGrad.addColorStop(1, 'rgba(255,246,150,0)');
+    ctx.fillStyle = hitGrad;
+    ctx.globalAlpha = 0.16;
     ctx.fillRect(hitX, roofY - 6, hitW, 11);
-    ctx.fillStyle = 'rgba(255, 246, 150, 0.28)';
+    ctx.globalAlpha = 0.24;
     ctx.fillRect(hitX, roofY - 3.5, hitW, 6);
-    ctx.fillStyle = 'rgba(255, 246, 150, 0.55)';
+    ctx.globalAlpha = 0.48;
     ctx.fillRect(hitX, roofY - 1.8, hitW, 3);
-    ctx.fillStyle = 'rgba(255, 248, 180, 0.85)';
+    ctx.globalAlpha = 0.8;
     ctx.fillRect(hitX, roofY - 0.6, hitW, 1.2);
+    ctx.globalAlpha = 1;
 
     // Smaller, more localised cursor influence — a splash, not a force field.
     const influenceRadius = Math.max(58, cw * 0.05);
@@ -268,10 +285,14 @@ window.__lenis = lenis;
           resetFalling(p, false);
         }
 
-        // Uniform alpha envelope — constant column width.
+        // Uniform envelope width kept; depth ramp makes the top of the beam
+        // feel gentler — particles grow in brightness as they fall toward
+        // the roof instead of blasting in at full power at the top.
         const envelopeHalf = columnHalf * 1.25;
         const edge = Math.abs((p.x - coreX) / Math.max(envelopeHalf, 1));
-        const alpha = p.alpha * Math.max(0, 1 - edge * 0.9);
+        const tDepth = clamp(p.y / Math.max(roofY, 1), 0, 1);
+        const depth = 0.18 + tDepth * tDepth * 0.82;
+        const alpha = p.alpha * Math.max(0, 1 - edge * 0.9) * depth;
         if (alpha > 0.012) {
           ctx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
           ctx.fillRect(p.x, p.y, p.size, p.size);
@@ -289,9 +310,10 @@ window.__lenis = lenis;
         p.vx *= 1.0014;
         p.life -= 0.0016;
 
-        // Start lifting off before reaching the edge so spill curves away
-        // rather than dropping straight down.
-        const nearEdge = p.x <= 28 || p.x >= cw - 28;
+        // Spill begins at the visual ticker edge (the host's left/right
+        // boundary), not at the canvas edge — the canvas extends beyond
+        // the host so particles can fly off into the surrounding space.
+        const nearEdge = p.x <= hostLeftX + 14 || p.x >= hostRightX - 14;
         if (nearEdge) {
           p.mode = 2;
           p.drift = p.vx * 0.6;
