@@ -70,9 +70,13 @@ window.__lenis = lenis;
 
   // Particle mode: 0 falling, 1 sliding on roof, 2 spilling off the edge
   const resetFalling = (p, randomY) => {
-    // Uniform spread — the column should feel the same width top to bottom.
+    // Each particle is assigned a persistent "lane" offset from the core.
+    // The bias in the loop pulls toward coreX + lane (not coreX), so the
+    // column keeps its full width from top to bottom instead of tapering
+    // to the centerline over the course of a long fall.
     const spread = columnHalf * (0.95 + Math.random() * 0.35);
-    p.x = coreX + gauss() * spread;
+    p.lane = gauss() * spread;
+    p.x = coreX + p.lane;
     p.y = randomY ? Math.random() * Math.max(roofY - 2, 1) : -Math.random() * 44;
     p.vx = 0;
     p.vy = 0.18 + Math.random() * 0.55;
@@ -222,9 +226,11 @@ window.__lenis = lenis;
         p.vy += 0.005;
         p.y += p.speed + p.vy;
 
-        // Uniform, very gentle column bias — keeps particles from wandering
-        // far off but doesn't taper the width as they fall.
-        p.vx += (coreX - p.x) * 0.0014;
+        // Pull each particle back toward its own lane rather than the core.
+        // This preserves the column width throughout the fall — the beam
+        // stays as wide at the impact as it was at the top.
+        const laneX = coreX + p.lane;
+        p.vx += (laneX - p.x) * 0.004;
 
         if (pointer.active) {
           const dx = p.x - pointer.x;
