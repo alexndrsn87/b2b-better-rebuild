@@ -173,23 +173,27 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   padding-top: 8px;
   padding-bottom: 4px;
 }
-.ticker-shell::before,
-.ticker-shell::after {
+/* Edge fades live INSIDE the track clip so they only mask the marquee text
+   itself. Previously they were on .ticker-shell and spanned its full height,
+   which created a visible dark rectangle behind the beam's spilling
+   particles that read as a gradient glitch. */
+.ticker-track-clip::before,
+.ticker-track-clip::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 190px;
+  width: 140px;
   z-index: 2;
   pointer-events: none;
 }
-.ticker-shell::before {
+.ticker-track-clip::before {
   left: 0;
-  background: linear-gradient(to right, rgba(11, 11, 12, .99), rgba(11, 11, 12, .75) 40%, rgba(11, 11, 12, 0));
+  background: linear-gradient(to right, rgba(11, 11, 12, .98), rgba(11, 11, 12, .6) 55%, rgba(11, 11, 12, 0));
 }
-.ticker-shell::after {
+.ticker-track-clip::after {
   right: 0;
-  background: linear-gradient(to left, rgba(11, 11, 12, .99), rgba(11, 11, 12, .75) 40%, rgba(11, 11, 12, 0));
+  background: linear-gradient(to left, rgba(11, 11, 12, .98), rgba(11, 11, 12, .6) 55%, rgba(11, 11, 12, 0));
 }
 .marquee-track:hover,
 .ticker-shell:hover .marquee-track { animation-play-state: paused; }
@@ -256,8 +260,8 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 }
 
 /* Outer soft glow — wide, blurred, gives atmospheric "light shaft" feel.
-   Top two-thirds kept deliberately restrained; intensity builds toward
-   the roof so the top of the beam doesn't feel too "hot". */
+   Gentle top fade so the first third of the beam doesn't blast, but mid
+   and lower sections stay warmly lit. */
 .beam-glow {
   position: absolute;
   top: 0;
@@ -268,14 +272,14 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   background: linear-gradient(
     to bottom,
     rgba(255, 242, 0, 0) 0%,
-    rgba(255, 242, 0, 0) 18%,
-    rgba(255, 242, 0, 0.035) 34%,
-    rgba(255, 242, 0, 0.08) 58%,
-    rgba(255, 242, 0, 0.17) 88%,
-    rgba(255, 242, 0, 0.2) 100%
+    rgba(255, 242, 0, 0.025) 16%,
+    rgba(255, 242, 0, 0.08) 34%,
+    rgba(255, 242, 0, 0.15) 58%,
+    rgba(255, 242, 0, 0.22) 88%,
+    rgba(255, 242, 0, 0.24) 100%
   );
   filter: blur(34px);
-  opacity: calc(0.5 + var(--beam-heat) * 0.3);
+  opacity: calc(0.68 + var(--beam-heat) * 0.32);
   z-index: 1;
   pointer-events: none;
 }
@@ -291,14 +295,14 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   background: linear-gradient(
     to bottom,
     rgba(255, 242, 0, 0) 0%,
-    rgba(255, 246, 150, 0) 20%,
-    rgba(255, 246, 150, 0.11) 38%,
-    rgba(255, 246, 150, 0.32) 62%,
-    rgba(255, 246, 150, 0.62) 94%,
-    rgba(255, 246, 150, 0.55) 100%
+    rgba(255, 246, 150, 0.05) 14%,
+    rgba(255, 246, 150, 0.22) 34%,
+    rgba(255, 246, 150, 0.48) 62%,
+    rgba(255, 246, 150, 0.74) 94%,
+    rgba(255, 246, 150, 0.66) 100%
   );
   filter: blur(4px);
-  opacity: calc(0.55 + var(--beam-heat) * 0.25);
+  opacity: calc(0.72 + var(--beam-heat) * 0.28);
   z-index: 3;
   pointer-events: none;
 }

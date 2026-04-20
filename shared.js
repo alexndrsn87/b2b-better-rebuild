@@ -181,14 +181,22 @@ window.__lenis = lenis;
   }
 
   const syncPointerVars = () => {
-    const px = clamp((pointer.x / Math.max(1, cw)) * 100, 0, 100);
+    // Map pointer (canvas-local) back into host-local % for the CSS vars
+    // consumed by glow/flare reactivity — the host is always narrower than
+    // the canvas by 2 * hostLeftX.
+    const hostW = Math.max(1, hostRightX - hostLeftX);
+    const px = clamp(((pointer.x - hostLeftX) / hostW) * 100, 0, 100);
     const py = clamp((pointer.y / Math.max(1, ch)) * 100, 0, 100);
     host.style.setProperty('--beam-cx', `${px}%`);
     host.style.setProperty('--beam-cy', `${py}%`);
   };
 
   stage.addEventListener('pointermove', (e) => {
-    const rect = host.getBoundingClientRect();
+    // Pointer must share the canvas's coordinate system now that the canvas
+    // extends beyond the host — particles live in canvas-local space, so
+    // using the host rect here would offset the cursor by hostLeftX and
+    // break the influence check.
+    const rect = canvas.getBoundingClientRect();
     pointer.active = true;
     pointer.x = clamp(e.clientX - rect.left, 0, rect.width);
     pointer.y = clamp(e.clientY - rect.top, 0, rect.height);
@@ -285,13 +293,13 @@ window.__lenis = lenis;
           resetFalling(p, false);
         }
 
-        // Uniform envelope width kept; depth ramp makes the top of the beam
-        // feel gentler — particles grow in brightness as they fall toward
-        // the roof instead of blasting in at full power at the top.
+        // Uniform envelope width kept; gentle depth ramp so the very top
+        // of the fall is slightly softer than the impact — but the beam
+        // stays visibly lit at full column height.
         const envelopeHalf = columnHalf * 1.25;
         const edge = Math.abs((p.x - coreX) / Math.max(envelopeHalf, 1));
         const tDepth = clamp(p.y / Math.max(roofY, 1), 0, 1);
-        const depth = 0.18 + tDepth * tDepth * 0.82;
+        const depth = 0.55 + tDepth * 0.45;
         const alpha = p.alpha * Math.max(0, 1 - edge * 0.9) * depth;
         if (alpha > 0.012) {
           ctx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
