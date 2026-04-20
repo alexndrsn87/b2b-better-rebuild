@@ -170,6 +170,8 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .ticker-track-clip {
   position: relative;
   overflow: hidden;
+  padding-top: 8px;
+  padding-bottom: 4px;
 }
 .ticker-beam-hit {
   position: absolute;

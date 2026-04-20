@@ -71,8 +71,8 @@ window.__lenis = lenis;
   let impactYBeam = 0;
   let beamLeft = 0;
   let tickerLeft = 0;
+  let roofY = 30;
   const pointer = { active: false, x: 0, y: 0 };
-  const roofY = 30;
   const tickerParticleCap = 2400;
 
   const resetBeamParticle = (particle, randomY) => {
@@ -119,8 +119,10 @@ window.__lenis = lenis;
   const updateGeometry = () => {
     const beamRect = beam.getBoundingClientRect();
     const tickerRect = tickerCanvas.getBoundingClientRect();
+    const canvasTop = parseFloat(getComputedStyle(tickerCanvas).top || '0');
     beamLeft = beamRect.left;
     tickerLeft = tickerRect.left;
+    roofY = clamp(Math.round((-canvasTop) + 1), 8, tickerHeight - 8);
 
     const beamCenterViewportX = beamRect.left + (beamRect.width * 0.5);
     impactX = clamp(beamCenterViewportX - tickerRect.left, 8, tickerWidth - 8);
