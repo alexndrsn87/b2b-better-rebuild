@@ -198,10 +198,15 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .marquee-track:hover,
 .ticker-shell:hover .marquee-track { animation-play-state: paused; }
 
-/* Text scrim — protects copy in front of WebGL/imagery */
+/* Text scrim — protects copy in front of WebGL/imagery. Masked at the
+   bottom so the scrim doesn't clip into a hard horizontal rectangle at
+   the hero's overflow edge (which read as a visible box behind the
+   beam particles spilling leftward). */
 .text-scrim::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to right, rgba(11, 11, 12, .9) 0%, rgba(11, 11, 12, .7) 30%, rgba(11, 11, 12, .2) 60%, transparent 85%);
+  background: linear-gradient(to right, rgba(11, 11, 12, .78) 0%, rgba(11, 11, 12, .55) 28%, rgba(11, 11, 12, .18) 58%, transparent 82%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, rgba(0,0,0,0.35) 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, rgba(0,0,0,0.35) 82%, transparent 100%);
 }
 
 .hero-ambient {
