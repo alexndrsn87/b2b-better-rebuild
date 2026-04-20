@@ -70,12 +70,14 @@ window.__lenis = lenis;
 
   // Particle mode: 0 falling, 1 sliding on roof, 2 spilling off the edge
   const resetFalling = (p, randomY) => {
-    const spread = columnHalf * (0.8 + Math.random() * 0.45);
+    // Wider spread at the top of the beam → particles get funnelled by the
+    // column bias toward the core as they fall, producing the hourglass waist.
+    const spread = columnHalf * (1.1 + Math.random() * 0.6);
     p.x = coreX + gauss() * spread;
-    p.y = randomY ? Math.random() * Math.max(roofY - 2, 1) : -Math.random() * 36;
+    p.y = randomY ? Math.random() * Math.max(roofY - 2, 1) : -Math.random() * 44;
     p.vx = 0;
-    p.vy = 0.55 + Math.random() * 1.35;
-    p.speed = 0.55 + Math.random() * 1.5;
+    p.vy = 0.18 + Math.random() * 0.55;
+    p.speed = 0.28 + Math.random() * 0.9;
     p.phase = Math.random() * Math.PI * 2;
     p.alpha = 0.22 + Math.random() * 0.5;
     p.size = 0.78 + Math.random() * 1.1;
@@ -87,13 +89,15 @@ window.__lenis = lenis;
   const convertToSlide = (p) => {
     p.y = roofY - 1;
     const dir = p.x >= coreX ? 1 : -1;
-    const offset = (p.x - coreX) * 0.02;
-    p.vx = dir * (1.3 + Math.random() * 2.8) + offset;
+    const offset = (p.x - coreX) * 0.012;
+    // Slower lateral launch → particles cluster near the impact, creating the
+    // "thick flow" pile-up the user asked for.
+    p.vx = dir * (0.35 + Math.random() * 1.25) + offset;
     p.vy = 0;
     p.mode = 1;
     p.life = 1;
-    p.alpha = 0.24 + Math.random() * 0.42;
-    p.size = 0.7 + Math.random() * 1.0;
+    p.alpha = 0.28 + Math.random() * 0.48;
+    p.size = 0.72 + Math.random() * 1.04;
   };
 
   const initParticles = () => {
@@ -136,8 +140,9 @@ window.__lenis = lenis;
     const roofGap = Math.max(0, ch - roofY);
     host.style.setProperty('--beam-roof-gap', `${roofGap}px`);
 
-    // Narrow the column slightly (matches Huly's tightening near the base)
-    columnHalf = Math.max(14, Math.min(32, coreWidthPx * 0.14));
+    // Column half-width — a good chunk of the visible glow width so particles
+    // fill the pillar rather than sitting as a thin thread inside it.
+    columnHalf = Math.max(22, Math.min(68, coreWidthPx * 0.22));
   };
 
   const resize = () => {
@@ -213,12 +218,16 @@ window.__lenis = lenis;
       const p = particles[i];
 
       if (p.mode === 0) {
-        p.vy += 0.015;
+        // Gentler gravity — a soft drift rather than a plunge.
+        p.vy += 0.005;
         p.y += p.speed + p.vy;
 
-        // Gentle column bias — pulls particles back toward the core so the
-        // column stays tight no matter what the cursor does.
-        p.vx += (coreX - p.x) * 0.0022;
+        // Hourglass funnel: the column pull scales with depth.
+        // Near the top particles drift freely (wide); near the roof they're
+        // squeezed tight to the core.
+        const tDepth = clamp(p.y / Math.max(roofY, 1), 0, 1);
+        const biasStrength = 0.0006 + tDepth * tDepth * 0.0048;
+        p.vx += (coreX - p.x) * biasStrength;
 
         if (pointer.active) {
           const dx = p.x - pointer.x;
@@ -228,14 +237,14 @@ window.__lenis = lenis;
             const pull = Math.pow(1 - dist / influenceRadius, 1.7);
             const nx = dx / dist;
             const ny = dy / dist;
-            p.vx += nx * pull * 3.2 + -ny * pull * 1.6;
-            p.vy += ny * pull * 2.0 + nx * pull * 0.9;
+            p.vx += nx * pull * 2.6 + -ny * pull * 1.4;
+            p.vy += ny * pull * 1.6 + nx * pull * 0.8;
           }
         }
 
         p.x += p.vx;
-        p.vx *= 0.9;
-        p.vy *= 0.92;
+        p.vx *= 0.92;
+        p.vy *= 0.94;
 
         if (p.y >= roofY - 1) {
           convertToSlide(p);
@@ -243,8 +252,10 @@ window.__lenis = lenis;
           resetFalling(p, false);
         }
 
-        const edge = Math.abs((p.x - coreX) / Math.max(columnHalf * 1.6, 1));
-        const alpha = p.alpha * Math.max(0, 1 - edge * 0.75);
+        // Alpha fade based on distance from the hourglass envelope at this depth.
+        const envelopeHalf = columnHalf * (1.4 - tDepth * 0.75);
+        const edge = Math.abs((p.x - coreX) / Math.max(envelopeHalf, 1));
+        const alpha = p.alpha * Math.max(0, 1 - edge * 0.85);
         if (alpha > 0.012) {
           ctx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
           ctx.fillRect(p.x, p.y, p.size, p.size);
@@ -252,15 +263,21 @@ window.__lenis = lenis;
         nextParticles.push(p);
       } else if (p.mode === 1) {
         p.x += p.vx;
-        p.y = (roofY - 1.2) + Math.sin((p.x * 0.09) + p.phase) * 0.35;
-        p.vx += ((p.x - coreX) / Math.max(coreX, 1)) * 0.018;
-        p.vx *= 1.0028;
-        p.life -= 0.0026;
+        p.y = (roofY - 1.2) + Math.sin((p.x * 0.09) + p.phase) * 0.4;
+        // Gentle outward acceleration — particles drift away from the impact
+        // point instead of being flung.
+        p.vx += ((p.x - coreX) / Math.max(coreX, 1)) * 0.009;
+        p.vx *= 1.0014;
+        p.life -= 0.0016;
 
-        if (p.x <= 8 || p.x >= cw - 8) {
+        // Start lifting off before reaching the edge so spill curves away
+        // rather than dropping straight down.
+        const nearEdge = p.x <= 28 || p.x >= cw - 28;
+        if (nearEdge) {
           p.mode = 2;
-          p.drift = p.vx * 0.2;
-          p.vy = 0.6 + Math.random() * 0.9;
+          p.drift = p.vx * 0.6;
+          p.vy = 0.18 + Math.random() * 0.35;
+          p.life = Math.max(p.life, 0.9);
         }
 
         const alpha = p.alpha * Math.max(0, p.life);
@@ -273,16 +290,19 @@ window.__lenis = lenis;
           nextParticles.push(p);
         }
       } else {
+        // Spilling off the edge — gentle outward arc, minimal gravity so
+        // particles float away rather than plunging.
         p.x += p.drift;
         p.y += p.vy;
-        p.vy += 0.06;
-        p.life -= 0.008;
+        p.vy += 0.018;
+        p.drift *= 0.994;
+        p.life -= 0.0055;
 
-        const alpha = p.alpha * 0.8 * Math.max(0, p.life);
+        const alpha = p.alpha * 0.82 * Math.max(0, p.life);
         ctx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
         ctx.fillRect(p.x, p.y, p.size, p.size);
 
-        if (p.life <= 0 || p.y > ch + 16 || p.x < -24 || p.x > cw + 24) {
+        if (p.life <= 0 || p.y > ch + 16 || p.x < -40 || p.x > cw + 40) {
           resetFalling(p, false);
         }
         nextParticles.push(p);
