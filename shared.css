@@ -193,9 +193,9 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .ticker-beam-canvas {
   position: absolute;
   left: 0;
-  top: -30px;
+  top: -220px;
   width: 100%;
-  height: 170px;
+  height: 360px;
   display: block;
   pointer-events: none;
   z-index: 4;
@@ -692,7 +692,8 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
     width: calc(100vw - 1.6rem);
   }
   .ticker-beam-canvas {
-    top: -26px;
+    top: -180px;
+    height: 300px;
   }
   .ticker-beam-hit {
     width: min(44vw, 320px);

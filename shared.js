@@ -84,10 +84,10 @@ window.__lenis = lenis;
   };
 
   const resetTickerParticle = (particle) => {
-    particle.x = impactX + (Math.random() - 0.5) * 8;
-    particle.y = -Math.random() * 30;
-    particle.vx = (Math.random() > 0.5 ? 1 : -1) * (0.2 + Math.random() * 0.5);
-    particle.vy = 0.62 + Math.random() * 0.65;
+    particle.x = impactX + (Math.random() - 0.5) * 42;
+    particle.y = -Math.random() * Math.max(120, tickerHeight * 0.82);
+    particle.vx = (Math.random() - 0.5) * 0.16;
+    particle.vy = 0.92 + Math.random() * 0.9;
     particle.phase = Math.random() * Math.PI * 2;
     particle.alpha = 0.24 + Math.random() * 0.46;
     particle.size = 0.75 + Math.random() * 1.08;
@@ -97,7 +97,7 @@ window.__lenis = lenis;
 
   const initParticles = () => {
     const beamCount = prefersReducedMotion ? 1000 : 5200;
-    const tickerCount = prefersReducedMotion ? 220 : 980;
+    const tickerCount = prefersReducedMotion ? 320 : 1600;
 
     beamParticles = Array.from({ length: beamCount }, () => {
       const particle = {};
@@ -243,20 +243,25 @@ window.__lenis = lenis;
 
     tickerCtx.clearRect(0, 0, tickerWidth, tickerHeight);
     tickerCtx.globalCompositeOperation = 'lighter';
-    tickerCtx.fillStyle = 'rgba(255, 242, 0, 0.5)';
+    tickerCtx.fillStyle = 'rgba(255, 242, 0, 0.45)';
     tickerCtx.fillRect(0, roofY - 1, tickerWidth, 1.2);
     for (let i = 0; i < tickerParticles.length; i += 1) {
       const p = tickerParticles[i];
       const centerX = impactX;
 
       if (p.mode === 0) {
+        const toCenter = centerX - p.x;
+        p.vx += toCenter * 0.0026;
+        p.vx += Math.sin((p.y * 0.03) + p.phase) * 0.015;
+        p.vx *= 0.96;
+        p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.035;
+        p.vy += 0.022;
         if (p.y >= roofY - 1) {
           p.y = roofY - 1;
           p.vy = 0;
           const dir = p.x >= centerX ? 1 : -1;
-          p.vx = dir * (1.3 + Math.random() * 2.9);
+          p.vx = dir * (1.7 + Math.random() * 3.4);
           p.mode = 1;
         }
       } else if (p.mode === 1) {
