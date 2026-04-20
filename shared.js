@@ -232,13 +232,16 @@ window.__lenis = lenis;
     // Thick glowing hit bar along the roof — layered rects create vertical
     // depth, each filled with a horizontal gradient so the ends fade softly
     // instead of chopping off at a hard rectangle edge.
-    const hitW = 880;
+    const hostW = Math.max(1, hostRightX - hostLeftX);
+    const hitW = Math.min(cw + 120, Math.max(1100, hostW + 360));
     const hitX = coreX - hitW / 2;
     const hitGrad = ctx.createLinearGradient(hitX, 0, hitX + hitW, 0);
     hitGrad.addColorStop(0, 'rgba(255,246,150,0)');
-    hitGrad.addColorStop(0.18, 'rgba(255,246,150,0.7)');
+    hitGrad.addColorStop(0.1, 'rgba(255,246,150,0.24)');
+    hitGrad.addColorStop(0.22, 'rgba(255,246,150,0.7)');
     hitGrad.addColorStop(0.5, 'rgba(255,246,150,1)');
-    hitGrad.addColorStop(0.82, 'rgba(255,246,150,0.7)');
+    hitGrad.addColorStop(0.78, 'rgba(255,246,150,0.7)');
+    hitGrad.addColorStop(0.9, 'rgba(255,246,150,0.24)');
     hitGrad.addColorStop(1, 'rgba(255,246,150,0)');
     ctx.fillStyle = hitGrad;
     ctx.globalAlpha = 0.16;
