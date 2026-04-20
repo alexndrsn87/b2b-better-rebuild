@@ -67,7 +67,7 @@ window.__lenis = lenis;
   let beamParticles = [];
   let tickerParticles = [];
   const pointer = { active: false, x: 0, y: 0 };
-  const roofY = 28;
+  const roofY = 30;
 
   const resetBeamParticle = (particle, randomY) => {
     particle.xN = randomBeamOffset();
@@ -173,8 +173,8 @@ window.__lenis = lenis;
 
     tickerCtx.clearRect(0, 0, tickerWidth, tickerHeight);
     tickerCtx.globalCompositeOperation = 'source-over';
-    tickerCtx.fillStyle = 'rgba(255,242,0,0.6)';
-    tickerCtx.fillRect(tickerWidth * 0.5 - 3, roofY, 6, 2);
+    tickerCtx.fillStyle = 'rgba(255,242,0,0.75)';
+    tickerCtx.fillRect(tickerWidth * 0.5 - 3, roofY - 1, 6, 2);
   };
 
   if (prefersReducedMotion) {
@@ -231,8 +231,8 @@ window.__lenis = lenis;
 
     tickerCtx.clearRect(0, 0, tickerWidth, tickerHeight);
     tickerCtx.globalCompositeOperation = 'lighter';
-    tickerCtx.fillStyle = 'rgba(255, 242, 0, 0.45)';
-    tickerCtx.fillRect(0, roofY, tickerWidth, 1.2);
+    tickerCtx.fillStyle = 'rgba(255, 242, 0, 0.5)';
+    tickerCtx.fillRect(0, roofY - 1, tickerWidth, 1.2);
     for (let i = 0; i < tickerParticles.length; i += 1) {
       const p = tickerParticles[i];
       const centerX = tickerWidth * 0.5;
@@ -240,8 +240,8 @@ window.__lenis = lenis;
       if (p.mode === 0) {
         p.y += p.vy;
         p.vy += 0.035;
-        if (p.y >= roofY) {
-          p.y = roofY;
+        if (p.y >= roofY - 1) {
+          p.y = roofY - 1;
           p.vy = 0;
           const dir = p.x >= centerX ? 1 : -1;
           p.vx = dir * (1.3 + Math.random() * 2.9);
@@ -249,7 +249,7 @@ window.__lenis = lenis;
         }
       } else if (p.mode === 1) {
         p.x += p.vx;
-        p.y = roofY + Math.sin((p.x * 0.09) + p.phase) * 0.55;
+        p.y = (roofY - 1.2) + Math.sin((p.x * 0.09) + p.phase) * 0.35;
         p.vx += ((p.x - centerX) / Math.max(centerX, 1)) * 0.016;
         p.vx *= 1.0028;
         if (p.x <= 10 || p.x >= tickerWidth - 10) {
