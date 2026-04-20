@@ -70,7 +70,9 @@ window.__lenis = lenis;
   let impactX = 0;
   let impactYBeam = 0;
   let beamLeft = 0;
+  let beamTopVp = 0;
   let tickerLeft = 0;
+  let tickerTopVp = 0;
   let roofY = 30;
   const pointer = { active: false, x: 0, y: 0 };
   const tickerParticleCap = 2400;
@@ -87,26 +89,41 @@ window.__lenis = lenis;
     particle.wobble = 0.14 + Math.random() * 0.65;
   };
 
-  const spawnTickerParticle = (xAtTicker) => {
-    const x = clamp(xAtTicker, 6, tickerWidth - 6);
-    const dir = x >= impactX ? 1 : -1;
-    tickerParticles.push({
-      x,
-      y: roofY - 1,
-      vx: dir * (1.15 + Math.random() * 2.9) + (x - impactX) * 0.018,
-      vy: 0,
-      phase: Math.random() * Math.PI * 2,
-      alpha: 0.26 + Math.random() * 0.42,
-      size: 0.74 + Math.random() * 1.06,
-      mode: 1, // 1 slide, 2 spill
-      drift: 0,
-      life: 1,
-    });
-    if (tickerParticles.length > tickerParticleCap) tickerParticles.shift();
+  const columnHalf = () => Math.max(10, Math.min(34, tickerWidth * 0.015));
+
+  const resetRainParticle = (p, randomY) => {
+    const spread = columnHalf();
+    const n = ((Math.random() + Math.random() + Math.random()) - 1.5) * 0.55;
+    p.x = impactX + n * spread;
+    p.y = randomY
+      ? Math.random() * Math.max(roofY - 2, 1)
+      : -Math.random() * 24;
+    p.vx = 0;
+    p.vy = 0.55 + Math.random() * 1.4;
+    p.speed = 0.55 + Math.random() * 1.55;
+    p.phase = Math.random() * Math.PI * 2;
+    p.alpha = 0.24 + Math.random() * 0.48;
+    p.size = 0.78 + Math.random() * 1.1;
+    p.mode = 0; // 0 = falling rain, 1 = sliding on roof, 2 = spilling off edge
+    p.drift = 0;
+    p.life = 1;
+  };
+
+  const convertToSlide = (p) => {
+    p.y = roofY - 1;
+    const dir = p.x >= impactX ? 1 : -1;
+    const distOffset = (p.x - impactX) * 0.02;
+    p.vx = dir * (1.15 + Math.random() * 2.9) + distOffset;
+    p.vy = 0;
+    p.mode = 1;
+    p.life = 1;
+    p.alpha = 0.26 + Math.random() * 0.42;
+    p.size = 0.74 + Math.random() * 1.06;
   };
 
   const initParticles = () => {
     const beamCount = prefersReducedMotion ? 1000 : 5200;
+    const rainCount = prefersReducedMotion ? 300 : 1800;
     tickerParticles = [];
 
     beamParticles = Array.from({ length: beamCount }, () => {
@@ -114,6 +131,12 @@ window.__lenis = lenis;
       resetBeamParticle(particle, true);
       return particle;
     });
+
+    for (let i = 0; i < rainCount; i += 1) {
+      const p = {};
+      resetRainParticle(p, true);
+      tickerParticles.push(p);
+    }
   };
 
   const updateGeometry = () => {
@@ -121,12 +144,17 @@ window.__lenis = lenis;
     const tickerRect = tickerCanvas.getBoundingClientRect();
     const canvasTop = parseFloat(getComputedStyle(tickerCanvas).top || '0');
     beamLeft = beamRect.left;
+    beamTopVp = beamRect.top;
     tickerLeft = tickerRect.left;
+    tickerTopVp = tickerRect.top;
     roofY = clamp(Math.round((-canvasTop) + 1), 8, tickerHeight - 8);
 
     const beamCenterViewportX = beamRect.left + (beamRect.width * 0.5);
     impactX = clamp(beamCenterViewportX - tickerRect.left, 8, tickerWidth - 8);
-    impactYBeam = clamp((tickerRect.top + roofY - 1) - beamRect.top, 42, beamHeight - 6);
+    const heroEl = hero.getBoundingClientRect();
+    const visibleBeamBottom = (heroEl.bottom - beamRect.top) - 2;
+    const roofInBeamCoords = (tickerRect.top + roofY - 1) - beamRect.top;
+    impactYBeam = clamp(Math.min(visibleBeamBottom, roofInBeamCoords), 42, beamHeight - 6);
     if (tickerHit) tickerHit.style.left = `${impactX}px`;
   };
 
@@ -149,8 +177,8 @@ window.__lenis = lenis;
     tickerCanvas.height = Math.floor(tickerHeight * dpr);
     tickerCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    initParticles();
     updateGeometry();
+    initParticles();
   };
 
   resize();
@@ -252,12 +280,7 @@ window.__lenis = lenis;
         beamCtx.fillRect(x, p.y, p.size, p.size);
       }
 
-      if (p.y >= impactYBeam) {
-        const viewportX = beamLeft + x;
-        const xAtTicker = viewportX - tickerLeft;
-        if (Math.random() < 0.72) spawnTickerParticle(xAtTicker);
-        resetBeamParticle(p, false);
-      } else if (p.y > beamHeight + 14 || x < -24 || x > beamWidth + 24) {
+      if (p.y >= impactYBeam || p.y > beamHeight + 14 || x < -24 || x > beamWidth + 24) {
         resetBeamParticle(p, false);
       }
     }
@@ -266,14 +289,45 @@ window.__lenis = lenis;
     tickerCtx.globalCompositeOperation = 'lighter';
     tickerCtx.fillStyle = 'rgba(255, 242, 0, 0.45)';
     tickerCtx.fillRect(0, roofY - 1, tickerWidth, 1.2);
+
+    const rainBounds = columnHalf();
+    const newTickerParticles = [];
     for (let i = 0; i < tickerParticles.length; i += 1) {
       const p = tickerParticles[i];
-      const centerX = impactX;
 
-      if (p.mode === 1) {
+      if (p.mode === 0) {
+        p.y += p.speed + p.vy;
+        p.vy += 0.018;
+        p.vx += (impactX - p.x) * 0.0016;
+        p.x += p.vx;
+        p.vx *= 0.94;
+        if (pointer.active) {
+          const pointerXInTicker = (beamLeft + pointer.x) - tickerLeft;
+          const pointerYInTicker = pointer.y + (beamTopVp - tickerTopVp);
+          const dx = p.x - pointerXInTicker;
+          const dy = p.y - pointerYInTicker;
+          const dist = Math.hypot(dx, dy) || 1;
+          const radius = 110;
+          if (dist < radius) {
+            const pull = Math.pow(1 - dist / radius, 1.6);
+            p.vx += (dx / dist) * pull * 2.4;
+            p.vy += (dy / dist) * pull * 1.4;
+          }
+        }
+        if (p.y >= roofY - 1) {
+          convertToSlide(p);
+        }
+        const edge = Math.abs((p.x - impactX) / Math.max(rainBounds, 1));
+        const alpha = p.alpha * Math.max(0, 1 - edge * 0.6);
+        if (alpha > 0.01) {
+          tickerCtx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
+          tickerCtx.fillRect(p.x, p.y, p.size, p.size);
+        }
+        newTickerParticles.push(p);
+      } else if (p.mode === 1) {
         p.x += p.vx;
         p.y = (roofY - 1.2) + Math.sin((p.x * 0.09) + p.phase) * 0.35;
-        p.vx += ((p.x - centerX) / Math.max(centerX, 1)) * 0.016;
+        p.vx += ((p.x - impactX) / Math.max(impactX, 1)) * 0.016;
         p.vx *= 1.0028;
         p.life -= 0.0026;
         if (p.x <= 10 || p.x >= tickerWidth - 10) {
@@ -281,22 +335,29 @@ window.__lenis = lenis;
           p.drift = p.vx * 0.2;
           p.vy = 0.7 + Math.random() * 0.85;
         }
+        const alpha = p.alpha * Math.max(0, p.life);
+        tickerCtx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
+        tickerCtx.fillRect(p.x, p.y, p.size, p.size);
+        if (p.life > 0) newTickerParticles.push(p);
+        else {
+          resetRainParticle(p, false);
+          newTickerParticles.push(p);
+        }
       } else {
         p.x += p.drift;
         p.y += p.vy;
         p.vy += 0.06;
         p.life -= 0.008;
+        const alpha = p.alpha * 0.8 * Math.max(0, p.life);
+        tickerCtx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
+        tickerCtx.fillRect(p.x, p.y, p.size, p.size);
+        if (p.life <= 0 || p.y > tickerHeight + 14 || p.x < -20 || p.x > tickerWidth + 20) {
+          resetRainParticle(p, false);
+        }
+        newTickerParticles.push(p);
       }
-
-      const alpha = p.alpha * (p.mode === 2 ? 0.8 : 1) * Math.max(0, p.life);
-      tickerCtx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
-      tickerCtx.fillRect(p.x, p.y, p.size, p.size);
     }
-    tickerParticles = tickerParticles.filter((particle) => {
-      if (particle.life <= 0) return false;
-      if (particle.mode === 2 && particle.y > tickerHeight + 14) return false;
-      return particle.x > -20 && particle.x < tickerWidth + 20;
-    });
+    tickerParticles = newTickerParticles;
 
     requestAnimationFrame(loop);
   })();
