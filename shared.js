@@ -49,6 +49,7 @@ window.__lenis = lenis;
   const beam = document.querySelector('.hero-beam');
   const beamCanvas = document.getElementById('heroBeamCanvas');
   const tickerCanvas = document.getElementById('tickerBeamCanvas');
+  const tickerHit = document.querySelector('.ticker-beam-hit');
   if (!hero || !beam || !beamCanvas || !tickerCanvas) return;
 
   const beamCtx = beamCanvas.getContext('2d', { alpha: true });
@@ -66,6 +67,7 @@ window.__lenis = lenis;
   let tickerHeight = 0;
   let beamParticles = [];
   let tickerParticles = [];
+  let impactX = 0;
   const pointer = { active: false, x: 0, y: 0 };
   const roofY = 30;
 
@@ -82,7 +84,7 @@ window.__lenis = lenis;
   };
 
   const resetTickerParticle = (particle) => {
-    particle.x = tickerWidth * 0.5 + (Math.random() - 0.5) * 8;
+    particle.x = impactX + (Math.random() - 0.5) * 8;
     particle.y = -Math.random() * 30;
     particle.vx = (Math.random() > 0.5 ? 1 : -1) * (0.2 + Math.random() * 0.5);
     particle.vy = 0.62 + Math.random() * 0.65;
@@ -127,6 +129,10 @@ window.__lenis = lenis;
     tickerCanvas.width = Math.floor(tickerWidth * dpr);
     tickerCanvas.height = Math.floor(tickerHeight * dpr);
     tickerCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const beamCenterViewportX = beamRect.left + (beamRect.width * 0.5);
+    impactX = clamp(beamCenterViewportX - tickerRect.left, 8, tickerWidth - 8);
+    if (tickerHit) tickerHit.style.left = `${impactX}px`;
 
     initParticles();
   };
@@ -174,7 +180,7 @@ window.__lenis = lenis;
     tickerCtx.clearRect(0, 0, tickerWidth, tickerHeight);
     tickerCtx.globalCompositeOperation = 'source-over';
     tickerCtx.fillStyle = 'rgba(255,242,0,0.75)';
-    tickerCtx.fillRect(tickerWidth * 0.5 - 3, roofY - 1, 6, 2);
+    tickerCtx.fillRect(impactX - 3, roofY - 1, 6, 2);
   };
 
   if (prefersReducedMotion) {
@@ -186,6 +192,12 @@ window.__lenis = lenis;
   pointer.y = beamHeight * 0.42;
 
   (function loop() {
+    const beamRect = beam.getBoundingClientRect();
+    const tickerRect = tickerCanvas.getBoundingClientRect();
+    const beamCenterViewportX = beamRect.left + (beamRect.width * 0.5);
+    impactX = clamp(beamCenterViewportX - tickerRect.left, 8, tickerWidth - 8);
+    if (tickerHit) tickerHit.style.left = `${impactX}px`;
+
     beamCtx.clearRect(0, 0, beamWidth, beamHeight);
     beamCtx.globalCompositeOperation = 'lighter';
 
@@ -235,7 +247,7 @@ window.__lenis = lenis;
     tickerCtx.fillRect(0, roofY - 1, tickerWidth, 1.2);
     for (let i = 0; i < tickerParticles.length; i += 1) {
       const p = tickerParticles[i];
-      const centerX = tickerWidth * 0.5;
+      const centerX = impactX;
 
       if (p.mode === 0) {
         p.y += p.vy;
