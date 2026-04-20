@@ -320,7 +320,10 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   pointer-events: none;
 }
 
-/* Canvas — particle dust layer, mix-blend screen so it adds light additively */
+/* Canvas — particle dust layer. Internal compositing is already additive
+   via globalCompositeOperation='lighter'; no element-level blend so the
+   canvas doesn't get muddied by dark gradients behind it (e.g. the ticker
+   edge fades). */
 .beam-canvas {
   position: absolute;
   inset: 0;
@@ -328,7 +331,6 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   height: 100%;
   display: block;
   pointer-events: none;
-  mix-blend-mode: screen;
   z-index: 4;
 }
 

@@ -70,9 +70,8 @@ window.__lenis = lenis;
 
   // Particle mode: 0 falling, 1 sliding on roof, 2 spilling off the edge
   const resetFalling = (p, randomY) => {
-    // Wider spread at the top of the beam → particles get funnelled by the
-    // column bias toward the core as they fall, producing the hourglass waist.
-    const spread = columnHalf * (1.1 + Math.random() * 0.6);
+    // Uniform spread — the column should feel the same width top to bottom.
+    const spread = columnHalf * (0.95 + Math.random() * 0.35);
     p.x = coreX + gauss() * spread;
     p.y = randomY ? Math.random() * Math.max(roofY - 2, 1) : -Math.random() * 44;
     p.vx = 0;
@@ -211,7 +210,8 @@ window.__lenis = lenis;
     ctx.fillStyle = 'rgba(255, 246, 130, 0.55)';
     ctx.fillRect(Math.max(0, coreX - 160), roofY - 1, Math.min(cw, 320), 1.1);
 
-    const influenceRadius = Math.max(110, cw * 0.11);
+    // Smaller, more localised cursor influence — a splash, not a force field.
+    const influenceRadius = Math.max(58, cw * 0.05);
     const nextParticles = [];
 
     for (let i = 0; i < particles.length; i += 1) {
@@ -222,28 +222,26 @@ window.__lenis = lenis;
         p.vy += 0.005;
         p.y += p.speed + p.vy;
 
-        // Hourglass funnel: the column pull scales with depth.
-        // Near the top particles drift freely (wide); near the roof they're
-        // squeezed tight to the core.
-        const tDepth = clamp(p.y / Math.max(roofY, 1), 0, 1);
-        const biasStrength = 0.0006 + tDepth * tDepth * 0.0048;
-        p.vx += (coreX - p.x) * biasStrength;
+        // Uniform, very gentle column bias — keeps particles from wandering
+        // far off but doesn't taper the width as they fall.
+        p.vx += (coreX - p.x) * 0.0014;
 
         if (pointer.active) {
           const dx = p.x - pointer.x;
           const dy = p.y - pointer.y;
           const dist = Math.hypot(dx, dy) || 1;
           if (dist < influenceRadius) {
-            const pull = Math.pow(1 - dist / influenceRadius, 1.7);
+            // Sharper falloff (^2.4) + lower force = localised splash.
+            const pull = Math.pow(1 - dist / influenceRadius, 2.4);
             const nx = dx / dist;
             const ny = dy / dist;
-            p.vx += nx * pull * 2.6 + -ny * pull * 1.4;
-            p.vy += ny * pull * 1.6 + nx * pull * 0.8;
+            p.vx += nx * pull * 1.1 + -ny * pull * 0.5;
+            p.vy += ny * pull * 0.7 + nx * pull * 0.3;
           }
         }
 
         p.x += p.vx;
-        p.vx *= 0.92;
+        p.vx *= 0.93;
         p.vy *= 0.94;
 
         if (p.y >= roofY - 1) {
@@ -252,10 +250,10 @@ window.__lenis = lenis;
           resetFalling(p, false);
         }
 
-        // Alpha fade based on distance from the hourglass envelope at this depth.
-        const envelopeHalf = columnHalf * (1.4 - tDepth * 0.75);
+        // Uniform alpha envelope — constant column width.
+        const envelopeHalf = columnHalf * 1.25;
         const edge = Math.abs((p.x - coreX) / Math.max(envelopeHalf, 1));
-        const alpha = p.alpha * Math.max(0, 1 - edge * 0.85);
+        const alpha = p.alpha * Math.max(0, 1 - edge * 0.9);
         if (alpha > 0.012) {
           ctx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
           ctx.fillRect(p.x, p.y, p.size, p.size);
