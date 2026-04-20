@@ -68,8 +68,12 @@ window.__lenis = lenis;
   let beamParticles = [];
   let tickerParticles = [];
   let impactX = 0;
+  let impactYBeam = 0;
+  let beamLeft = 0;
+  let tickerLeft = 0;
   const pointer = { active: false, x: 0, y: 0 };
   const roofY = 30;
+  const tickerParticleCap = 2400;
 
   const resetBeamParticle = (particle, randomY) => {
     particle.xN = randomBeamOffset();
@@ -83,32 +87,45 @@ window.__lenis = lenis;
     particle.wobble = 0.14 + Math.random() * 0.65;
   };
 
-  const resetTickerParticle = (particle) => {
-    particle.x = impactX + (Math.random() - 0.5) * 42;
-    particle.y = -Math.random() * Math.max(120, tickerHeight * 0.82);
-    particle.vx = (Math.random() - 0.5) * 0.16;
-    particle.vy = 0.92 + Math.random() * 0.9;
-    particle.phase = Math.random() * Math.PI * 2;
-    particle.alpha = 0.24 + Math.random() * 0.46;
-    particle.size = 0.75 + Math.random() * 1.08;
-    particle.mode = 0; // 0 landing, 1 slide, 2 spill
-    particle.drift = 0;
+  const spawnTickerParticle = (xAtTicker) => {
+    const x = clamp(xAtTicker, 6, tickerWidth - 6);
+    const dir = x >= impactX ? 1 : -1;
+    tickerParticles.push({
+      x,
+      y: roofY - 1,
+      vx: dir * (1.15 + Math.random() * 2.9) + (x - impactX) * 0.018,
+      vy: 0,
+      phase: Math.random() * Math.PI * 2,
+      alpha: 0.26 + Math.random() * 0.42,
+      size: 0.74 + Math.random() * 1.06,
+      mode: 1, // 1 slide, 2 spill
+      drift: 0,
+      life: 1,
+    });
+    if (tickerParticles.length > tickerParticleCap) tickerParticles.shift();
   };
 
   const initParticles = () => {
     const beamCount = prefersReducedMotion ? 1000 : 5200;
-    const tickerCount = prefersReducedMotion ? 320 : 1600;
+    tickerParticles = [];
 
     beamParticles = Array.from({ length: beamCount }, () => {
       const particle = {};
       resetBeamParticle(particle, true);
       return particle;
     });
-    tickerParticles = Array.from({ length: tickerCount }, () => {
-      const particle = {};
-      resetTickerParticle(particle);
-      return particle;
-    });
+  };
+
+  const updateGeometry = () => {
+    const beamRect = beam.getBoundingClientRect();
+    const tickerRect = tickerCanvas.getBoundingClientRect();
+    beamLeft = beamRect.left;
+    tickerLeft = tickerRect.left;
+
+    const beamCenterViewportX = beamRect.left + (beamRect.width * 0.5);
+    impactX = clamp(beamCenterViewportX - tickerRect.left, 8, tickerWidth - 8);
+    impactYBeam = clamp((tickerRect.top + roofY - 1) - beamRect.top, 42, beamHeight - 6);
+    if (tickerHit) tickerHit.style.left = `${impactX}px`;
   };
 
   const resize = () => {
@@ -130,11 +147,8 @@ window.__lenis = lenis;
     tickerCanvas.height = Math.floor(tickerHeight * dpr);
     tickerCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const beamCenterViewportX = beamRect.left + (beamRect.width * 0.5);
-    impactX = clamp(beamCenterViewportX - tickerRect.left, 8, tickerWidth - 8);
-    if (tickerHit) tickerHit.style.left = `${impactX}px`;
-
     initParticles();
+    updateGeometry();
   };
 
   resize();
@@ -168,7 +182,9 @@ window.__lenis = lenis;
     beamCtx.globalCompositeOperation = 'source-over';
     for (let i = 0; i < beamParticles.length; i += 1) {
       const p = beamParticles[i];
-      const x = beamWidth * 0.5 + p.xN * beamWidth * 0.32;
+      const t = clamp(p.y / Math.max(impactYBeam, 1), 0, 1);
+      const squeeze = 1 - (t * 0.74);
+      const x = beamWidth * 0.5 + p.xN * beamWidth * 0.34 * squeeze;
       const y = p.y;
       const edge = Math.abs((x - beamWidth * 0.5) / (beamWidth * 0.5));
       const alpha = p.alpha * Math.max(0, 1 - edge * 1.65);
@@ -192,11 +208,7 @@ window.__lenis = lenis;
   pointer.y = beamHeight * 0.42;
 
   (function loop() {
-    const beamRect = beam.getBoundingClientRect();
-    const tickerRect = tickerCanvas.getBoundingClientRect();
-    const beamCenterViewportX = beamRect.left + (beamRect.width * 0.5);
-    impactX = clamp(beamCenterViewportX - tickerRect.left, 8, tickerWidth - 8);
-    if (tickerHit) tickerHit.style.left = `${impactX}px`;
+    updateGeometry();
 
     beamCtx.clearRect(0, 0, beamWidth, beamHeight);
     beamCtx.globalCompositeOperation = 'lighter';
@@ -205,11 +217,13 @@ window.__lenis = lenis;
     for (let i = 0; i < beamParticles.length; i += 1) {
       const p = beamParticles[i];
 
-      p.vy += 0.015;
+      p.vy += 0.012;
       p.y += p.speed + p.vy;
       p.xN += Math.sin((p.y * 0.01) + p.phase) * 0.0008;
 
-      let x = beamWidth * 0.5 + p.xN * beamWidth * 0.32 + Math.sin((p.y * 0.022) + p.phase) * p.wobble;
+      const t = clamp(p.y / Math.max(impactYBeam, 1), 0, 1);
+      const squeeze = 1 - (t * 0.74);
+      let x = beamWidth * 0.5 + p.xN * beamWidth * 0.34 * squeeze + Math.sin((p.y * 0.022) + p.phase) * p.wobble * (0.65 + (1 - t) * 0.4);
       if (pointer.active) {
         const dx = x - pointer.x;
         const dy = p.y - pointer.y;
@@ -236,7 +250,12 @@ window.__lenis = lenis;
         beamCtx.fillRect(x, p.y, p.size, p.size);
       }
 
-      if (p.y > beamHeight + 14 || x < -24 || x > beamWidth + 24) {
+      if (p.y >= impactYBeam) {
+        const viewportX = beamLeft + x;
+        const xAtTicker = viewportX - tickerLeft;
+        if (Math.random() < 0.72) spawnTickerParticle(xAtTicker);
+        resetBeamParticle(p, false);
+      } else if (p.y > beamHeight + 14 || x < -24 || x > beamWidth + 24) {
         resetBeamParticle(p, false);
       }
     }
@@ -249,26 +268,12 @@ window.__lenis = lenis;
       const p = tickerParticles[i];
       const centerX = impactX;
 
-      if (p.mode === 0) {
-        const toCenter = centerX - p.x;
-        p.vx += toCenter * 0.0026;
-        p.vx += Math.sin((p.y * 0.03) + p.phase) * 0.015;
-        p.vx *= 0.96;
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.022;
-        if (p.y >= roofY - 1) {
-          p.y = roofY - 1;
-          p.vy = 0;
-          const dir = p.x >= centerX ? 1 : -1;
-          p.vx = dir * (1.7 + Math.random() * 3.4);
-          p.mode = 1;
-        }
-      } else if (p.mode === 1) {
+      if (p.mode === 1) {
         p.x += p.vx;
         p.y = (roofY - 1.2) + Math.sin((p.x * 0.09) + p.phase) * 0.35;
         p.vx += ((p.x - centerX) / Math.max(centerX, 1)) * 0.016;
         p.vx *= 1.0028;
+        p.life -= 0.0026;
         if (p.x <= 10 || p.x >= tickerWidth - 10) {
           p.mode = 2;
           p.drift = p.vx * 0.2;
@@ -278,17 +283,18 @@ window.__lenis = lenis;
         p.x += p.drift;
         p.y += p.vy;
         p.vy += 0.06;
+        p.life -= 0.008;
       }
 
-      if (p.mode === 2 && p.y > tickerHeight + 14) {
-        resetTickerParticle(p);
-        continue;
-      }
-
-      const alpha = p.alpha * (p.mode === 2 ? 0.8 : 1);
+      const alpha = p.alpha * (p.mode === 2 ? 0.8 : 1) * Math.max(0, p.life);
       tickerCtx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
       tickerCtx.fillRect(p.x, p.y, p.size, p.size);
     }
+    tickerParticles = tickerParticles.filter((particle) => {
+      if (particle.life <= 0) return false;
+      if (particle.mode === 2 && particle.y > tickerHeight + 14) return false;
+      return particle.x > -20 && particle.x < tickerWidth + 20;
+    });
 
     requestAnimationFrame(loop);
   })();
