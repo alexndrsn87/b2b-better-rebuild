@@ -47,53 +47,166 @@ window.__lenis = lenis;
 (function heroBeamFX() {
   const hero = document.getElementById('top');
   const beam = document.querySelector('.hero-beam');
+  const canvas = document.getElementById('heroBeamCanvas');
   const tickerHit = document.querySelector('.ticker-beam-hit');
-  if (!hero || !beam) return;
+  if (!hero || !beam || !canvas) return;
+
+  const ctx = canvas.getContext('2d', { alpha: true });
+  if (!ctx) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) return;
-
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-  const ease = (start, target, factor) => start + (target - start) * factor;
+  const lerp = (start, target, factor) => start + (target - start) * factor;
+  const randomBeamOffset = () => ((Math.random() + Math.random() + Math.random()) - 1.5) * 0.26;
 
+  let dpr = 1;
+  let width = 0;
+  let height = 0;
+  let particles = [];
   let targetHeat = 0;
   let heat = 0;
+  const pointer = { active: false, x: 0, y: 0 };
+
+  const resetParticle = (particle, randomY) => {
+    particle.xN = randomBeamOffset();
+    particle.y = randomY ? Math.random() * height : -Math.random() * 60;
+    particle.vx = 0;
+    particle.speed = 0.45 + Math.random() * 1.2;
+    particle.size = 0.6 + Math.random() * 1.2;
+    particle.alpha = 0.08 + Math.random() * 0.2;
+    particle.phase = Math.random() * Math.PI * 2;
+    particle.wobble = 0.08 + Math.random() * 0.4;
+  };
+
+  const initParticles = () => {
+    const count = prefersReducedMotion ? 700 : 2600;
+    particles = Array.from({ length: count }, () => {
+      const particle = {};
+      resetParticle(particle, true);
+      return particle;
+    });
+  };
+
+  const resize = () => {
+    const rect = beam.getBoundingClientRect();
+    width = Math.max(72, Math.floor(rect.width));
+    height = Math.max(280, Math.floor(rect.height));
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    initParticles();
+  };
+
+  resize();
+  window.addEventListener('resize', resize);
 
   hero.addEventListener('pointermove', (e) => {
     const rect = beam.getBoundingClientRect();
     const cx = rect.left + rect.width * 0.5;
-    const cy = rect.top + rect.height * 0.55;
+    const cy = rect.top + rect.height * 0.56;
     const dx = e.clientX - cx;
     const dy = e.clientY - cy;
     const distance = Math.hypot(dx, dy);
-    const radius = Math.max(240, rect.width * 1.7);
+    const radius = Math.max(260, rect.width * 2.2);
     const proximity = clamp(1 - distance / radius, 0, 1);
-    targetHeat = Math.pow(proximity, 0.55);
+    targetHeat = Math.pow(proximity, 0.5);
 
-    const localX = clamp(((e.clientX - rect.left) / rect.width) * 100, 0, 100);
-    const localY = clamp(((e.clientY - rect.top) / rect.height) * 100, 0, 100);
+    pointer.active = true;
+    pointer.x = clamp(e.clientX - rect.left, 0, rect.width);
+    pointer.y = clamp(e.clientY - rect.top, 0, rect.height);
+
+    const localX = clamp((pointer.x / rect.width) * 100, 0, 100);
+    const localY = clamp((pointer.y / rect.height) * 100, 0, 100);
     beam.style.setProperty('--beam-cx', `${localX}%`);
     beam.style.setProperty('--beam-cy', `${localY}%`);
-    const pushX = clamp(dx * 0.16, -28, 28) * proximity;
-    const pushY = clamp((e.clientY - cy) * 0.08, -14, 14) * proximity;
-    beam.style.setProperty('--beam-push-x', `${pushX.toFixed(2)}px`);
-    beam.style.setProperty('--beam-push-y', `${pushY.toFixed(2)}px`);
-
-    if (tickerHit) tickerHit.classList.toggle('is-energized', targetHeat > 0.52);
+    if (tickerHit) tickerHit.classList.toggle('is-energized', targetHeat > 0.48);
   });
 
   hero.addEventListener('pointerleave', () => {
+    pointer.active = false;
     targetHeat = 0;
     beam.style.setProperty('--beam-cx', '50%');
     beam.style.setProperty('--beam-cy', '42%');
-    beam.style.setProperty('--beam-push-x', '0px');
-    beam.style.setProperty('--beam-push-y', '0px');
     if (tickerHit) tickerHit.classList.remove('is-energized');
   });
 
+  const renderStatic = () => {
+    ctx.clearRect(0, 0, width, height);
+    ctx.globalCompositeOperation = 'source-over';
+    for (let i = 0; i < particles.length; i += 1) {
+      const p = particles[i];
+      const x = width * 0.5 + p.xN * width * 0.32;
+      const y = p.y;
+      const edge = Math.abs((x - width * 0.5) / (width * 0.5));
+      const alpha = (0.09 + p.alpha * 0.8) * Math.max(0, 1 - edge * 1.6);
+      if (alpha < 0.01) continue;
+      ctx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
+      ctx.fillRect(x, y, 1.1, 1.1);
+    }
+  };
+
+  if (prefersReducedMotion) {
+    renderStatic();
+    return;
+  }
+
   (function loop() {
-    heat = ease(heat, targetHeat, 0.12);
+    heat = lerp(heat, targetHeat, 0.11);
     beam.style.setProperty('--beam-heat', heat.toFixed(3));
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.globalCompositeOperation = 'lighter';
+
+    const veil = ctx.createRadialGradient(
+      width * 0.5,
+      height * 0.44,
+      8,
+      width * 0.5,
+      height * 0.48,
+      Math.max(width * 1.8, 180)
+    );
+    veil.addColorStop(0, `rgba(255,242,0,${(0.08 + heat * 0.16).toFixed(3)})`);
+    veil.addColorStop(0.45, `rgba(255,242,0,${(0.035 + heat * 0.08).toFixed(3)})`);
+    veil.addColorStop(1, 'rgba(255,242,0,0)');
+    ctx.fillStyle = veil;
+    ctx.fillRect(0, 0, width, height);
+
+    const influenceRadius = Math.max(54, width * 0.58);
+    for (let i = 0; i < particles.length; i += 1) {
+      const p = particles[i];
+
+      p.y += p.speed * (1 + heat * 0.55);
+      p.xN += Math.sin((p.y * 0.01) + p.phase) * 0.0008;
+
+      let x = width * 0.5 + p.xN * width * 0.32 + Math.sin((p.y * 0.022) + p.phase) * p.wobble;
+      if (pointer.active) {
+        const dx = x - pointer.x;
+        const dy = p.y - pointer.y;
+        const dist = Math.hypot(dx, dy) || 1;
+        if (dist < influenceRadius) {
+          const force = (1 - dist / influenceRadius) * (0.9 + heat * 1.35);
+          p.vx += (dx / dist) * force * 0.95;
+          p.y += Math.abs(dy / dist) * force * 0.42;
+        }
+      }
+
+      x += p.vx;
+      p.vx *= 0.9;
+
+      const edge = Math.abs((x - width * 0.5) / (width * 0.5));
+      const alpha = p.alpha * Math.max(0, 1 - edge * 1.72) * (0.85 + heat * 0.65);
+      if (alpha > 0.01) {
+        const size = p.size * (0.9 + heat * 0.2);
+        ctx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;
+        ctx.fillRect(x, p.y, size, size);
+      }
+
+      if (p.y > height + 12 || x < -26 || x > width + 26) {
+        resetParticle(p, false);
+      }
+    }
+
     requestAnimationFrame(loop);
   })();
 })();
