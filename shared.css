@@ -380,13 +380,12 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .hero-copy-glass {
   position: relative;
   max-width: 1080px;
-  min-height: clamp(360px, 62vh, 680px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   border: 1px solid rgba(250, 250, 247, .08);
   border-radius: 34px;
-  padding: clamp(1.4rem, 3vw, 3rem);
+  padding: clamp(1.6rem, 3vw, 2.6rem) clamp(1.4rem, 3vw, 3rem);
   background: linear-gradient(145deg, rgba(250, 250, 247, .08), rgba(250, 250, 247, .02));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, .1),
