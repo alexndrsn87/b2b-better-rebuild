@@ -84,7 +84,7 @@ window.__lenis = lenis;
     p.vy = 0.18 + Math.random() * 0.55;
     p.speed = 0.28 + Math.random() * 0.9;
     p.phase = Math.random() * Math.PI * 2;
-    p.alpha = 0.22 + Math.random() * 0.5;
+    p.alpha = 0.28 + Math.random() * 0.52;
     p.size = 0.78 + Math.random() * 1.1;
     p.mode = 0;
     p.drift = 0;
@@ -229,29 +229,30 @@ window.__lenis = lenis;
     ctx.clearRect(0, 0, cw, ch);
     ctx.globalCompositeOperation = 'lighter';
 
-    // Thick glowing hit bar along the roof — layered rects create vertical
-    // depth, each filled with a horizontal gradient so the ends fade softly
-    // instead of chopping off at a hard rectangle edge.
-    const hostW = Math.max(1, hostRightX - hostLeftX);
-    const hitW = Math.min(cw + 120, Math.max(1100, hostW + 360));
-    const hitX = coreX - hitW / 2;
-    const hitGrad = ctx.createLinearGradient(hitX, 0, hitX + hitW, 0);
-    hitGrad.addColorStop(0, 'rgba(255,246,150,0)');
-    hitGrad.addColorStop(0.1, 'rgba(255,246,150,0.24)');
-    hitGrad.addColorStop(0.22, 'rgba(255,246,150,0.7)');
-    hitGrad.addColorStop(0.5, 'rgba(255,246,150,1)');
-    hitGrad.addColorStop(0.78, 'rgba(255,246,150,0.7)');
-    hitGrad.addColorStop(0.9, 'rgba(255,246,150,0.24)');
-    hitGrad.addColorStop(1, 'rgba(255,246,150,0)');
-    ctx.fillStyle = hitGrad;
-    ctx.globalAlpha = 0.16;
-    ctx.fillRect(hitX, roofY - 6, hitW, 11);
-    ctx.globalAlpha = 0.24;
-    ctx.fillRect(hitX, roofY - 3.5, hitW, 6);
-    ctx.globalAlpha = 0.48;
-    ctx.fillRect(hitX, roofY - 1.8, hitW, 3);
-    ctx.globalAlpha = 0.8;
-    ctx.fillRect(hitX, roofY - 0.6, hitW, 1.2);
+    // Host-wide rail glow with extra overhang so off-edge spill particles
+    // always sit on top of illuminated haze (especially on the far left).
+    const railStart = Math.max(-260, hostLeftX - 260);
+    const railEnd = Math.min(cw + 260, hostRightX + 260);
+    const railW = Math.max(1, railEnd - railStart);
+    const coreStop = clamp((coreX - railStart) / railW, 0.08, 0.92);
+    const shoulder = 0.16;
+    const railGrad = ctx.createLinearGradient(railStart, 0, railEnd, 0);
+    railGrad.addColorStop(0, 'rgba(255,246,150,0)');
+    railGrad.addColorStop(0.1, 'rgba(255,246,150,0.16)');
+    railGrad.addColorStop(Math.max(0, coreStop - shoulder), 'rgba(255,246,150,0.38)');
+    railGrad.addColorStop(coreStop, 'rgba(255,246,150,1)');
+    railGrad.addColorStop(Math.min(1, coreStop + shoulder), 'rgba(255,246,150,0.38)');
+    railGrad.addColorStop(0.9, 'rgba(255,246,150,0.16)');
+    railGrad.addColorStop(1, 'rgba(255,246,150,0)');
+    ctx.fillStyle = railGrad;
+    ctx.globalAlpha = 0.2;
+    ctx.fillRect(railStart, roofY - 7, railW, 13);
+    ctx.globalAlpha = 0.3;
+    ctx.fillRect(railStart, roofY - 4, railW, 7.5);
+    ctx.globalAlpha = 0.54;
+    ctx.fillRect(railStart, roofY - 2, railW, 3.6);
+    ctx.globalAlpha = 0.86;
+    ctx.fillRect(railStart, roofY - 0.7, railW, 1.35);
     ctx.globalAlpha = 1;
 
     // Smaller, more localised cursor influence — a splash, not a force field.
@@ -302,7 +303,7 @@ window.__lenis = lenis;
         const envelopeHalf = columnHalf * 1.25;
         const edge = Math.abs((p.x - coreX) / Math.max(envelopeHalf, 1));
         const tDepth = clamp(p.y / Math.max(roofY, 1), 0, 1);
-        const depth = 0.55 + tDepth * 0.45;
+        const depth = 0.64 + tDepth * 0.36;
         const alpha = p.alpha * Math.max(0, 1 - edge * 0.9) * depth;
         if (alpha > 0.012) {
           ctx.fillStyle = `rgba(255,242,0,${alpha.toFixed(3)})`;

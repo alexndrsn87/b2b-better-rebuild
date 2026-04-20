@@ -277,14 +277,14 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   background: linear-gradient(
     to bottom,
     rgba(255, 242, 0, 0) 0%,
-    rgba(255, 242, 0, 0.025) 16%,
-    rgba(255, 242, 0, 0.08) 34%,
-    rgba(255, 242, 0, 0.15) 58%,
-    rgba(255, 242, 0, 0.22) 88%,
-    rgba(255, 242, 0, 0.24) 100%
+    rgba(255, 242, 0, 0.04) 16%,
+    rgba(255, 242, 0, 0.11) 34%,
+    rgba(255, 242, 0, 0.19) 58%,
+    rgba(255, 242, 0, 0.27) 88%,
+    rgba(255, 242, 0, 0.29) 100%
   );
   filter: blur(34px);
-  opacity: calc(0.68 + var(--beam-heat) * 0.32);
+  opacity: calc(0.76 + var(--beam-heat) * 0.34);
   z-index: 1;
   pointer-events: none;
 }
@@ -300,14 +300,14 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   background: linear-gradient(
     to bottom,
     rgba(255, 242, 0, 0) 0%,
-    rgba(255, 246, 150, 0.05) 14%,
-    rgba(255, 246, 150, 0.22) 34%,
-    rgba(255, 246, 150, 0.48) 62%,
-    rgba(255, 246, 150, 0.74) 94%,
-    rgba(255, 246, 150, 0.66) 100%
+    rgba(255, 246, 150, 0.12) 14%,
+    rgba(255, 246, 150, 0.32) 34%,
+    rgba(255, 246, 150, 0.58) 62%,
+    rgba(255, 246, 150, 0.82) 94%,
+    rgba(255, 246, 150, 0.74) 100%
   );
   filter: blur(4px);
-  opacity: calc(0.72 + var(--beam-heat) * 0.28);
+  opacity: calc(0.8 + var(--beam-heat) * 0.3);
   z-index: 3;
   pointer-events: none;
 }
@@ -339,8 +339,8 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .beam-rail {
   position: absolute;
   bottom: calc(var(--beam-roof-gap) - 2px);
-  left: -18vw;
-  right: -18vw;
+  left: -28vw;
+  right: -28vw;
   height: 16px;
   transform: translateY(50%);
   background: linear-gradient(
@@ -354,7 +354,7 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
     rgba(255, 246, 150, 0) 100%
   );
   filter: blur(7px);
-  opacity: calc(0.52 + var(--beam-heat) * 0.34);
+  opacity: calc(0.58 + var(--beam-heat) * 0.36);
   z-index: 2;
   pointer-events: none;
   mix-blend-mode: screen;
