@@ -67,7 +67,7 @@ window.__lenis = lenis;
   let beamParticles = [];
   let tickerParticles = [];
   const pointer = { active: false, x: 0, y: 0 };
-  const roofY = 2;
+  const roofY = 28;
 
   const resetBeamParticle = (particle, randomY) => {
     particle.xN = randomBeamOffset();
@@ -82,9 +82,9 @@ window.__lenis = lenis;
   };
 
   const resetTickerParticle = (particle) => {
-    particle.x = tickerWidth * 0.5 + (Math.random() - 0.5) * 16;
+    particle.x = tickerWidth * 0.5 + (Math.random() - 0.5) * 8;
     particle.y = -Math.random() * 30;
-    particle.vx = (Math.random() > 0.5 ? 1 : -1) * (0.55 + Math.random() * 2.1);
+    particle.vx = (Math.random() > 0.5 ? 1 : -1) * (0.2 + Math.random() * 0.5);
     particle.vy = 0.62 + Math.random() * 0.65;
     particle.phase = Math.random() * Math.PI * 2;
     particle.alpha = 0.24 + Math.random() * 0.46;
@@ -235,6 +235,7 @@ window.__lenis = lenis;
     tickerCtx.fillRect(0, roofY, tickerWidth, 1.2);
     for (let i = 0; i < tickerParticles.length; i += 1) {
       const p = tickerParticles[i];
+      const centerX = tickerWidth * 0.5;
 
       if (p.mode === 0) {
         p.y += p.vy;
@@ -242,11 +243,14 @@ window.__lenis = lenis;
         if (p.y >= roofY) {
           p.y = roofY;
           p.vy = 0;
+          const dir = p.x >= centerX ? 1 : -1;
+          p.vx = dir * (1.3 + Math.random() * 2.9);
           p.mode = 1;
         }
       } else if (p.mode === 1) {
         p.x += p.vx;
         p.y = roofY + Math.sin((p.x * 0.09) + p.phase) * 0.55;
+        p.vx += ((p.x - centerX) / Math.max(centerX, 1)) * 0.016;
         p.vx *= 1.0028;
         if (p.x <= 10 || p.x >= tickerWidth - 10) {
           p.mode = 2;

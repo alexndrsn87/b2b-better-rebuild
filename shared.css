@@ -160,7 +160,8 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .hairline { height: 1px; background: linear-gradient(to right, transparent, rgba(250, 250, 247, .18), transparent); }
 
 .ticker-shell {
-  width: min(1400px, calc(100vw - 3rem));
+  width: 100%;
+  max-width: 1400px;
   position: relative;
   margin-inline: auto;
   overflow: visible;
@@ -189,9 +190,9 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .ticker-beam-canvas {
   position: absolute;
   left: 0;
-  top: -2px;
+  top: -28px;
   width: 100%;
-  height: 132px;
+  height: 170px;
   display: block;
   pointer-events: none;
   z-index: 4;
@@ -685,7 +686,7 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
     width: min(24vw, 180px);
   }
   .ticker-shell {
-    width: min(1400px, calc(100vw - 1.6rem));
+    width: calc(100vw - 1.6rem);
   }
   .ticker-beam-hit {
     width: min(44vw, 320px);
