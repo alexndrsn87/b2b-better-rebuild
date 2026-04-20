@@ -57,7 +57,7 @@ window.__lenis = lenis;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-  const randomBeamOffset = () => ((Math.random() + Math.random() + Math.random()) - 1.5) * 0.27;
+  const randomBeamOffset = () => ((Math.random() + Math.random() + Math.random()) - 1.5) * 0.28;
 
   let dpr = 1;
   let beamWidth = 0;
@@ -67,33 +67,35 @@ window.__lenis = lenis;
   let beamParticles = [];
   let tickerParticles = [];
   const pointer = { active: false, x: 0, y: 0 };
+  const roofY = 2;
 
   const resetBeamParticle = (particle, randomY) => {
     particle.xN = randomBeamOffset();
     particle.y = randomY ? Math.random() * beamHeight : -Math.random() * 80;
     particle.vx = 0;
-    particle.speed = 0.55 + Math.random() * 1.35;
-    particle.size = 0.7 + Math.random() * 1.05;
-    particle.alpha = 0.17 + Math.random() * 0.35;
+    particle.vy = 0;
+    particle.speed = 0.62 + Math.random() * 1.55;
+    particle.size = 0.8 + Math.random() * 1.15;
+    particle.alpha = 0.24 + Math.random() * 0.48;
     particle.phase = Math.random() * Math.PI * 2;
-    particle.wobble = 0.12 + Math.random() * 0.5;
+    particle.wobble = 0.14 + Math.random() * 0.65;
   };
 
   const resetTickerParticle = (particle) => {
-    particle.x = tickerWidth * 0.5 + (Math.random() - 0.5) * 10;
-    particle.y = 2 + Math.random() * 7;
-    particle.vx = (Math.random() > 0.5 ? 1 : -1) * (0.3 + Math.random() * 1.6);
-    particle.vy = 0.04 + Math.random() * 0.08;
+    particle.x = tickerWidth * 0.5 + (Math.random() - 0.5) * 16;
+    particle.y = -Math.random() * 30;
+    particle.vx = (Math.random() > 0.5 ? 1 : -1) * (0.55 + Math.random() * 2.1);
+    particle.vy = 0.62 + Math.random() * 0.65;
     particle.phase = Math.random() * Math.PI * 2;
-    particle.alpha = 0.2 + Math.random() * 0.35;
-    particle.size = 0.8 + Math.random() * 0.95;
+    particle.alpha = 0.24 + Math.random() * 0.46;
+    particle.size = 0.75 + Math.random() * 1.08;
     particle.mode = 0; // 0 landing, 1 slide, 2 spill
     particle.drift = 0;
   };
 
   const initParticles = () => {
-    const beamCount = prefersReducedMotion ? 800 : 3000;
-    const tickerCount = prefersReducedMotion ? 160 : 540;
+    const beamCount = prefersReducedMotion ? 1000 : 5200;
+    const tickerCount = prefersReducedMotion ? 220 : 980;
 
     beamParticles = Array.from({ length: beamCount }, () => {
       const particle = {};
@@ -171,8 +173,8 @@ window.__lenis = lenis;
 
     tickerCtx.clearRect(0, 0, tickerWidth, tickerHeight);
     tickerCtx.globalCompositeOperation = 'source-over';
-    tickerCtx.fillStyle = 'rgba(255,242,0,0.4)';
-    tickerCtx.fillRect(tickerWidth * 0.5 - 3, 6, 6, 2);
+    tickerCtx.fillStyle = 'rgba(255,242,0,0.6)';
+    tickerCtx.fillRect(tickerWidth * 0.5 - 3, roofY, 6, 2);
   };
 
   if (prefersReducedMotion) {
@@ -187,11 +189,12 @@ window.__lenis = lenis;
     beamCtx.clearRect(0, 0, beamWidth, beamHeight);
     beamCtx.globalCompositeOperation = 'lighter';
 
-    const influenceRadius = Math.max(56, beamWidth * 0.62);
+    const influenceRadius = Math.max(90, beamWidth * 0.78);
     for (let i = 0; i < beamParticles.length; i += 1) {
       const p = beamParticles[i];
 
-      p.y += p.speed;
+      p.vy += 0.015;
+      p.y += p.speed + p.vy;
       p.xN += Math.sin((p.y * 0.01) + p.phase) * 0.0008;
 
       let x = beamWidth * 0.5 + p.xN * beamWidth * 0.32 + Math.sin((p.y * 0.022) + p.phase) * p.wobble;
@@ -200,14 +203,19 @@ window.__lenis = lenis;
         const dy = p.y - pointer.y;
         const dist = Math.hypot(dx, dy) || 1;
         if (dist < influenceRadius) {
-          const force = (1 - dist / influenceRadius) * 2.1;
-          p.vx += (dx / dist) * force * 1.05;
-          p.y += Math.abs(dy / dist) * force * 0.45;
+          const normX = dx / dist;
+          const normY = dy / dist;
+          const pull = Math.pow(1 - dist / influenceRadius, 1.65);
+          const swirlX = -normY;
+          const swirlY = normX;
+          p.vx += normX * pull * 3.9 + swirlX * pull * 2.2;
+          p.vy += normY * pull * 2.4 + swirlY * pull * 1.2;
         }
       }
 
       x += p.vx;
-      p.vx *= 0.88;
+      p.vx *= 0.91;
+      p.vy *= 0.9;
 
       const edge = Math.abs((x - beamWidth * 0.5) / (beamWidth * 0.5));
       const alpha = p.alpha * Math.max(0, 1 - edge * 1.72);
@@ -223,33 +231,35 @@ window.__lenis = lenis;
 
     tickerCtx.clearRect(0, 0, tickerWidth, tickerHeight);
     tickerCtx.globalCompositeOperation = 'lighter';
+    tickerCtx.fillStyle = 'rgba(255, 242, 0, 0.45)';
+    tickerCtx.fillRect(0, roofY, tickerWidth, 1.2);
     for (let i = 0; i < tickerParticles.length; i += 1) {
       const p = tickerParticles[i];
 
       if (p.mode === 0) {
         p.y += p.vy;
-        p.vy += 0.03;
-        if (p.y >= 9) {
-          p.y = 9;
+        p.vy += 0.035;
+        if (p.y >= roofY) {
+          p.y = roofY;
           p.vy = 0;
           p.mode = 1;
         }
       } else if (p.mode === 1) {
         p.x += p.vx;
-        p.y = 9 + Math.sin((p.x * 0.08) + p.phase) * 0.9;
-        p.vx *= 1.0018;
-        if (p.x <= 14 || p.x >= tickerWidth - 14) {
+        p.y = roofY + Math.sin((p.x * 0.09) + p.phase) * 0.55;
+        p.vx *= 1.0028;
+        if (p.x <= 10 || p.x >= tickerWidth - 10) {
           p.mode = 2;
-          p.drift = p.vx * 0.18;
-          p.vy = 0.55 + Math.random() * 0.6;
+          p.drift = p.vx * 0.2;
+          p.vy = 0.7 + Math.random() * 0.85;
         }
       } else {
         p.x += p.drift;
         p.y += p.vy;
-        p.vy += 0.05;
+        p.vy += 0.06;
       }
 
-      if (p.mode === 2 && p.y > tickerHeight + 10) {
+      if (p.mode === 2 && p.y > tickerHeight + 14) {
         resetTickerParticle(p);
         continue;
       }
