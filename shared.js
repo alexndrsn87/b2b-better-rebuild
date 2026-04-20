@@ -43,6 +43,50 @@ window.__lenis = lenis;
   });
 })();
 
+/* ---- Hero beam cursor interaction ---- */
+(function heroBeamFX() {
+  const hero = document.getElementById('top');
+  const beam = document.querySelector('.hero-beam');
+  if (!hero || !beam) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const ease = (start, target, factor) => start + (target - start) * factor;
+
+  let targetHeat = 0;
+  let heat = 0;
+
+  hero.addEventListener('pointermove', (e) => {
+    const rect = beam.getBoundingClientRect();
+    const cx = rect.left + rect.width * 0.5;
+    const cy = rect.top + rect.height * 0.55;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
+    const distance = Math.hypot(dx, dy);
+    const radius = Math.max(220, rect.width * 1.45);
+    targetHeat = clamp(1 - distance / radius, 0, 1);
+
+    const localX = clamp(((e.clientX - rect.left) / rect.width) * 100, 0, 100);
+    const localY = clamp(((e.clientY - rect.top) / rect.height) * 100, 0, 100);
+    beam.style.setProperty('--beam-cx', `${localX}%`);
+    beam.style.setProperty('--beam-cy', `${localY}%`);
+  });
+
+  hero.addEventListener('pointerleave', () => {
+    targetHeat = 0;
+    beam.style.setProperty('--beam-cx', '50%');
+    beam.style.setProperty('--beam-cy', '42%');
+  });
+
+  (function loop() {
+    heat = ease(heat, targetHeat, 0.12);
+    beam.style.setProperty('--beam-heat', heat.toFixed(3));
+    requestAnimationFrame(loop);
+  })();
+})();
+
 /* ---- Nav: scroll state + burger ---- */
 (function nav() {
   const navEl = document.getElementById('siteNav');
