@@ -47,6 +47,7 @@ window.__lenis = lenis;
 (function heroBeamFX() {
   const hero = document.getElementById('top');
   const beam = document.querySelector('.hero-beam');
+  const tickerHit = document.querySelector('.ticker-beam-hit');
   if (!hero || !beam) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -65,19 +66,29 @@ window.__lenis = lenis;
     const dx = e.clientX - cx;
     const dy = e.clientY - cy;
     const distance = Math.hypot(dx, dy);
-    const radius = Math.max(220, rect.width * 1.45);
-    targetHeat = clamp(1 - distance / radius, 0, 1);
+    const radius = Math.max(240, rect.width * 1.7);
+    const proximity = clamp(1 - distance / radius, 0, 1);
+    targetHeat = Math.pow(proximity, 0.55);
 
     const localX = clamp(((e.clientX - rect.left) / rect.width) * 100, 0, 100);
     const localY = clamp(((e.clientY - rect.top) / rect.height) * 100, 0, 100);
     beam.style.setProperty('--beam-cx', `${localX}%`);
     beam.style.setProperty('--beam-cy', `${localY}%`);
+    const pushX = clamp(dx * 0.16, -28, 28) * proximity;
+    const pushY = clamp((e.clientY - cy) * 0.08, -14, 14) * proximity;
+    beam.style.setProperty('--beam-push-x', `${pushX.toFixed(2)}px`);
+    beam.style.setProperty('--beam-push-y', `${pushY.toFixed(2)}px`);
+
+    if (tickerHit) tickerHit.classList.toggle('is-energized', targetHeat > 0.52);
   });
 
   hero.addEventListener('pointerleave', () => {
     targetHeat = 0;
     beam.style.setProperty('--beam-cx', '50%');
     beam.style.setProperty('--beam-cy', '42%');
+    beam.style.setProperty('--beam-push-x', '0px');
+    beam.style.setProperty('--beam-push-y', '0px');
+    if (tickerHit) tickerHit.classList.remove('is-energized');
   });
 
   (function loop() {
