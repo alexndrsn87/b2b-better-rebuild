@@ -479,3 +479,19 @@
   }, { threshold: 0.15 });
   els.forEach((el) => io.observe(el));
 })();
+
+/* ---------- Team carousel controls ---------- */
+(function teamCarousel() {
+  const track = document.querySelector('[data-team-carousel]');
+  const prev = document.querySelector('[data-team-prev]');
+  const next = document.querySelector('[data-team-next]');
+  if (!track || !prev || !next) return;
+
+  const step = () => Math.max(260, Math.floor(track.clientWidth * 0.78));
+  prev.addEventListener('click', () => {
+    track.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+  next.addEventListener('click', () => {
+    track.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+})();
