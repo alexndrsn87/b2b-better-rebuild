@@ -231,18 +231,20 @@ window.__lenis = lenis;
 
     // Host-wide rail glow with extra overhang so off-edge spill particles
     // always sit on top of illuminated haze (especially on the far left).
-    const railStart = Math.max(-260, hostLeftX - 260);
-    const railEnd = Math.min(cw + 260, hostRightX + 260);
+    const railStart = Math.max(-360, hostLeftX - 360);
+    const railEnd = Math.min(cw + 360, hostRightX + 360);
     const railW = Math.max(1, railEnd - railStart);
     const coreStop = clamp((coreX - railStart) / railW, 0.08, 0.92);
     const shoulder = 0.16;
     const railGrad = ctx.createLinearGradient(railStart, 0, railEnd, 0);
     railGrad.addColorStop(0, 'rgba(255,246,150,0)');
-    railGrad.addColorStop(0.1, 'rgba(255,246,150,0.16)');
+    railGrad.addColorStop(0.06, 'rgba(255,246,150,0.07)');
+    railGrad.addColorStop(0.14, 'rgba(255,246,150,0.16)');
     railGrad.addColorStop(Math.max(0, coreStop - shoulder), 'rgba(255,246,150,0.38)');
     railGrad.addColorStop(coreStop, 'rgba(255,246,150,1)');
     railGrad.addColorStop(Math.min(1, coreStop + shoulder), 'rgba(255,246,150,0.38)');
-    railGrad.addColorStop(0.9, 'rgba(255,246,150,0.16)');
+    railGrad.addColorStop(0.86, 'rgba(255,246,150,0.16)');
+    railGrad.addColorStop(0.94, 'rgba(255,246,150,0.07)');
     railGrad.addColorStop(1, 'rgba(255,246,150,0)');
     ctx.fillStyle = railGrad;
     ctx.globalAlpha = 0.2;

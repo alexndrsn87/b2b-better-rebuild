@@ -366,18 +366,20 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .beam-rail {
   position: absolute;
   bottom: calc(var(--beam-roof-gap) - 2px);
-  left: -28vw;
-  right: -28vw;
+  left: -34vw;
+  right: -34vw;
   height: 16px;
   transform: translateY(50%);
   background: linear-gradient(
     to right,
     rgba(255, 246, 150, 0) 0%,
-    rgba(255, 246, 150, 0.08) 12%,
-    rgba(255, 246, 150, 0.2) 28%,
+    rgba(255, 246, 150, 0.04) 10%,
+    rgba(255, 246, 150, 0.12) 20%,
+    rgba(255, 246, 150, 0.2) 32%,
     rgba(255, 246, 150, 0.58) 50%,
-    rgba(255, 246, 150, 0.2) 72%,
-    rgba(255, 246, 150, 0.08) 88%,
+    rgba(255, 246, 150, 0.2) 68%,
+    rgba(255, 246, 150, 0.12) 80%,
+    rgba(255, 246, 150, 0.04) 90%,
     rgba(255, 246, 150, 0) 100%
   );
   filter: blur(7px);
@@ -385,6 +387,9 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   z-index: 2;
   pointer-events: none;
   mix-blend-mode: screen;
+  /* Extra feathering so the rail never ends in a visible hard cutoff. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 8%, #000 14%, #000 86%, rgba(0,0,0,0.6) 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 8%, #000 14%, #000 86%, rgba(0,0,0,0.6) 92%, transparent 100%);
 }
 
 /* Canvas — particle dust layer. Internal compositing is already additive
