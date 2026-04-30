@@ -578,7 +578,12 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: 8px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  mask-image: linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%);
 }
+.team-carousel::-webkit-scrollbar { display: none; }
 @media (max-width: 1100px) { .team-carousel { grid-auto-columns: minmax(250px, 46%); } }
 @media (max-width: 640px)  { .team-carousel { grid-auto-columns: minmax(240px, 82%); } }
 .team-card {
@@ -669,6 +674,83 @@
 @keyframes teamParticleDrift {
   from { transform: translateY(0); }
   to { transform: translateY(-8px); }
+}
+
+/* -------- Team profile pages (bespoke) -------- */
+.team-profile-page .profile-shell {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: clamp(1.4rem, 2.4vw, 2.4rem);
+  background:
+    radial-gradient(circle at 8% 10%, rgba(255,242,0,.08), transparent 50%),
+    radial-gradient(circle at 92% 88%, rgba(95,201,255,.08), transparent 50%),
+    rgba(12,12,14,.6);
+  overflow: hidden;
+}
+.team-profile-page .profile-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .36;
+  background-image:
+    radial-gradient(circle at 18% 26%, rgba(255,242,0,.45) 1px, transparent 2px),
+    radial-gradient(circle at 78% 18%, rgba(255,242,0,.3) 1px, transparent 2px),
+    radial-gradient(circle at 60% 82%, rgba(95,201,255,.35) 1px, transparent 2px);
+  animation: teamParticleDrift 10s linear infinite;
+}
+.team-profile-page .profile-layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: clamp(1.2rem, 2.2vw, 2.2rem);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .team-profile-page .profile-layout { grid-template-columns: 1fr; }
+}
+.team-profile-page .profile-photo {
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1px solid rgba(250,250,247,.14);
+  box-shadow: 0 16px 34px rgba(0,0,0,.35);
+}
+.team-profile-page .profile-meta-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (max-width: 900px) {
+  .team-profile-page .profile-meta-grid { grid-template-columns: 1fr; }
+}
+.team-profile-page .profile-meta-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 12px 11px;
+  background: rgba(10,10,12,.55);
+  transition: border-color .25s ease, transform .25s ease, background .25s ease;
+}
+.team-profile-page .profile-meta-card:hover {
+  border-color: rgba(255,242,0,.4);
+  background: rgba(255,242,0,.08);
+  transform: translateY(-2px);
+}
+.team-profile-page .profile-meta-card .k {
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(250,250,247,.45);
+}
+.team-profile-page .profile-meta-card .v {
+  margin-top: 5px;
+  font-size: 14px;
+  color: var(--paper);
 }
 
 /* -------- Insight cards — v2 -------- */
