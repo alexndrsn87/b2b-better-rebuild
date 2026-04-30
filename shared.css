@@ -411,6 +411,28 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   z-index: 4;
 }
 
+/* Problem section beam carry-over */
+.problem-beam-glow {
+  position: absolute;
+  top: 6%;
+  bottom: 8%;
+  left: 50%;
+  width: min(22vw, 220px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 242, 0, 0) 0%,
+      rgba(255, 242, 0, 0.05) 18%,
+      rgba(255, 242, 0, 0.11) 52%,
+      rgba(255, 242, 0, 0.2) 100%
+    );
+  filter: blur(24px);
+  opacity: 0.62;
+}
+
 .hero-copy-glass {
   position: relative;
   max-width: 1080px;

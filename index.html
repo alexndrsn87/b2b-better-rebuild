@@ -104,7 +104,7 @@
 </div><!-- /.beam-stage -->
 
 <!-- PROBLEM (pinned) -->
-<section id="problemPin" class="relative py-20 md:py-24 overflow-hidden">
+<section id="problemPin" class="relative py-14 md:py-16 overflow-hidden">
   <div class="problem-content max-w-[1320px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-4 md:gap-6 items-start">
     <div class="md:col-span-5">
       <div class="eyebrow text-paper/50 mb-8">The problem</div>
@@ -117,11 +117,12 @@
       </p>
     </div>
   </div>
-  <canvas id="particles" class="absolute inset-0 w-full h-full pointer-events-none opacity-60"></canvas>
+  <div class="problem-beam-glow" aria-hidden="true"></div>
+  <canvas id="particles" class="absolute inset-0 w-full h-full pointer-events-none opacity-75"></canvas>
 </section>
 
 <!-- PROMISE -->
-<section class="relative py-20 md:py-24 overflow-hidden">
+<section class="relative py-14 md:py-16 overflow-hidden">
   <div class="max-w-[1320px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-4 md:gap-6">
     <div class="md:col-span-6 md:col-start-7">
       <div class="eyebrow text-yolk mb-8">The promise</div>
