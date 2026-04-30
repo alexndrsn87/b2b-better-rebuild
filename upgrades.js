@@ -27,19 +27,43 @@
       return;
     }
 
-    // Stacked on hover + on scroll past a threshold
-    const hero = stack.closest('section') || document.body;
-    hero.addEventListener('pointermove', (e) => {
-      const r = hero.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const dx = Math.abs(e.clientX - cx);
-      // if pointer near centre, activate stack
-      if (dx < r.width * 0.5) stack.classList.add('is-stacked');
-    });
-    hero.addEventListener('pointerleave', () => stack.classList.remove('is-stacked'));
-    // Also activate briefly after initial reveal
-    setTimeout(() => stack.classList.add('is-stacked'), 1400);
-    setTimeout(() => stack.classList.remove('is-stacked'), 3200);
+    const heroBox = stack.closest('.hero-copy-glass') || stack.closest('section') || document.body;
+    let resetTimer = 0;
+
+    const puff = () => {
+      const dots = 18;
+      for (let i = 0; i < dots; i += 1) {
+        const dot = document.createElement('span');
+        dot.className = 'cs-puff-dot';
+        const a = (Math.PI * 2 * i) / dots + (Math.random() - 0.5) * 0.5;
+        const r = 16 + Math.random() * 40;
+        dot.style.setProperty('--dx', `${Math.cos(a) * r}px`);
+        dot.style.setProperty('--dy', `${Math.sin(a) * r - 8}px`);
+        dot.style.setProperty('--dur', `${700 + Math.random() * 350}ms`);
+        dot.style.setProperty('--size', `${1.8 + Math.random() * 2.8}px`);
+        dot.addEventListener('animationend', () => dot.remove(), { once: true });
+        stack.appendChild(dot);
+      }
+    };
+
+    const activate = () => {
+      clearTimeout(resetTimer);
+      stack.classList.add('is-energized');
+      stack.classList.add('is-stacked');
+      puff();
+    };
+
+    const deactivate = () => {
+      stack.classList.remove('is-energized');
+      // Slow reset back to normal over 3-4 seconds.
+      stack.classList.remove('is-stacked');
+      resetTimer = setTimeout(() => {
+        stack.classList.remove('is-energized');
+      }, 3600);
+    };
+
+    heroBox.addEventListener('pointerenter', activate);
+    heroBox.addEventListener('pointerleave', deactivate);
   });
 })();
 

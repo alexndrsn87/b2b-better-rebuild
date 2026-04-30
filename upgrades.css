@@ -55,8 +55,11 @@
   color: var(--paper);
   opacity: 0;
   pointer-events: none;
-  transition: opacity .35s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+  transition: opacity 3.4s ease-out, transform 3.4s cubic-bezier(.2,.7,.2,1);
   will-change: transform, opacity;
+}
+.compound-stack.is-energized .cs-layer {
+  transition-duration: .34s;
 }
 .compound-stack.is-stacked .cs-layer { opacity: .22; }
 .compound-stack.is-stacked .cs-layer:nth-child(1) { transform: translate(-12px, -10px); color: #6fd1ff; }
@@ -64,6 +67,25 @@
 .compound-stack.is-stacked .cs-layer:nth-child(3) { transform: translate(6px, 5px); color: var(--yolk); }
 .compound-stack.is-stacked .cs-layer:nth-child(4) { transform: translate(12px, 10px); color: #b8ff93; }
 .compound-stack .cs-main { position: relative; z-index: 2; display: inline-block; }
+.compound-stack .cs-puff-dot {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: var(--size, 3px);
+  height: var(--size, 3px);
+  margin-left: calc(var(--size, 3px) * -0.5);
+  margin-top: calc(var(--size, 3px) * -0.5);
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 4;
+  background: rgba(255,242,0,.95);
+  box-shadow: 0 0 8px rgba(255,242,0,.5);
+  animation: csPuff var(--dur, 880ms) ease-out forwards;
+}
+@keyframes csPuff {
+  from { transform: translate(0,0) scale(.7); opacity: .95; }
+  to   { transform: translate(var(--dx), var(--dy)) scale(.2); opacity: 0; }
+}
 
 /* The trailing dot — make it a living, breathing pulse */
 .yolk-dot {
