@@ -6,8 +6,9 @@
 <title>B2B Better — Content that compounds.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css?v=3">
+<link rel="stylesheet" href="upgrades.css?v=3">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = { theme: { extend: {
@@ -15,6 +16,11 @@
     colors: { ink:'#0B0B0C', surface:'#101114', paper:'#FAFAF7', muted:'#6B6B70', line:'#1E1F23', yolk:'#FFF200' },
   }}};
 </script>
+<script>window.__TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "yolk_hue": 64,
+  "beam_intensity": "balanced",
+  "type_variant": "default"
+}/*EDITMODE-END*/;</script>
 </head>
 <body class="overflow-x-hidden">
 
@@ -24,16 +30,18 @@
 <!-- NAV -->
 <header id="siteNav" class="nav-frost fixed top-4 inset-x-0 z-50">
   <div class="nav-shell mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
-    <a href="/" class="inline-flex items-center nav-logo" aria-label="B2B Better home"><img src="/b2b-logo.png" alt="B2B Better" class="h-8 w-auto md:h-9" /></a>
+    <a href="index.html" class="inline-flex items-center nav-logo" aria-label="B2B Better home">
+      <span class="flex items-baseline gap-[3px] text-paper font-bold text-xl tracking-tight"><span>B2B</span><span class="text-yolk">Better</span><span class="w-2.5 h-2.5 rounded-full bg-yolk" style="margin-left:3px;"></span></span>
+    </a>
     <nav class="hidden md:flex items-center gap-8 text-base text-paper/75">
-      <a class="nav-link link-underline hover:text-paper transition" href="/packages">Packages</a>
-      <a class="nav-link link-underline hover:text-paper transition" href="/insights">Insights</a>
-      <a class="nav-link link-underline hover:text-paper transition" href="/assessment">Assessment</a>
-      <a class="nav-link link-underline hover:text-paper transition" href="/about">About</a>
-      <a class="nav-link link-underline hover:text-paper transition" href="/referral">Referral</a>
+      <a class="nav-link link-underline hover:text-paper transition" href="packages.html">Packages</a>
+      <a class="nav-link link-underline hover:text-paper transition" href="insights.html">Insights</a>
+      <a class="nav-link link-underline hover:text-paper transition" href="assessment.html">Assessment</a>
+      <a class="nav-link link-underline hover:text-paper transition" href="about.html">About</a>
+      <a class="nav-link link-underline hover:text-paper transition" href="referral.html">Referral</a>
     </nav>
     <div class="hidden md:block">
-      <a href="/premise-pitch" class="btn-primary nav-cta !py-3 !px-5 text-sm">Free premise pitch
+      <a href="premise-pitch.html" class="btn-primary nav-cta !py-3 !px-5 text-sm">Free premise pitch
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -43,37 +51,57 @@
   </div>
 </header>
 <div id="menuOverlay" class="menu-overlay fixed inset-0 z-40 hidden flex-col px-6 pt-24 pb-10 gap-6 text-paper md:!hidden">
-  <a class="text-3xl font-semibold tracking-tight" href="/packages">Packages.</a>
-  <a class="text-3xl font-semibold tracking-tight" href="/insights">Insights.</a>
-  <a class="text-3xl font-semibold tracking-tight" href="/assessment">Assessment.</a>
-  <a class="text-3xl font-semibold tracking-tight" href="/about">About.</a>
-  <a class="text-3xl font-semibold tracking-tight" href="/referral">Referral.</a>
-  <div class="mt-auto"><a href="/premise-pitch" class="btn-primary">Free premise pitch</a></div>
+  <a class="text-3xl font-semibold tracking-tight" href="packages.html">Packages.</a>
+  <a class="text-3xl font-semibold tracking-tight" href="insights.html">Insights.</a>
+  <a class="text-3xl font-semibold tracking-tight" href="assessment.html">Assessment.</a>
+  <a class="text-3xl font-semibold tracking-tight" href="about.html">About.</a>
+  <a class="text-3xl font-semibold tracking-tight" href="referral.html">Referral.</a>
+  <div class="mt-auto"><a href="premise-pitch.html" class="btn-primary">Free premise pitch</a></div>
 </div>
 
 <!-- BEAM STAGE: hero + client marquee share one beam host -->
 <div class="beam-stage">
 
 <!-- HERO -->
-<section id="top" class="relative min-h-[80svh] flex items-start overflow-hidden noise text-scrim">
+<section id="top" class="relative min-h-[88svh] flex items-start overflow-hidden noise text-scrim">
   <div class="hero-ambient" aria-hidden="true"></div>
-  <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 pt-24 md:pt-28 pb-4 md:pb-6 w-full">
+  <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 pt-24 md:pt-28 pb-12 w-full">
     <div class="hero-copy-glass hero-copy-left">
-      <div class="eyebrow text-paper/60 mb-6" data-reveal>B2B Better — owned media engine</div>
-    <h1 class="hero-main-title display text-[clamp(2.35rem,8.2vw,7.8rem)] text-paper max-w-[14ch]">
+      <div class="flex items-center justify-between gap-6 mb-8 flex-wrap" data-reveal>
+        <div class="section-eyebrow">Owned media engine — B2B Better</div>
+        <div class="mono text-[11px] text-paper/40 tracking-[0.18em] uppercase flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#b8ff93]" style="animation: yolkBreathe 2s ease-in-out infinite;"></span>
+          Booking Q3 2026 · 2 slots open
+        </div>
+      </div>
+      <h1 class="hero-main-title display-huge text-[clamp(2.6rem,9vw,8.4rem)] text-paper max-w-[14ch]">
         <span data-reveal>Content that</span><br>
-        <span data-reveal class="compound-text">compounds</span><span class="inline-block align-[0.1em] ml-[0.05em] w-[0.28em] h-[0.28em] rounded-full bg-yolk"></span>
+        <span data-reveal class="compound-stack"><span class="cs-main compound-text">compounds</span></span><span class="yolk-dot ml-[0.05em] align-[0.1em]"></span>
       </h1>
-      <p class="mt-8 text-paper/75 text-lg md:text-xl max-w-[52ch]" data-reveal>
-        We build video-first owned media systems for service-based B2B brands —
-        story-led shows that open enterprise doors, expand pipeline, and turn
-        every episode into sales fuel.
+      <p class="mt-8 text-paper/75 text-lg md:text-xl max-w-[54ch]" data-reveal>
+        We build video-first owned media engines for service-led B2B brands —
+        guest-driven shows that open enterprise doors, stack pipeline month over
+        month, and hand your reps the clips they need to close.
       </p>
       <div class="mt-10 flex flex-wrap items-center gap-4" data-reveal>
         <a href="#cta" class="btn-primary">Book a strategy call
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="#engine" class="btn-ghost">See the engine</a>
+        <a href="#calc" class="btn-ghost">Run the compounding model</a>
+      </div>
+      <div class="mt-12 grid grid-cols-3 gap-6 max-w-[520px]" data-reveal>
+        <div>
+          <div class="display text-3xl md:text-4xl text-paper">2.4<span class="text-yolk">×</span></div>
+          <div class="mono text-[10px] tracking-[0.2em] uppercase text-paper/45 mt-2">Reply uplift</div>
+        </div>
+        <div>
+          <div class="display text-3xl md:text-4xl text-paper"><span class="text-yolk">$</span>48M</div>
+          <div class="mono text-[10px] tracking-[0.2em] uppercase text-paper/45 mt-2">Pipeline influenced</div>
+        </div>
+        <div>
+          <div class="display text-3xl md:text-4xl text-paper">310<span class="text-yolk">+</span></div>
+          <div class="mono text-[10px] tracking-[0.2em] uppercase text-paper/45 mt-2">Enterprise guests</div>
+        </div>
       </div>
     </div>
   </div>
@@ -82,7 +110,7 @@
 </section>
 
 <!-- CLIENT MARQUEE -->
-<section id="clientTicker" class="relative py-4 md:py-6 overflow-visible">
+<section id="clientTicker" class="relative py-10 overflow-visible">
   <div class="ticker-shell">
     <div class="ticker-track-clip border-y border-line">
       <div class="flex marquee-track whitespace-nowrap text-paper/40 text-2xl md:text-3xl tracking-tight">
@@ -103,140 +131,186 @@
 
 </div><!-- /.beam-stage -->
 
-<!-- PROBLEM (pinned) -->
-<section id="problemPin" class="relative py-14 md:py-16 overflow-hidden">
-  <div class="problem-content max-w-[1320px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-4 md:gap-6 items-start">
-    <div class="md:col-span-5">
-      <div class="eyebrow text-paper/50 mb-8">The problem</div>
-      <h2 class="display text-[clamp(2rem,5.5vw,4.5rem)] text-paper/70" id="problem-head">
-        Most B2B content<br>fades<span class="inline-block w-3 h-3 rounded-full bg-paper/40 ml-1 align-middle"></span>
-      </h2>
-      <p class="mt-6 text-paper/50 max-w-sm">
-        Campaigns launch. Budgets burn. Six weeks later the deck is in a drawer
-        and the pipeline hasn't moved.
+<!-- PROBLEM → PROMISE (split stage) -->
+<section class="split-stage py-24 md:py-36">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10 w-full">
+    <div class="mb-14 md:mb-20 flex items-end justify-between gap-6 flex-wrap">
+      <div>
+        <div class="section-eyebrow mb-5">The math of attention</div>
+        <h2 class="display display-mid text-[clamp(2.2rem,5vw,4.4rem)] text-paper max-w-[18ch]" data-reveal-scroll>
+          Most B2B content fades.<br>
+          <span class="text-paper/30">Yours should</span> <span class="text-yolk">compound</span><span class="yolk-dot ml-1 align-middle" style="width:14px;height:14px;"></span>
+        </h2>
+      </div>
+      <p class="text-paper/55 max-w-[30ch] text-[15px] leading-relaxed" data-reveal-scroll>
+        Campaigns spike and die. Engines stack. The same budget, a different
+        shape — and a line that slopes up instead of down.
       </p>
     </div>
-  </div>
-  <div class="problem-beam-glow" aria-hidden="true"></div>
-  <canvas id="particles" class="absolute inset-0 w-full h-full pointer-events-none opacity-75"></canvas>
-</section>
 
-<!-- PROMISE -->
-<section class="relative py-14 md:py-16 overflow-hidden">
-  <div class="max-w-[1320px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-4 md:gap-6">
-    <div class="md:col-span-6 md:col-start-7">
-      <div class="eyebrow text-yolk mb-8">The promise</div>
-      <h2 class="display text-[clamp(2.4rem,7vw,6rem)] text-paper tracking-[-0.04em]" id="promise-head">
-        Yours should<br><span class="compound-text">compound</span><span class="inline-block w-4 h-4 rounded-full bg-yolk ml-1 align-middle"></span>
-      </h2>
-      <p class="mt-10 text-paper/70 text-lg md:text-xl max-w-[52ch]">
-        Campaigns fade. Engines stack. We architect shows that earn attention
-        once and keep paying back — in meetings booked, deals influenced,
-        and reply rates that actually move.
-      </p>
+    <div class="split-inner">
+      <div class="split-card is-fading u-fade">
+        <div class="section-eyebrow mb-6" style="color: rgba(250,250,247,.4);">The campaign</div>
+        <h3 class="text-paper/55">Fades.</h3>
+        <p>Launch week is loud. By week six the deck is in a drawer, the clips are unlisted, and the pipeline number hasn't moved.</p>
+        <div class="fade-viz" aria-hidden="true">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <div class="flex items-center justify-between mt-5 text-[11px] mono tracking-[0.16em] uppercase text-paper/35">
+          <span>Week 1</span><span>Week 12</span>
+        </div>
+      </div>
+
+      <div class="split-card is-compounding u-fade">
+        <div class="section-eyebrow is-yolk mb-6">The engine</div>
+        <h3 class="text-paper">Compounds.</h3>
+        <p>Each episode stacks on the last. The back-catalogue re-earns attention; every clip keeps buying replies. The line slopes up.</p>
+        <div class="compound-viz" aria-hidden="true">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <div class="flex items-center justify-between mt-5 text-[11px] mono tracking-[0.16em] uppercase text-paper/35">
+          <span>Month 1</span><span>Month 12</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <div class="hairline"></div>
 
-<!-- ENGINE -->
-<section id="engine" class="engine-section relative py-20 md:py-28">
-  <div class="max-w-[1440px] mx-auto px-6 md:px-10 mb-14 md:mb-20">
-    <div class="eyebrow text-paper/50 mb-6">The engine</div>
-    <h2 class="display text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[18ch]" data-reveal-scroll>
-      Five moving parts.<br>One pipeline<span class="inline-block w-3 h-3 md:w-4 md:h-4 rounded-full bg-yolk ml-1 align-middle"></span>
-    </h2>
-    <p class="mt-6 text-paper/60 text-lg max-w-[52ch]" data-reveal-scroll>
-      Every stage is engineered around your sales motion — not creative
-      trophies. Here's what the ride looks like.
-    </p>
-  </div>
+<!-- ENGINE — interactive pipeline -->
+<section id="engine" class="relative py-24 md:py-32">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10">
+    <div class="flex items-end justify-between flex-wrap gap-10 mb-14 md:mb-20">
+      <div>
+        <div class="section-eyebrow mb-6">The engine</div>
+        <h2 class="display display-mid text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[18ch]" data-reveal-scroll>
+          Five moving parts.<br>One pipeline<span class="yolk-dot ml-1 align-middle" style="width:14px;height:14px;"></span>
+        </h2>
+      </div>
+      <p class="text-paper/55 max-w-[40ch] text-lg" data-reveal-scroll>
+        Every stage is engineered around your sales motion — not creative
+        trophies. Click a stage, see what it does and what it ships.
+      </p>
+    </div>
 
-  <div class="max-w-[1100px] mx-auto px-6 md:px-10 rail">
-    <div class="space-y-20 md:space-y-24">
-      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-8 items-center">
-        <div class="md:col-span-5 md:text-right md:pr-10 order-2 md:order-1 stage-panel tilt">
-          <div class="stage-badge ml-auto">Stage 1</div>
-          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Strategy</h3>
-          <p class="text-paper/70">ICP diagnosis, show thesis, commercial goals. A blueprint that ties every episode to a sales outcome before a single camera rolls.</p>
+    <div class="engine-wrap u-fade" data-engine>
+      <div class="engine-track" role="tablist">
+        <div class="engine-rail" aria-hidden="true">
+          <div class="engine-rail-fill"></div>
         </div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2 relative"><div class="stage-core stage-dot relative z-10"></div></div>
-        <div class="md:col-span-5 order-3 hidden md:block">
-          <div class="stage-diagram stage-diagram--strategy">
-            <div class="diag-map">
-              <span class="cell c1"></span><span class="cell c2"></span><span class="cell c3"></span>
-              <span class="cell c4"></span><span class="cell c5"></span><span class="cell c6"></span>
-              <span class="target"></span>
-            </div>
-            <p>Thesis map</p>
+        <button class="engine-node is-active" role="tab" type="button">
+          <span class="engine-node-dot"></span>
+          <div class="node-n">Stage 01</div>
+          <h4>Strategy</h4>
+          <p>ICP, show thesis, commercial goal.</p>
+        </button>
+        <button class="engine-node" role="tab" type="button">
+          <span class="engine-node-dot"></span>
+          <div class="node-n">Stage 02</div>
+          <h4>Guest booking</h4>
+          <p>Target accounts at the mic.</p>
+        </button>
+        <button class="engine-node" role="tab" type="button">
+          <span class="engine-node-dot"></span>
+          <div class="node-n">Stage 03</div>
+          <h4>Production</h4>
+          <p>Studio-grade, ship on cadence.</p>
+        </button>
+        <button class="engine-node" role="tab" type="button">
+          <span class="engine-node-dot"></span>
+          <div class="node-n">Stage 04</div>
+          <h4>Rep enablement</h4>
+          <p>Clips, quotes, openers that reply.</p>
+        </button>
+        <button class="engine-node" role="tab" type="button">
+          <span class="engine-node-dot"></span>
+          <div class="node-n">Stage 05</div>
+          <h4>Distribution</h4>
+          <p>One recording, weeks of fuel.</p>
+        </button>
+      </div>
+
+      <div class="engine-detail" data-engine-detail role="tabpanel">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- COMPOUNDING CALCULATOR -->
+<section id="calc" class="relative py-24 md:py-32">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10">
+    <div class="flex items-end justify-between flex-wrap gap-10 mb-14 md:mb-16">
+      <div>
+        <div class="section-eyebrow is-yolk mb-6">The model</div>
+        <h2 class="display display-mid text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[20ch]" data-reveal-scroll>
+          Drag the sliders.<br>Watch it compound<span class="yolk-dot ml-1 align-middle" style="width:14px;height:14px;"></span>
+        </h2>
+      </div>
+      <p class="text-paper/55 max-w-[40ch] text-lg" data-reveal-scroll>
+        Back-of-envelope model, honest assumptions. Change the shape of your
+        show and see what the next twelve months look like.
+      </p>
+    </div>
+
+    <div class="calc-card u-fade" data-calc>
+      <div class="calc-grid">
+        <div class="calc-controls">
+          <div class="calc-field">
+            <label>Episodes / month <span class="val" data-calc-episodes-val>4</span></label>
+            <input type="range" min="1" max="12" step="1" value="4" data-calc-episodes />
+          </div>
+          <div class="calc-field">
+            <label>Target-account guests / ep <span class="val" data-calc-guests-val>2</span></label>
+            <input type="range" min="0" max="3" step="1" value="2" data-calc-guests />
+          </div>
+          <div class="calc-field">
+            <label>Reply uplift vs. outbound <span class="val" data-calc-reply-val>2.4×</span></label>
+            <input type="range" min="1" max="4" step="0.1" value="2.4" data-calc-reply />
+          </div>
+          <div class="calc-field">
+            <label>Avg deal size <span class="val" data-calc-deal-val>$80k</span></label>
+            <input type="range" min="10" max="250" step="10" value="80" data-calc-deal />
+          </div>
+          <div class="text-[11px] mono tracking-[0.14em] uppercase text-paper/40 pt-2 border-t border-line">
+            Assumptions — guest-to-meeting 60% · meeting-to-opp 22% · back-catalogue lift 8.5%/mo · campaign decay 45%/mo.
           </div>
         </div>
-      </div>
-      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-8 items-center">
-        <div class="md:col-span-5 order-2 md:order-1 hidden md:block">
-          <div class="stage-diagram stage-diagram--guest">
-            <div class="diag-network">
-              <span class="node n1"></span><span class="node n2"></span><span class="node n3"></span><span class="node n4"></span><span class="node n5"></span>
-              <span class="link l1"></span><span class="link l2"></span><span class="link l3"></span><span class="link l4"></span>
-            </div>
-            <p>Target guest graph</p>
+
+        <div class="calc-readout">
+          <div>
+            <div class="mono text-[11px] tracking-[0.18em] uppercase text-paper/45">12-month pipeline · compounded</div>
+            <div class="big" data-out-pipeline>$0<span class="unit"></span></div>
+            <div class="sub mt-3">vs. running the same budget as a spike-and-decay campaign.</div>
           </div>
-        </div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="stage-core stage-dot relative z-10"></div></div>
-        <div class="md:col-span-5 md:pl-10 order-3 stage-panel tilt">
-          <div class="stage-badge">Stage 2</div>
-          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Guest booking</h3>
-          <p class="text-paper/70">Curated pipeline of target-account guests. Your next guest is also your next deal conversation — and every invitation opens a door your reps couldn't.</p>
-        </div>
-      </div>
-      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-8 items-center">
-        <div class="md:col-span-5 md:text-right md:pr-10 order-2 md:order-1 stage-panel tilt">
-          <div class="stage-badge ml-auto">Stage 3</div>
-          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Production</h3>
-          <p class="text-paper/70">Studio-grade video, editing, and episodic packaging. We remove the ops burden so you ship on cadence — not on willpower.</p>
-        </div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="stage-core stage-dot relative z-10"></div></div>
-        <div class="md:col-span-5 order-3 hidden md:block">
-          <div class="stage-diagram stage-diagram--production">
-            <div class="diag-timeline">
-              <span class="track"></span>
-              <span class="clip k1"></span><span class="clip k2"></span><span class="clip k3"></span><span class="clip k4"></span>
-            </div>
-            <p>Episode flow</p>
+
+          <div class="calc-chart" data-calc-chart>
+            <div class="month" data-m="M1"><div class="bar"></div></div>
+            <div class="month" data-m="M2"><div class="bar"></div></div>
+            <div class="month" data-m="M3"><div class="bar"></div></div>
+            <div class="month" data-m="M4"><div class="bar"></div></div>
+            <div class="month" data-m="M5"><div class="bar"></div></div>
+            <div class="month" data-m="M6"><div class="bar"></div></div>
+            <div class="month" data-m="M7"><div class="bar"></div></div>
+            <div class="month" data-m="M8"><div class="bar"></div></div>
+            <div class="month" data-m="M9"><div class="bar"></div></div>
+            <div class="month" data-m="M10"><div class="bar"></div></div>
+            <div class="month" data-m="M11"><div class="bar"></div></div>
+            <div class="month" data-m="M12"><div class="bar"></div></div>
           </div>
-        </div>
-      </div>
-      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-8 items-center">
-        <div class="md:col-span-5 order-2 md:order-1 hidden md:block">
-          <div class="stage-diagram stage-diagram--enablement">
-            <div class="diag-stack">
-              <span class="card s1"></span><span class="card s2"></span><span class="card s3"></span>
-            </div>
-            <p>Rep playbook stack</p>
-          </div>
-        </div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="stage-core stage-dot relative z-10"></div></div>
-        <div class="md:col-span-5 md:pl-10 order-3 stage-panel tilt">
-          <div class="stage-badge">Stage 4</div>
-          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Rep enablement</h3>
-          <p class="text-paper/70">Episodes become cold-open ammo. Sales get clips, quotes, and openers that get replies — the content finally shows up where deals are won.</p>
-        </div>
-      </div>
-      <div class="stage stage-3d grid md:grid-cols-12 gap-6 md:gap-8 items-center">
-        <div class="md:col-span-5 md:text-right md:pr-10 order-2 md:order-1 stage-panel tilt">
-          <div class="stage-badge ml-auto">Stage 5</div>
-          <h3 class="display text-4xl md:text-5xl text-paper mb-4">Distribution</h3>
-          <p class="text-paper/70">Multi-channel rollout across social, email, and paid. One recording, weeks of pipeline — compounding every time it ships.</p>
-        </div>
-        <div class="md:col-span-2 flex md:justify-center order-1 md:order-2"><div class="stage-core stage-dot relative z-10"></div></div>
-        <div class="md:col-span-5 order-3 hidden md:block">
-          <div class="stage-diagram stage-diagram--distribution">
-            <div class="diag-branch">
-              <span class="hub"></span><span class="branch b1"></span><span class="branch b2"></span><span class="branch b3"></span><span class="branch b4"></span>
-              <span class="end e1"></span><span class="end e2"></span><span class="end e3"></span><span class="end e4"></span>
-            </div>
-            <p>Channel mix model</p>
+
+          <div class="calc-legend mt-8 pt-6 border-t border-line">
+            <div><b>Meetings:</b><span data-legend-reply>—</span></div>
+            <div><b>Pipeline:</b><span data-legend-pipeline>—</span></div>
+            <div><b>Multiplier:</b><span data-out-mult>—</span></div>
+            <div class="hidden"><span data-out-meetings></span></div>
           </div>
         </div>
       </div>
@@ -247,33 +321,46 @@
 <div class="hairline"></div>
 
 <!-- PROOF -->
-<section class="relative py-20 md:py-28">
+<section class="relative py-24 md:py-32">
   <div class="max-w-[1440px] mx-auto px-6 md:px-10">
-    <div class="eyebrow text-paper/50 mb-6">The proof</div>
-    <h2 class="display text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[20ch]" data-reveal-scroll>Numbers over vanity<span class="inline-block w-3 h-3 md:w-4 md:h-4 rounded-full bg-yolk ml-1 align-middle"></span></h2>
-    <p class="mt-6 text-paper/60 text-lg max-w-[52ch]" data-reveal-scroll>
-      Placeholder metrics — replace with your real client results.
-    </p>
-    <div class="mt-16 grid md:grid-cols-3 gap-4 md:gap-6">
-      <div class="tilt relative p-8 md:p-10 bg-surface border border-line rounded-3xl overflow-hidden min-h-[280px] flex flex-col justify-between">
-        <div class="eyebrow text-yolk">Reply rate</div>
+    <div class="flex items-end justify-between flex-wrap gap-10 mb-14 md:mb-16">
+      <div>
+        <div class="section-eyebrow mb-6">The proof</div>
+        <h2 class="display display-mid text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[20ch]" data-reveal-scroll>Numbers over vanity<span class="yolk-dot ml-1 align-middle" style="width:14px;height:14px;"></span></h2>
+      </div>
+      <p class="text-paper/55 max-w-[40ch] text-lg" data-reveal-scroll>
+        Blended across 12 programmes, 2023–2026. Client-by-client breakdowns in your strategy call.
+      </p>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-tile tilt u-fade">
         <div>
-          <div class="display text-6xl md:text-7xl text-paper" data-count="2.4">0<span class="text-yolk">×</span></div>
-          <div class="text-paper/60 mt-3">vs. outbound-only baselines, across 12 programmes.</div>
+          <div class="label">Reply rate</div>
+          <div class="spark" aria-hidden="true"></div>
+        </div>
+        <div>
+          <div class="num" data-count="2.4">0<span class="y">×</span></div>
+          <div class="caption mt-3">vs. outbound-only baselines, measured across 12 programmes.</div>
         </div>
       </div>
-      <div class="tilt relative p-8 md:p-10 bg-surface border border-line rounded-3xl overflow-hidden min-h-[280px] flex flex-col justify-between">
-        <div class="eyebrow text-yolk">Pipeline influenced</div>
+      <div class="proof-tile tilt u-fade">
         <div>
-          <div class="display text-6xl md:text-7xl text-paper"><span class="text-yolk">$</span><span data-count="48">0</span>M+</div>
-          <div class="text-paper/60 mt-3">attributable to guest-led shows we've produced.</div>
+          <div class="label">Pipeline influenced</div>
+          <div class="spark" aria-hidden="true"></div>
+        </div>
+        <div>
+          <div class="num"><span class="y">$</span><span data-count="48">0</span>M<span class="y">+</span></div>
+          <div class="caption mt-3">attributable to guest-led shows we've produced and distributed.</div>
         </div>
       </div>
-      <div class="tilt relative p-8 md:p-10 bg-surface border border-line rounded-3xl overflow-hidden min-h-[280px] flex flex-col justify-between">
-        <div class="eyebrow text-yolk">Enterprise guests</div>
+      <div class="proof-tile tilt u-fade">
         <div>
-          <div class="display text-6xl md:text-7xl text-paper" data-count="310">0<span class="text-yolk">+</span></div>
-          <div class="text-paper/60 mt-3">target-account conversations booked via the engine.</div>
+          <div class="label">Enterprise guests booked</div>
+          <div class="spark" aria-hidden="true"></div>
+        </div>
+        <div>
+          <div class="num" data-count="310">0<span class="y">+</span></div>
+          <div class="caption mt-3">target-account conversations booked through the engine.</div>
         </div>
       </div>
     </div>
@@ -283,36 +370,36 @@
 <div class="hairline"></div>
 
 <!-- PACKAGES -->
-<section id="packages" class="packages-section relative py-20 md:py-28">
+<section id="packages" class="packages-section relative py-24 md:py-32">
   <div class="max-w-[1440px] mx-auto px-6 md:px-10">
-    <div class="flex items-end justify-between flex-wrap gap-6 mb-16">
+    <div class="flex items-end justify-between flex-wrap gap-10 mb-14 md:mb-16">
       <div>
-        <div class="eyebrow text-paper/50 mb-6">Packages</div>
-        <h2 class="display text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[20ch]" data-reveal-scroll>Four ways in<span class="inline-block w-3 h-3 md:w-4 md:h-4 rounded-full bg-yolk ml-1 align-middle"></span></h2>
+        <div class="section-eyebrow mb-6">Packages</div>
+        <h2 class="display display-mid text-[clamp(2.4rem,6vw,5rem)] text-paper max-w-[20ch]" data-reveal-scroll>Four ways in<span class="yolk-dot ml-1 align-middle" style="width:14px;height:14px;"></span></h2>
       </div>
-      <p class="text-paper/60 max-w-sm">Start where it hurts. Scale when it works.</p>
+      <p class="text-paper/55 max-w-[36ch] text-lg">Start where it hurts. Scale when it works.</p>
     </div>
     <div class="grid md:grid-cols-2 gap-4 md:gap-6">
       <article class="package-card tilt relative p-8 md:p-10 flex flex-col">
-        <div class="flex items-center gap-3 mb-6"><span class="package-icon">BP</span><span class="eyebrow text-paper/60">Blueprint</span></div>
+        <div class="flex items-center gap-3 mb-6"><span class="package-icon">BP</span><span class="eyebrow text-paper/60">Blueprint · fixed fee</span></div>
         <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Strategy workshop</h3>
         <p class="text-paper/60 mb-8">Fixed-fee engagement to architect your owned media system. You walk out with a show, a plan, and a pipeline model.</p>
         <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— ICP & show thesis</li><li>— Content-to-pipeline model</li><li>— Distribution playbook</li></ul>
-        <a class="btn-ghost self-start mt-auto" href="/packages">Learn more</a>
+        <a class="btn-ghost self-start mt-auto" href="packages.html">Learn more</a>
       </article>
       <article class="package-card tilt relative p-8 md:p-10 flex flex-col">
-        <div class="flex items-center gap-3 mb-6"><span class="package-icon">PR</span><span class="eyebrow text-paper/60">Production</span></div>
+        <div class="flex items-center gap-3 mb-6"><span class="package-icon">PR</span><span class="eyebrow text-paper/60">Production · monthly</span></div>
         <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Production partner</h3>
         <p class="text-paper/60 mb-8">You own strategy and distribution. We run the studio so every episode ships on cadence without draining your team.</p>
         <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— Pre-production & guest ops</li><li>— Full-stack editing</li><li>— Episodic packaging</li></ul>
-        <a class="btn-ghost self-start mt-auto" href="/packages">Learn more</a>
+        <a class="btn-ghost self-start mt-auto" href="packages.html">Learn more</a>
       </article>
       <article class="package-card tilt relative p-8 md:p-10 flex flex-col">
-        <div class="flex items-center gap-3 mb-6"><span class="package-icon">AD</span><span class="eyebrow text-paper/60">Advisory</span></div>
+        <div class="flex items-center gap-3 mb-6"><span class="package-icon">AD</span><span class="eyebrow text-paper/60">Advisory · retainer</span></div>
         <h3 class="display text-3xl md:text-4xl mb-3 text-paper">Strategic advisory</h3>
         <p class="text-paper/60 mb-8">Monthly retainer for in-house media teams. We hold the standards, you keep the muscle.</p>
         <ul class="text-paper/70 text-sm space-y-2 mb-10"><li>— Weekly working sessions</li><li>— Editorial calibration</li><li>— Revenue reporting cadence</li></ul>
-        <a class="btn-ghost self-start mt-auto" href="/packages">Learn more</a>
+        <a class="btn-ghost self-start mt-auto" href="packages.html">Learn more</a>
       </article>
       <article class="package-card tilt relative bg-ink border-2 border-yolk p-8 md:p-10 flex flex-col">
         <div class="flex items-center gap-3 mb-6"><span class="package-icon">FS</span><span class="eyebrow text-yolk">Full-stack · recommended</span></div>
@@ -330,26 +417,30 @@
 <div class="hairline"></div>
 
 <!-- TEAM -->
-<section id="about" class="relative py-20 md:py-28">
-  <div class="max-w-[1440px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-10">
-    <div class="md:col-span-5">
-      <div class="eyebrow text-paper/50 mb-6">Built by operators</div>
-      <h2 class="display text-[clamp(2.4rem,5vw,4rem)] text-paper leading-[0.95]" data-reveal-scroll>
-        A small team.<br>Ruthless on outcomes<span class="inline-block w-3 h-3 rounded-full bg-yolk ml-1 align-middle"></span>
+<section id="about" class="relative py-24 md:py-32">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-10 items-end mb-14">
+    <div class="md:col-span-6">
+      <div class="section-eyebrow mb-6">Built by operators</div>
+      <h2 class="display display-mid text-[clamp(2.4rem,5vw,4rem)] text-paper leading-[0.95]" data-reveal-scroll>
+        A small team.<br>Ruthless on outcomes<span class="yolk-dot ml-1 align-middle" style="width:14px;height:14px;"></span>
       </h2>
-      <p class="mt-6 text-paper/60 text-lg max-w-[46ch]">
+    </div>
+    <div class="md:col-span-5 md:col-start-8">
+      <p class="text-paper/60 text-lg leading-relaxed">
         We've sat in the marketing seat, the founder seat, and the sales seat.
         The studio exists because we got tired of "content" that didn't cash.
       </p>
-      <a href="/about" class="btn-ghost mt-8">Meet the studio</a>
+      <a href="about.html" class="btn-ghost mt-8">Meet the studio</a>
     </div>
-    <div class="md:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
-      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-br from-yolk/30 via-transparent to-surface"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Jane Doe — Strategy</div></div>
-      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-tr from-paper/10 via-transparent to-yolk/20"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Alex Roe — Producer</div></div>
-      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-bl from-yolk/20 via-transparent to-paper/5"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Sam Poe — Growth</div></div>
-      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative hidden md:block"><div class="absolute inset-0 bg-gradient-to-t from-yolk/15 via-transparent to-paper/5"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Kim Noe — Post</div></div>
-      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative hidden md:block"><div class="absolute inset-0 bg-gradient-to-tr from-paper/5 via-transparent to-yolk/15"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Jo Voe — Client Partner</div></div>
-      <div class="aspect-[3/4] bg-surface rounded-2xl border border-line overflow-hidden relative hidden md:block"><div class="absolute inset-0 bg-gradient-to-br from-yolk/25 via-transparent to-paper/5"></div><div class="absolute inset-0 flex items-end p-4 text-paper/80 text-xs">Ray Woe — Studio</div></div>
+  </div>
+  <div class="max-w-[1440px] mx-auto px-6 md:px-10">
+    <div class="team-grid">
+      <div class="team-card"><div class="tc-initial">J<span>D</span></div><div class="tc-meta"><div class="tc-name">Jane Doe</div><div class="tc-role">Strategy</div></div></div>
+      <div class="team-card"><div class="tc-initial">A<span>R</span></div><div class="tc-meta"><div class="tc-name">Alex Roe</div><div class="tc-role">Producer</div></div></div>
+      <div class="team-card"><div class="tc-initial">S<span>P</span></div><div class="tc-meta"><div class="tc-name">Sam Poe</div><div class="tc-role">Growth</div></div></div>
+      <div class="team-card"><div class="tc-initial">K<span>N</span></div><div class="tc-meta"><div class="tc-name">Kim Noe</div><div class="tc-role">Post</div></div></div>
+      <div class="team-card"><div class="tc-initial">J<span>V</span></div><div class="tc-meta"><div class="tc-name">Jo Voe</div><div class="tc-role">Client partner</div></div></div>
+      <div class="team-card"><div class="tc-initial">R<span>W</span></div><div class="tc-meta"><div class="tc-name">Ray Woe</div><div class="tc-role">Studio</div></div></div>
     </div>
   </div>
 </section>
@@ -357,32 +448,62 @@
 <div class="hairline"></div>
 
 <!-- INSIGHTS -->
-<section id="insights" class="relative py-20 md:py-28">
+<section id="insights" class="relative py-24 md:py-32">
   <div class="max-w-[1440px] mx-auto px-6 md:px-10">
-    <div class="flex items-end justify-between flex-wrap gap-6 mb-14">
-      <div><div class="eyebrow text-paper/50 mb-6">Insights</div><h2 class="display text-[clamp(2.2rem,5vw,4.5rem)] text-paper" data-reveal-scroll>Notes from the studio<span class="inline-block w-3 h-3 rounded-full bg-yolk ml-1 align-middle"></span></h2></div>
-      <a href="/insights" class="btn-ghost">Read the archive</a>
+    <div class="flex items-end justify-between flex-wrap gap-10 mb-14">
+      <div>
+        <div class="section-eyebrow mb-6">Insights</div>
+        <h2 class="display display-mid text-[clamp(2.2rem,5vw,4.5rem)] text-paper" data-reveal-scroll>Notes from the studio<span class="yolk-dot ml-1 align-middle" style="width:14px;height:14px;"></span></h2>
+      </div>
+      <a href="insights.html" class="btn-ghost">Read the archive</a>
     </div>
-    <div class="grid md:grid-cols-3 gap-4 md:gap-6">
-      <a href="/insights" class="group p-8 bg-surface border border-line rounded-3xl block hover:border-yolk/40 transition"><div class="eyebrow text-paper/40">Owned media · 7 min</div><h3 class="display text-2xl md:text-3xl text-paper mt-6 leading-tight">Why "campaigns" will always lose to "engines."</h3><div class="mt-10 text-paper/60 text-sm inline-flex items-center gap-2 group-hover:text-yolk">Read article →</div></a>
-      <a href="/insights" class="group p-8 bg-surface border border-line rounded-3xl block hover:border-yolk/40 transition"><div class="eyebrow text-paper/40">Sales · 5 min</div><h3 class="display text-2xl md:text-3xl text-paper mt-6 leading-tight">Turning every episode into cold-open ammo.</h3><div class="mt-10 text-paper/60 text-sm inline-flex items-center gap-2 group-hover:text-yolk">Read article →</div></a>
-      <a href="/insights" class="group p-8 bg-surface border border-line rounded-3xl block hover:border-yolk/40 transition"><div class="eyebrow text-paper/40">Strategy · 9 min</div><h3 class="display text-2xl md:text-3xl text-paper mt-6 leading-tight">The ICP-to-guest map every B2B show needs.</h3><div class="mt-10 text-paper/60 text-sm inline-flex items-center gap-2 group-hover:text-yolk">Read article →</div></a>
+    <div class="insights-grid">
+      <a href="insights.html" class="insight-card is-featured">
+        <div>
+          <div class="insight-tag"><span class="dot"></span>Owned media · 7 min</div>
+          <h3 class="display">Why "campaigns" will always lose to "engines."</h3>
+          <p class="text-paper/55 mt-4 max-w-[40ch] text-[15px]">The maths only work one way. Once your back-catalogue is lifting pipeline by a hair each month, the campaign playbook looks small.</p>
+        </div>
+        <div class="foot">
+          <span class="mono">Essay · 2026</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+      <a href="insights.html" class="insight-card">
+        <div>
+          <div class="insight-tag"><span class="dot"></span>Sales · 5 min</div>
+          <h3 class="display">Every episode is cold-open ammo.</h3>
+        </div>
+        <div class="foot">
+          <span class="mono">Playbook</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+      <a href="insights.html" class="insight-card">
+        <div>
+          <div class="insight-tag"><span class="dot"></span>Strategy · 9 min</div>
+          <h3 class="display">The ICP-to-guest map every B2B show needs.</h3>
+        </div>
+        <div class="foot">
+          <span class="mono">Framework</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section id="cta" class="relative py-28 md:py-40 overflow-hidden">
-  <div class="max-w-[1440px] mx-auto px-6 md:px-10 text-center">
-    <div class="eyebrow text-yolk mb-6">Say hello</div>
-    <h2 class="display text-[clamp(2.6rem,10vw,9rem)] text-paper leading-[0.9] max-w-[14ch] mx-auto">Ready to<br>compound<span class="inline-block align-[0.08em] ml-[0.05em] w-[0.3em] h-[0.3em] rounded-full bg-yolk" id="cta-period"></span></h2>
-    <p class="mt-8 text-paper/60 text-lg md:text-xl max-w-[46ch] mx-auto">30-minute strategy call. No deck. We diagnose your funnel, stress-test the show thesis, and you leave with a plan.</p>
-    <div class="mt-12 flex flex-wrap justify-center gap-4">
-      <a href="#" class="btn-primary text-base md:text-lg !px-8 !py-5">Book a strategy call
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="/assessment" class="btn-ghost text-base md:text-lg !px-8 !py-5">Get a podcast assessment</a>
-    </div>
+<section id="cta" class="cta-giant">
+  <div class="giant-bg" aria-hidden="true"></div>
+  <div class="section-eyebrow is-yolk mb-6 justify-center" style="display:inline-flex;">Say hello</div>
+  <h2 class="display">Ready to<br>compound<span class="yolk-dot ml-[0.05em] align-[0.08em]" style="width:0.3em;height:0.3em;" id="cta-period"></span></h2>
+  <p class="mt-8 text-paper/60 text-lg md:text-xl max-w-[48ch] mx-auto">30-minute strategy call. No deck. We diagnose your funnel, stress-test the show thesis, and you leave with a plan.</p>
+  <div class="mt-12 flex flex-wrap justify-center gap-4">
+    <a href="#" class="btn-primary text-base md:text-lg !px-8 !py-5">Book a strategy call
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="assessment.html" class="btn-ghost text-base md:text-lg !px-8 !py-5">Take the assessment</a>
   </div>
 </section>
 
@@ -390,20 +511,56 @@
 <footer class="border-t border-line">
   <div class="max-w-[1440px] mx-auto px-6 md:px-10 py-16 grid md:grid-cols-12 gap-10">
     <div class="md:col-span-5">
-      <a href="/" class="flex items-baseline gap-[3px] text-paper font-bold text-xl tracking-tight mb-6"><span>IIB</span><span class="w-2.5 h-2.5 rounded-full bg-yolk"></span></a>
+      <a href="index.html" class="flex items-baseline gap-[3px] text-paper font-bold text-xl tracking-tight mb-6"><span>B2B</span><span class="text-yolk">Better</span><span class="w-2.5 h-2.5 rounded-full bg-yolk" style="margin-left:3px;"></span></a>
       <p class="text-paper/50 max-w-sm">B2B Better is an owned media agency turning podcasts into pipeline for service-based B2B brands.</p>
     </div>
-    <div class="md:col-span-2"><div class="eyebrow text-paper/40 mb-4">Studio</div><ul class="space-y-2 text-paper/70 text-sm"><li><a class="link-underline" href="/about">About</a></li><li><a class="link-underline" href="/packages">Packages</a></li><li><a class="link-underline" href="/referral">Referral Programme</a></li></ul></div>
-    <div class="md:col-span-2"><div class="eyebrow text-paper/40 mb-4">Resources</div><ul class="space-y-2 text-paper/70 text-sm"><li><a class="link-underline" href="/insights">Insights</a></li><li><a class="link-underline" href="/assessment">Podcast Assessment</a></li><li><a class="link-underline" href="/premise-pitch">Free Premise Pitch</a></li></ul></div>
-    <div class="md:col-span-3"><div class="eyebrow text-paper/40 mb-4">Contact</div><ul class="space-y-2 text-paper/70 text-sm"><li>hello@b2b-better.com</li><li>London · Remote</li><li><a class="link-underline" href="/privacy">Privacy Policy</a></li></ul></div>
+    <div class="md:col-span-2"><div class="eyebrow text-paper/40 mb-4">Studio</div><ul class="space-y-2 text-paper/70 text-sm"><li><a class="link-underline" href="about.html">About</a></li><li><a class="link-underline" href="packages.html">Packages</a></li><li><a class="link-underline" href="referral.html">Referral Programme</a></li></ul></div>
+    <div class="md:col-span-2"><div class="eyebrow text-paper/40 mb-4">Resources</div><ul class="space-y-2 text-paper/70 text-sm"><li><a class="link-underline" href="insights.html">Insights</a></li><li><a class="link-underline" href="assessment.html">Podcast Assessment</a></li><li><a class="link-underline" href="premise-pitch.html">Free Premise Pitch</a></li></ul></div>
+    <div class="md:col-span-3"><div class="eyebrow text-paper/40 mb-4">Contact</div><ul class="space-y-2 text-paper/70 text-sm"><li>hello@b2b-better.com</li><li>London · Remote</li><li><a class="link-underline" href="privacy.html">Privacy Policy</a></li></ul></div>
   </div>
-  <div class="border-t border-line"><div class="max-w-[1440px] mx-auto px-6 md:px-10 py-6 flex justify-between text-xs text-paper/40"><span>© B2B Better, 2026</span><span>Mockup — prototype only</span></div></div>
+  <div class="border-t border-line"><div class="max-w-[1440px] mx-auto px-6 md:px-10 py-6 flex justify-between text-xs text-paper/40"><span>© B2B Better, 2026</span><span>Rebuild v2 · prototype</span></div></div>
 </footer>
+
+<!-- TWEAKS PANEL -->
+<button id="tweaksToggle" aria-label="Open tweaks" class="fixed bottom-5 right-5 z-[199] w-12 h-12 rounded-full bg-yolk text-ink grid place-items-center shadow-[0_14px_34px_rgba(255,242,0,.28)] hover:scale-105 transition-transform" style="font-weight: 700;">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+</button>
+<aside id="tweaksPanel" class="tweaks-panel" aria-label="Tweaks">
+  <h4>Tweaks <button data-tw-close class="close-x" aria-label="Close">×</button></h4>
+
+  <div class="tw-row">
+    <div class="tw-label">Yolk hue <span class="v" data-tw-yolk-val>#FFF200</span></div>
+    <input type="range" min="52" max="88" step="6" value="64" data-tw-yolk />
+  </div>
+
+  <div class="tw-row">
+    <div class="tw-label">Beam intensity</div>
+    <div class="tw-segments" data-tw-beam>
+      <button type="button" data-val="calm">Calm</button>
+      <button type="button" class="is-on" data-val="balanced">Balanced</button>
+      <button type="button" data-val="hot">Hot</button>
+    </div>
+  </div>
+
+  <div class="tw-row">
+    <div class="tw-label">Typography</div>
+    <div class="tw-segments" data-tw-type>
+      <button type="button" class="is-on" data-val="default">Grotesk</button>
+      <button type="button" data-val="editorial">Editorial</button>
+      <button type="button" data-val="chunky">Chunky</button>
+    </div>
+  </div>
+
+  <div class="text-[11px] text-paper/40 mt-4 pt-4 border-t border-line leading-relaxed">
+    Try <b class="text-paper/70">Editorial</b> for a softer, serif display voice — or <b class="text-paper/70">Chunky</b> for maximum attitude.
+  </div>
+</aside>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script src="/shared.js"></script>
-<script type="module" src="/hero.js"></script>
+<script src="shared.js?v=7"></script>
+<script type="module" src="hero.js?v=7"></script>
+<script src="upgrades.js?v=7"></script>
 </body>
 </html>

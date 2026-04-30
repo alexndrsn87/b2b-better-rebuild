@@ -264,33 +264,6 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   mix-blend-mode: normal;
 }
 
-/* Spill haze at ticker edges — independent of .ticker-track-clip so
-   off-edge particle arcs keep a soft backing gradient outside the clip. */
-.beam-host::before,
-.beam-host::after {
-  content: "";
-  position: absolute;
-  bottom: calc(var(--beam-roof-gap) - 78px);
-  width: min(34vw, 460px);
-  height: 190px;
-  pointer-events: none;
-  z-index: 3;
-  filter: blur(26px);
-  opacity: calc(0.32 + var(--beam-heat) * 0.22);
-}
-.beam-host::before {
-  left: -18vw;
-  background:
-    radial-gradient(ellipse at 88% 52%, rgba(255, 246, 150, 0.32) 0%, rgba(255, 246, 150, 0.16) 34%, rgba(255, 246, 150, 0) 74%),
-    linear-gradient(to right, rgba(11, 11, 12, 0.7), rgba(11, 11, 12, 0));
-}
-.beam-host::after {
-  right: -18vw;
-  background:
-    radial-gradient(ellipse at 12% 52%, rgba(255, 246, 150, 0.32) 0%, rgba(255, 246, 150, 0.16) 34%, rgba(255, 246, 150, 0) 74%),
-    linear-gradient(to left, rgba(11, 11, 12, 0.7), rgba(11, 11, 12, 0));
-}
-
 /* Outer soft glow — wide, blurred, gives atmospheric "light shaft" feel.
    Gentle top fade so the first third of the beam doesn't blast, but mid
    and lower sections stay warmly lit. */
@@ -366,20 +339,18 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
 .beam-rail {
   position: absolute;
   bottom: calc(var(--beam-roof-gap) - 2px);
-  left: -34vw;
-  right: -34vw;
+  left: -28vw;
+  right: -28vw;
   height: 16px;
   transform: translateY(50%);
   background: linear-gradient(
     to right,
     rgba(255, 246, 150, 0) 0%,
-    rgba(255, 246, 150, 0.04) 10%,
-    rgba(255, 246, 150, 0.12) 20%,
-    rgba(255, 246, 150, 0.2) 32%,
+    rgba(255, 246, 150, 0.08) 12%,
+    rgba(255, 246, 150, 0.2) 28%,
     rgba(255, 246, 150, 0.58) 50%,
-    rgba(255, 246, 150, 0.2) 68%,
-    rgba(255, 246, 150, 0.12) 80%,
-    rgba(255, 246, 150, 0.04) 90%,
+    rgba(255, 246, 150, 0.2) 72%,
+    rgba(255, 246, 150, 0.08) 88%,
     rgba(255, 246, 150, 0) 100%
   );
   filter: blur(7px);
@@ -387,9 +358,6 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   z-index: 2;
   pointer-events: none;
   mix-blend-mode: screen;
-  /* Extra feathering so the rail never ends in a visible hard cutoff. */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 8%, #000 14%, #000 86%, rgba(0,0,0,0.6) 92%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 8%, #000 14%, #000 86%, rgba(0,0,0,0.6) 92%, transparent 100%);
 }
 
 /* Canvas — particle dust layer. Internal compositing is already additive
@@ -409,28 +377,6 @@ body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothi
   display: block;
   pointer-events: none;
   z-index: 4;
-}
-
-/* Problem section beam carry-over */
-.problem-beam-glow {
-  position: absolute;
-  top: 6%;
-  bottom: 8%;
-  left: 50%;
-  width: min(22vw, 220px);
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 1;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 242, 0, 0) 0%,
-      rgba(255, 242, 0, 0.05) 18%,
-      rgba(255, 242, 0, 0.11) 52%,
-      rgba(255, 242, 0, 0.2) 100%
-    );
-  filter: blur(24px);
-  opacity: 0.62;
 }
 
 .hero-copy-glass {
